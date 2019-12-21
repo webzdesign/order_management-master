@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('status')->comment('0-deactivate, 1-activate')->nullable();
-            $table->boolean('display')->comment('0-No, 1-Yes')->default(0)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

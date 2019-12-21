@@ -19,48 +19,48 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              <br />
+              
               <form id="frm" method="post"  action ="{{route('user.store')}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name<span class="requride_cls">*</span>
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label" for="name">Name<span class="requride_cls">*</span>
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div>
                     <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Name" value="{{old('name')}}">
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email<span class="requride_cls">*</span>
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label" for="email">Email<span class="requride_cls">*</span>
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div>
                     <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Email" value="{{old('email')}}">
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password<span class="requride_cls">*</span>
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label" for="password">Password<span class="requride_cls">*</span>
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div>
                     <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Password" value="{{old('password')}}" >
                   </div>
                 </div>
 
 
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="confirm_password">Confirm Password<span class="requride_cls">*</span>
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label" for="confirm_password">Confirm Password<span class="requride_cls">*</span>
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div>
                     <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Confirm Password" value="{{old('confirm_password')}}" >
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label" for="status">
                     Status <span class="requride_cls">*</span>
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div>
                     <div class="radio">
                       <label style="margin-right:20px;">
                         <input type="radio" value="1" name="status">Active
@@ -72,23 +72,12 @@
                     <label id="status-error" class="error" for="status"></label>
                   </div>
                 </div>
-                
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="display">
-                    Display All Dealer
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <label>
-                      <input type="checkbox" id="display" name="display" value="1" > Yes
-                    </label>
-                  </div>
-                </div>
 
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label" for="role">
                     Select Role
                   </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div>
                     <select class="select2_single form-control" name="role" id="role">
                         <option value="">Select</option>
                         @foreach($role_details as $key=>$value)
@@ -100,7 +89,7 @@
 
                 <div class="ln_solid"></div>
                 <div class="form-group">
-                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
                     <a href=" {{ url('user') }}" class="btn btn-primary">Cancel</a>
                     <button type="submit" class="btn btn-success focusClass">Submit</button>
                   </div>

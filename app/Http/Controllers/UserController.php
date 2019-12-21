@@ -85,28 +85,14 @@ class UserController extends Controller
     {
         $roles = Role::find($request->role);
         
-        if(isset($request->display)) {
-            //User::create(['name'=> ucwords($request->name), 'email'=>$request->email, 'password'=> bcrypt($request->password), 'status'=>$request->status, 'display'=>$request->display ]);
-            $user = new User();
-            $user->name         = ucwords($request->name); 
-            $user->email        = $request->email;
-            $user->password     = bcrypt($request->password); 
-            $user->status       = $request->status; 
-            $user->display      = $request->display;
-            $user->save();
-            $user->attachRole($roles);
+        $user = new User();
+        $user->name         = ucwords($request->name); 
+        $user->email        = $request->email;
+        $user->password     = bcrypt($request->password); 
+        $user->status       = $request->status; 
+        $user->save();
+        $user->attachRole($roles);
              
-        } else {
-            //User::create(['name'=> ucwords($request->name), 'email'=>$request->email, 'password'=> bcrypt($request->password), 'status'=>$request->status, 'display'=> 0 ]);
-            $user = new User();
-            $user->name         = ucwords($request->name); 
-            $user->email        = $request->email;
-            $user->password     = bcrypt($request->password); 
-            $user->status       = $request->status; 
-            $user->display      = 0;
-            $user->save();
-            $user->attachRole($roles);
-        }
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
     }
@@ -132,30 +118,14 @@ class UserController extends Controller
     {
         $roles = Role::find($request->role);
 
-        if(isset($request->display))
-        {
-            //User::find($id)->update(['name' => ucwords($request->name), 'email' => $request->email, 'password' => bcrypt($request->password), 'status' => $request->status,  'display'=>$request->display ]);
-            $user = new User();
-            $user->name         = ucwords($request->name); 
-            $user->email        = $request->email;
-            $user->password     = bcrypt($request->password); 
-            $user->status       = $request->status; 
-            $user->display      = $request->display;
-            $user->save();
-            $user->attachRole($roles);
-            
-        }
-        else {
-            //User::find($id)->update(['name' => ucwords($request->name), 'email' => $request->email, 'password' => bcrypt($request->password), 'status' => $request->status,  'display'=> 0 ]);
-            $user = new User();
-            $user->name         = ucwords($request->name); 
-            $user->email        = $request->email;
-            $user->password     = bcrypt($request->password); 
-            $user->status       = $request->status; 
-            $user->display      = 0;
-            $user->save();
-            $user->attachRole($roles);
-        }
+        $user = User::find($id);
+        $user->name         = ucwords($request->name); 
+        $user->email        = $request->email;
+        $user->password     = bcrypt($request->password); 
+        $user->status       = $request->status; 
+        $user->save();
+        $user->roles()->detach();
+        $user->attachRole($roles);
         
 
         Helper::successMsg('update', $this->moduleName);
