@@ -18,6 +18,10 @@ class CreateSettingsTable extends Migration
             $table->string('name');
             $table->string('logo');
             $table->string('favicon');
+            $table->boolean('gst_type')->comment('0-inter state, 1-out of state');
+            $table->double('cgst')->default(0);
+            $table->double('sgst')->default(0);
+            $table->double('igst')->default(0);
             $table->timestamps();
         });
     }
