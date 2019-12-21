@@ -40,6 +40,10 @@
 <script src="{{asset('public/assets/vendors/pdfmake/build/pdfmake.min.js')}}"></script>
 <script src="{{asset('public/assets/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
 
+<script src="{{asset('public/assets/vendors/pnotify/dist/pnotify.js')}}"></script>
+<script src="{{asset('public/assets/vendors/pnotify/dist/pnotify.buttons.js')}}"></script>
+<script src="{{asset('public/assets/vendors/pnotify/dist/pnotify.nonblock.js')}}"></script>
+
 <!-- Custom Theme Scripts -->
 <script src="{{asset('public/assets/build/js/custom.min.js')}}"></script>
 

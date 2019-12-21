@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use jeremykenedy\LaravelRoles\Models\Permission;
+use jeremykenedy\LaravelRoles\Models\Role;
 use App\User;
 use Helper;
 use DataTables;
@@ -23,7 +25,8 @@ class UserController extends Controller
 
     public function getUserData()
     {
-        return DataTables::eloquent(User::query())
+        $users = User::with('roles')->select('users.*');
+        return DataTables::eloquent($users)
             ->addColumn('action', function ($user) {
                 if($user->name != 'Admin'){
                     $editUrl = route('user.edit', encrypt($user->id));
@@ -39,7 +42,9 @@ class UserController extends Controller
                     return $action;
                 }
             })
-
+            ->editColumn('user.role', function($user){
+                return $user->roles()->first()->name; 
+            })
             ->editColumn('status', function($user) {
                 if ($user->status == '0') {
                     $status = '<label class="label label-danger">Deactivate</label>';
@@ -69,20 +74,38 @@ class UserController extends Controller
 
     public function create()
     {
+        $role_details = Role::whereNotIn('id', [1,2])->get();
         $moduleName = $this->moduleName;
 
-        return view($this->view.'/form', compact('moduleName'));
+        return view($this->view.'/form', compact('moduleName', 'role_details'));
     }
 
 
     public function store(Request $request)
     {
-        if(isset($request->display))
-        {
-            User::create(['name'=> ucwords($request->name), 'email'=>$request->email, 'password'=> bcrypt($request->password), 'status'=>$request->status, 'display'=>$request->display ]);
-        }
-        else {
-            User::create(['name'=> ucwords($request->name), 'email'=>$request->email, 'password'=> bcrypt($request->password), 'status'=>$request->status, 'display'=> 0 ]);
+        $roles = Role::find($request->role);
+        
+        if(isset($request->display)) {
+            //User::create(['name'=> ucwords($request->name), 'email'=>$request->email, 'password'=> bcrypt($request->password), 'status'=>$request->status, 'display'=>$request->display ]);
+            $user = new User();
+            $user->name         = ucwords($request->name); 
+            $user->email        = $request->email;
+            $user->password     = bcrypt($request->password); 
+            $user->status       = $request->status; 
+            $user->display      = $request->display;
+            $user->save();
+            $user->attachRole($roles);
+             
+        } else {
+            //User::create(['name'=> ucwords($request->name), 'email'=>$request->email, 'password'=> bcrypt($request->password), 'status'=>$request->status, 'display'=> 0 ]);
+            $user = new User();
+            $user->name         = ucwords($request->name); 
+            $user->email        = $request->email;
+            $user->password     = bcrypt($request->password); 
+            $user->status       = $request->status; 
+            $user->display      = 0;
+            $user->save();
+            $user->attachRole($roles);
         }
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -97,21 +120,41 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $user = User::with('roles')->where('id',decrypt($id))->select('users.*')->first();
+        $role_details = Role::whereNotIn('id', [1,2])->get();
         $moduleName = $this->moduleName;
-        $user = User::find(decrypt($id));
 
-        return view($this->view.'/_form', compact('user', 'moduleName'));
+        return view($this->view.'/_form', compact('user', 'moduleName', 'role_details'));
     }
 
 
     public function update(Request $request, $id)
     {
+        $roles = Role::find($request->role);
+
         if(isset($request->display))
         {
-            User::find($id)->update(['name' => ucwords($request->name), 'email' => $request->email, 'password' => bcrypt($request->password), 'status' => $request->status,  'display'=>$request->display ]);
+            //User::find($id)->update(['name' => ucwords($request->name), 'email' => $request->email, 'password' => bcrypt($request->password), 'status' => $request->status,  'display'=>$request->display ]);
+            $user = new User();
+            $user->name         = ucwords($request->name); 
+            $user->email        = $request->email;
+            $user->password     = bcrypt($request->password); 
+            $user->status       = $request->status; 
+            $user->display      = $request->display;
+            $user->save();
+            $user->attachRole($roles);
+            
         }
         else {
-            User::find($id)->update(['name' => ucwords($request->name), 'email' => $request->email, 'password' => bcrypt($request->password), 'status' => $request->status,  'display'=> 0 ]);
+            //User::find($id)->update(['name' => ucwords($request->name), 'email' => $request->email, 'password' => bcrypt($request->password), 'status' => $request->status,  'display'=> 0 ]);
+            $user = new User();
+            $user->name         = ucwords($request->name); 
+            $user->email        = $request->email;
+            $user->password     = bcrypt($request->password); 
+            $user->status       = $request->status; 
+            $user->display      = 0;
+            $user->save();
+            $user->attachRole($roles);
         }
         
 

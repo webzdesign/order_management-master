@@ -17,12 +17,22 @@ class RolesTableSeeder extends Seeder
          * Add Roles
          *
          */
-        if (Role::where('name', '=', 'Administrator')->first() === null) {
+
+        if (Role::where('name', '=', 'Super Admin')->first() === null) {
+            Role::create([
+               'name'        => 'Super Admin',
+               'slug'        => 'superadmin',
+               'description' => 'Super Admin Role',
+               'level'       => 5,
+           ]);
+       }
+
+        if (Role::where('name', '=', 'Admin')->first() === null) {
              Role::create([
-                'name'        => 'Administrator',
-                'slug'        => 'administrator',
+                'name'        => 'Admin',
+                'slug'        => 'Admin',
                 'description' => 'Admin Role',
-                'level'       => 5,
+                'level'       => 1,
             ]);
         }
 
@@ -34,14 +44,6 @@ class RolesTableSeeder extends Seeder
                 'level'       => 1,
             ]);
         }
-
-        if (Role::where('name', '=', 'Unverified')->first() === null) {
-            Role::create([
-                'name'        => 'Unverified',
-                'slug'        => 'unverified',
-                'description' => 'Unverified Role',
-                'level'       => 0,
-            ]);
-        }
+        
     }
 }

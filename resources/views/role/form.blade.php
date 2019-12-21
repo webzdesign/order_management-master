@@ -26,7 +26,7 @@
 </style>
 <div class="right_col" role="main">
 	<div class="title_left">
-		<a href="{{url('admin/role')}}"><button class="btn btn-primary" >Back</button></a>
+		<a href="{{url('role')}}"><button class="btn btn-primary" >Back</button></a>
 	</div>
 	<div class="clearfix"></div>
 
@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
                 required: true,
                 remote:{
                     type:'POST',
-                    url:"{{url('admin/checkRoleName')}}",
+                    url:"{{url('checkRoleName')}}",
                     data:{
                         name:function(){
                             return $("#name").val();

@@ -84,6 +84,20 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">
+                    Select Role
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select class="select2_single form-control" name="role" id="role">
+                        <option value="">Select</option>
+                        @foreach($role_details as $key=>$value)
+                          <option value="{{$value->id}}">{{$value->name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </div>
+
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -134,6 +148,9 @@
           status:{
             required:true,
           },
+          role:{
+            required:true,
+          },
         },
         messages:
         {
@@ -155,6 +172,9 @@
             },
             status:{
               required:"Status Is Required",
+            },
+            role:{
+              required:"Role Is Required",
             },
         },
         errorPlacement: function(error, element){
