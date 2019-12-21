@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use jeremykenedy\LaravelRoles\Models\Role;
 use Illuminate\Http\Request;
-use Helper, DataTables;
+use Helper, DataTables, DB;
+
 
 class RoleController extends Controller
 {
@@ -32,6 +33,9 @@ class RoleController extends Controller
 
                 if ($role->id == 1) {
                     $action =  "<a class='btn btn-success btn-xs'>Super Admin
+                                </a>";
+                } else if ($role->id == 2) {
+                    $action =  "<a class='btn btn-success btn-xs'>Admin
                                 </a>";
                 } else {
                     if (auth()->user()->hasPermission('edit.roles')) {
@@ -60,26 +64,74 @@ class RoleController extends Controller
     
     public function store(Request $request)
     {
+        $role = Role::create(
+            [
+                'name' => ucwords($request->name),
+                'slug' => str_slug($request->name),
+                'description' => $request->description,
+                'level' => 1
+            ]
+        );
+
+        $role->attachPermission($request->permission);
+
+        Helper::successMsg('insert', $this->moduleName);
+        return redirect($this->route);
+    }
+
+    public function show($id)
+    {
         //
     }
 
-    public function show(Role $role)
+    public function edit($id)
+    {
+        $moduleName = $this->moduleName;
+        $role = Role::find(decrypt($id));
+        $permissions = Permission::get()->groupBy('model');
+        $existPermission = DB::table('permission_role')
+            ->where('role_id', decrypt($id))->pluck('permission_id')->toArray();
+
+                
+        return view($this->view.'/_form', compact('role', 'moduleName', 'permissions', 'existPermission'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+        Role::find($id)->update(
+            [
+                'name' => ucwords($request->name),
+                'slug' => str_slug($request->name),
+                'description' => $request->description,
+                'level' => 1
+            ]
+        );
+
+        $role = Role::findOrFail($id);
+        $role->syncPermissions($request->permission);
+
+        Helper::successMsg('update', $this->moduleName);
+        return redirect($this->route);   
+    }
+    
+    public function destroy($id)
     {
         //
     }
 
-    public function edit(Role $role)
+    public function checkRoleName(Request $request)
     {
-        //
-    }
-    
-    public function update(Request $request, Role $role)
-    {
-        //
-    }
-    
-    public function destroy(Role $role)
-    {
-        //
+        if (!isset($request->id)) {
+            $checkRole = Role::where('name', trim($request->name))->count();
+        } else {
+            $checkRole = Role::where('name', trim($request->name))
+            ->where('id', '!=', $request->id)->count();
+        }
+
+        if ($checkRole > 0) {
+            echo json_encode(false);
+        } else {
+            echo json_encode(true);
+        }
     }
 }

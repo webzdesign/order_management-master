@@ -7,9 +7,9 @@ class SettingTableSeeder extends Seeder
 {
     public function run()
     {
-        if (Setting::where('name', '=', 'Saral Pressure cooker')->first() === null) {
+        if (Setting::where('name', '=', 'Order Management System')->first() === null) {
             $setting = Setting::create([
-                'name'              => 'Saral Pressure cooker',
+                'name'              => 'Order Management System',
                 'logo'             => 'logo.png',
                 'favicon'          => 'favicon.jpg'
             ]);

@@ -45,6 +45,7 @@
                           <th>Name</th>
                           <th>Email</th>
                           <th>Status</th>
+                          <th>User Role</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -73,6 +74,7 @@
             { data: 'name'},
             { data: 'email'},
             { data: 'status'},
+            { data: 'user.role', name:'roles.name'},
             { data: 'action',orderable: false, searchable: false},
           ],
       });

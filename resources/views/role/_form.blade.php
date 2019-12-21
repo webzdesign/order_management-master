@@ -1,12 +1,32 @@
-@extends('admin.resLayouts.master')
+@extends('layouts.master')
 @section('title')
 {{ $moduleName.' - '.Helper::setting()->name }}
 @endsection
 @section('content')
 <!-- page content -->
+<style>
+    .permissionHeader{
+        color:black;
+        border-style: outset;
+        font-weight: bold;
+        background-color:#bbe7ff;
+    }
+    .selectalltitle{
+        color:#3e1ad0;
+        margin-right:10px;
+    }
+    .deselectalltitle{
+        color:#e8182b;
+        margin-right:10px;
+    }
+    .permissionOption{
+        color: black;
+        font-size: 13px;
+    }
+</style>
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{url('admin/role')}}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{url('role')}}"><button class="btn btn-primary" >Back</button></a>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -51,10 +71,10 @@
                                     <div class="row">
                                 @endif
                                     <div class="col-lg-4 permission-listing">
-                                        <div class="permission-card-header">{{ $k }} <a class="pull-right permission-card-title selectDeselect" value="deselect">Deselect All</a> <a class="pull-right permission-card-title selectDeselect" value="select">Select All</a></div>
+                                        <div class="permissionHeader">{{ $k }} <a class="pull-right selectDeselect deselectalltitle" value="deselect">Deselect All</a> <a class="pull-right selectDeselect selectalltitle" value="select">Select All</a></div>
                                         @foreach($permission as $key=>$val)
                                         <div class="checkbox">
-                                            <label class="permission-option"><input type="checkbox" class="permission-options permission" name="permission[]" @if(in_array($val->id,$existPermission)) checked @endif value="{{ $val->id }}"> {{ $val->name }} </label>
+                                            <label class="permissionOption"><input type="checkbox" class="permission-options permission" name="permission[]" @if(in_array($val->id,$existPermission)) checked @endif value="{{ $val->id }}"> {{ $val->name }} </label>
                                         </div>
                                         @endforeach
                                     </div>
@@ -70,7 +90,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <a href=" {{ url('admin/role') }}" class="btn btn-primary">Cancel</a>
+                                <a href=" {{ url('role') }}" class="btn btn-primary">Cancel</a>
                                 <button type="submit" id="submitButton" class="btn btn-success focusClass">Submit</button>
                             </div>
                         </div>
@@ -102,7 +122,7 @@ jQuery(document).ready(function() {
                 required: true,
                 remote:{
                     type:'POST',
-                    url:"{{url('admin/checkRoleName')}}",
+                    url:"{{url('checkRoleName')}}",
                     data:{
                         name:function(){
                             return $("#name").val();

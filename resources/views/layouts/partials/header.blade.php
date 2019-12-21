@@ -17,6 +17,11 @@
 <link href="{{asset('public/assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('public/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
+<!-- PNotify -->
+<link href="{{asset('public/assets/vendors/pnotify/dist/pnotify.css')}}" rel="stylesheet">
+<link href="{{asset('public/assets/vendors/pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet">
+<link href="{{asset('public/assets/vendors/pnotify/dist/pnotify.nonblock.css')}}" rel="stylesheet">
+
 <!-- Custom Theme Style -->
 <link href="{{asset('public/assets/build/css/custom.min.css')}}" rel="stylesheet">
 
