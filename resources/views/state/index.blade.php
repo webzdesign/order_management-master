@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{$moduleName}}
+{{$moduleName}} - {{ Helper::setting()->name }}
 @endsection
 @section('content')
 <div class="right_col" role="main">
@@ -12,19 +12,10 @@
     <div class="clearfix"></div>
 
     <div class="row">
-        @if (Session::has('message'))
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">
-                <i class="ace-icon fa fa-times"></i>
-            </button>
-            {!! session('message') !!}
-        </div>
-        @endif
-
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{$moduleName }}</h2>
+                    <h2>{{$moduleName }} Details</h2>
                     <div><a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
                     <div class="clearfix"></div>
                 </div>
@@ -38,6 +29,8 @@
                                         <tr>
                                             <th>SrNo</th>
                                             <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Added By</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -64,6 +57,8 @@ $(document).ready(function() {
         columns: [
           { data: 'DT_RowIndex',searchable: false,orderable: false},
           { data: 'name'},
+          { data: 'status'},
+          { data: 'user.name'},
           { data: 'action',orderable: false, searchable: false},
         ],
     });

@@ -22,13 +22,14 @@ class StateController extends Controller
 
     public function getStateData()
     {
-        return DataTables::eloquent(State::query())
+        $state = State::with('user')->select('states.*');
+        return DataTables::eloquent($state)
         ->addColumn('action', function ($state) {
 
-            $editUrl = route('city.edit', encrypt($state->id));
             $action = '';
             if (auth()->user()->hasPermission('edit.states')) {
-                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i>Edit</a>";
+                $editUrl = route('state.edit', encrypt($state->id));
+                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
             }
 
             if (auth()->user()->hasPermission('activeinactive.states')) {
@@ -43,6 +44,14 @@ class StateController extends Controller
 
             return $action;
         })
+        ->editColumn('status', function ($state) {
+            if ($state->status == 1) {
+                return "<span class='label label-success' style='font-size: 12px;'>Activate</span>";
+            } else {
+                return "<span class='label label-danger' style='font-size: 12px;'>Deactivate</span>";
+            }
+        })
+        ->rawColumns(['action', 'status'])
         ->addIndexColumn()
         ->make(true);
     }
@@ -58,7 +67,7 @@ class StateController extends Controller
 
     public function store(Request $request)
     {
-        State::create(['name'=> ucwords($request->name), 'added_by' => auth()->user()->id]);
+        State::create(['name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
 
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -74,7 +83,7 @@ class StateController extends Controller
 
     public function update(Request $request, $id)
     {
-        State::find($id)->update(['name' => ucwords($request->name), 'updated_by' => auth()->user()->id]);
+        State::find($id)->update(['name' => ucwords($request->name), 'status' => $request->status, 'updated_by' => auth()->user()->id]);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);

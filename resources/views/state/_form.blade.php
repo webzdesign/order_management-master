@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{$moduleName}}
+{{$moduleName}} - {{ Helper::setting()->name }}
 @endsection
 @section('content')
 <!-- page content -->
@@ -18,7 +18,6 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<br />
 					<form id="frm" method="post"  action ="{{route('state.update', $state->id)}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
 						@method('PUT')
 						<input type="hidden" id="id" name="id" value="{{ $state->id }}" />
@@ -31,7 +30,24 @@
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter State Name" value="{{ $state->name }}">
 							</div>
-						</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
+                                Status<span class="requride_cls">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="radio">
+                                <label style="margin-right:4%;">
+                                    <input type="radio" class="status" {{ ($state->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">Active
+                                </label>
+                                <label style="margin-right:4%;">
+                                    <input type="radio" class="status" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="2">Deactive
+                                </label>
+                            </div>
+                            </div>
+                            <label id="status-error" class="error requride_cls" for="status"></label>
+                        </div>
 
 						<div class="ln_solid"></div>
 						<div class="form-group">
@@ -69,10 +85,12 @@ $(document).ready(function(){
                     },
                 },
             },
+            status:{ required:true, },
         },
         messages:
         {
             name:{ required:"State Name Is Required", remote: "State Name Already Exits", },
+            status:{ required:"Status Is Required.", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));
