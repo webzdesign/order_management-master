@@ -11,8 +11,8 @@ use DataTables;
 class PartyController extends Controller
 {
     public $route = 'party';
-    public $view = 'city';
-    public $moduleName = 'City';
+    public $view = 'party';
+    public $moduleName = 'Party';
 
     public function index()
     {
