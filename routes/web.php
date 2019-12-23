@@ -39,11 +39,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dealeractivedeactive/{type}/{id}','DealerController@dealeractivedeactive');
     Route::resource('dealer', 'DealerController');
 
-    Route::get('getCategoryData','CategoryController@getCategoryData');
-    Route::get('categoryactivedeactive/{type}/{id}','CategoryController@categoryactivedeactive');
-    Route::post('checkCategoryName','CategoryController@checkCategoryName');
-    Route::resource('category', 'CategoryController');
-
     Route::get('getProductData','ProductController@getProductData');
     Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive');
     Route::resource('product', 'ProductController');
@@ -93,5 +88,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('getStateCity', 'PartyController@getStateCity')->middleware('permission:view.parties');
     Route::post('checkPartyMobile','PartyController@checkPartyMobile')->middleware('permission:view.parties');
     Route::get('partyActiveInactive/{type}/{id}','PartyController@partyActiveInactive')->middleware('permission:activeinactive.parties');
+
+    /* Route For Category */
+    Route::get('category','CategoryController@index')->name('category.index')->middleware('permission:view.category');
+    Route::get('category/create','CategoryController@create')->name('category.create')->middleware('permission:create.category');
+    Route::post('category','CategoryController@store')->name('category.store')->middleware('permission:create.category');
+    Route::get('category/{category}/edit','CategoryController@edit')->name('category.edit')->middleware('permission:edit.category');
+    Route::put('category/{category}','CategoryController@update')->name('category.update')->middleware('permission:edit.category');
+    Route::get('getCategoryData', 'CategoryController@getCategoryData')->middleware('permission:view.category');
+    Route::post('checkCategoryName','CategoryController@checkCategoryName')->middleware('permission:view.category');
+    Route::get('categoryactivedeactive/{type}/{id}','CategoryController@categoryactivedeactive')->middleware('permission:activeinactive.category');
+
 
 });
