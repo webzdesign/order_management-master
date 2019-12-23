@@ -90,7 +90,36 @@
                   </div>
                 </div>
 
-                <div class="ln_solid"></div>
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
+
+                <div class="form-group">
+                    <label for="name">Permissions :</label>
+
+                    <div class="col-lg-12 permission-card">
+                    @php $cnt = 1; @endphp
+                    @foreach($permissions as $k=>$permission)
+                        @if($cnt%3 == 1)
+                            <div class="row">
+                        @endif
+                            <div class="col-lg-4 permission-listing">
+                                <div class="permissionHeader">{{ $k }} <a class="pull-right selectDeselect deselectalltitle" value="deselect">Deselect All</a> <a class="pull-right selectDeselect selectalltitle" value="select">Select All</a></div>
+                                @foreach($permission as $key=>$val)
+                                <div class="checkbox">
+                                    <label class="permissionOption"><input type="checkbox" class="permission-options permission" name="permission[]" @if(in_array($val->id,$existPermission)) checked @endif value="{{ $val->id }}"> {{ $val->name }} </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        @if($cnt%3 == 0)
+                            </div>
+                            <hr class="form-part">
+                        @endif
+                        @php $cnt++; @endphp
+                    @endforeach
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
+
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                       <a href="{{route('user.index')}}" class="btn btn-primary">Cancel</a>
@@ -110,6 +139,17 @@
   @section('script')
   <script>
     $(document).ready(function(){
+
+      $('body').on('click','.selectDeselect',function(e){
+        var selectVal = $(this).attr('value');
+        console.log(selectVal);
+        if(selectVal == 'select'){
+            $(this).closest('.permission-listing').find(".permission").prop("checked", true);
+        }else{
+            $(this).closest('.permission-listing').find(".permission").prop("checked", false);
+        }
+    });
+    
       $('#frm').validate({
         rules:{
           name:{

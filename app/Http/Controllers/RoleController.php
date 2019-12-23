@@ -19,7 +19,8 @@ class RoleController extends Controller
     {
         $route = $this->route;
         $moduleName = $this->moduleName;
-        return view($this->view.'/index', compact('route', 'moduleName'));
+        $roles = Role::find(1);
+        return view($this->view.'/index', compact('route', 'moduleName', 'roles'));
     }
 
     public function getRoleData()
@@ -44,7 +45,6 @@ class RoleController extends Controller
                                     <i class='fa fa-pencil'></i> Edit</a>";
                     }
                 }
-
                 return $action;
             }
         )

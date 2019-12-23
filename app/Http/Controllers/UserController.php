@@ -7,7 +7,7 @@ use jeremykenedy\LaravelRoles\Models\Permission;
 use jeremykenedy\LaravelRoles\Models\Role;
 use App\User;
 use Helper;
-use DataTables;
+use DataTables, DB;
 
 class UserController extends Controller
 {
@@ -28,16 +28,21 @@ class UserController extends Controller
         $users = User::with('roles')->select('users.*');
         return DataTables::eloquent($users)
             ->addColumn('action', function ($user) {
-                if($user->name != 'Admin'){
+                $action = "";
+                if($user->name != 'Admin' && $user->name !='Super Admin'){
                     $editUrl = route('user.edit', encrypt($user->id));
-                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                    if (auth()->user()->hasPermission('edit.users')) {
+                        $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                    }
 
-                    if ($user->status == '0') {
-                        $activeUrl = url('useractivedeactive/active/'.$user->id);
-                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
-                    } else {
-                        $deactiveUrl = url('useractivedeactive/deactive/'.$user->id);
-                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                    if (auth()->user()->hasPermission('activeinactive.users')) {
+                        if ($user->status == '0') {
+                            $activeUrl = url('useractivedeactive/active/'.$user->id);
+                            $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                        } else {
+                            $deactiveUrl = url('useractivedeactive/deactive/'.$user->id);
+                            $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                        }
                     }
                     return $action;
                 }
@@ -76,8 +81,8 @@ class UserController extends Controller
     {
         $role_details = Role::whereNotIn('id', [1,2])->get();
         $moduleName = $this->moduleName;
-
-        return view($this->view.'/form', compact('moduleName', 'role_details'));
+        $permissions = Permission::get()->groupBy('model');
+        return view($this->view.'/form', compact('moduleName', 'role_details', 'permissions'));
     }
 
 
@@ -92,6 +97,7 @@ class UserController extends Controller
         $user->status       = $request->status; 
         $user->save();
         $user->attachRole($roles);
+        $user->attachPermission($request->permission);
              
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -109,8 +115,11 @@ class UserController extends Controller
         $user = User::with('roles')->where('id',decrypt($id))->select('users.*')->first();
         $role_details = Role::whereNotIn('id', [1,2])->get();
         $moduleName = $this->moduleName;
-
-        return view($this->view.'/_form', compact('user', 'moduleName', 'role_details'));
+        $permissions = Permission::get()->groupBy('model');
+        $existPermission = DB::table('permission_user')
+            ->where('user_id', decrypt($id))->pluck('permission_id')->toArray();
+        
+        return view($this->view.'/_form', compact('user', 'moduleName', 'role_details', 'permissions', 'existPermission'));
     }
 
 
@@ -124,9 +133,8 @@ class UserController extends Controller
         $user->password     = bcrypt($request->password); 
         $user->status       = $request->status; 
         $user->save();
-        $user->roles()->detach();
-        $user->attachRole($roles);
-        
+        $user->syncPermissions($roles);
+        $user->syncPermissions($request->permission);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);
