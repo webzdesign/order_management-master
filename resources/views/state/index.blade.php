@@ -17,8 +17,8 @@
                 <div class="x_title">
                     <h2>{{$moduleName }} Details</h2>
                     <div>
-                        @permission('create.category')
-                        <a href="{{ route('category.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
+                        @permission('create.states')
+                        <a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
                         @endpermission
                     </div>
                     <div class="clearfix"></div>
@@ -69,7 +69,7 @@ $(document).ready(function() {
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{url('getCategoryData') }}",
+        ajax: "{{url('getStateData') }}",
         columns: [
           { data: 'DT_RowIndex',searchable: false,orderable: false},
           { data: 'name'},

@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\State;
-use App\Models\City;
 use Helper;
 use DataTables;
 
-class CityController extends Controller
+class StateController extends Controller
 {
-    public $route = 'city';
-    public $view = 'city';
-    public $moduleName = 'City';
+    public $route = 'state';
+    public $view = 'state';
+    public $moduleName = 'State';
 
     public function index()
     {
@@ -21,32 +20,32 @@ class CityController extends Controller
         return view($this->view.'/index', compact('moduleName'));
     }
 
-    public function getCityData()
+    public function getStateData()
     {
-        $city = City::with(['state', 'user'])->select('cities.*');
-        return DataTables::eloquent($city)
-        ->addColumn('action', function ($city) {
+        $state = State::with('user')->select('states.*');
+        return DataTables::eloquent($state)
+        ->addColumn('action', function ($state) {
 
             $action = '';
-            if (auth()->user()->hasPermission('edit.cities')) {
-                $editUrl = route('city.edit', encrypt($city->id));
+            if (auth()->user()->hasPermission('edit.states')) {
+                $editUrl = route('state.edit', encrypt($state->id));
                 $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
             }
 
-            if (auth()->user()->hasPermission('activeinactive.cities')) {
-                if ($city->status == '0') {
-                    $activeUrl = url('cityActiveInactive/active/'.$city->id);
+            if (auth()->user()->hasPermission('activeinactive.states')) {
+                if ($state->status == '0') {
+                    $activeUrl = url('stateActiveInactive/active/'.$state->id);
                     $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
                 } else {
-                    $deactiveUrl = url('cityActiveInactive/deactive/'.$city->id);
+                    $deactiveUrl = url('stateActiveInactive/deactive/'.$state->id);
                     $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
                 }
             }
 
             return $action;
         })
-        ->editColumn('status', function ($city) {
-            if ($city->status == 1) {
+        ->editColumn('status', function ($state) {
+            if ($state->status == 1) {
                 return "<span class='label label-success' style='font-size: 12px;'>Activate</span>";
             } else {
                 return "<span class='label label-danger' style='font-size: 12px;'>Deactivate</span>";
@@ -61,15 +60,14 @@ class CityController extends Controller
     public function create()
     {
         $moduleName = $this->moduleName;
-        $states = State::select('id', 'name')->active()->get();
 
-        return view($this->view.'/form', compact('moduleName', 'states'));
+        return view($this->view.'/form', compact('moduleName'));
     }
 
 
     public function store(Request $request)
     {
-        City::create(['state_id' => $request->state_id, 'name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
+        State::create(['name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
 
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -78,41 +76,40 @@ class CityController extends Controller
     public function edit($id)
     {
         $moduleName = $this->moduleName;
-        $city = City::find(decrypt($id));
-        $states = State::select('id', 'name')->active()->get();
+        $state = State::find(decrypt($id));
 
-        return view($this->view.'/_form', compact('city', 'moduleName', 'states'));
+        return view($this->view.'/_form', compact('state', 'moduleName'));
     }
 
     public function update(Request $request, $id)
     {
-        City::find($id)->update(['state_id' => $request->state_id, 'name' => ucwords($request->name), 'status' => $request->status, 'updated_by' => auth()->user()->id]);
+        State::find($id)->update(['name' => ucwords($request->name), 'status' => $request->status, 'updated_by' => auth()->user()->id]);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);
     }
 
-    public function checkCityName(Request $request)
+    public function checkStateName(Request $request)
     {
         if (!isset($request->id)) {
-            $checkCity = City::where('name', $request->name)->count();
+            $checkState = State::where('name', $request->name)->count();
         } else {
-            $checkCity = City::where('name', $request->name)->where('id', '!=', $request->id)->count();
+            $checkState = State::where('name', $request->name)->where('id', '!=', $request->id)->count();
         }
-        if ($checkCity > 0) {
+        if ($checkState > 0) {
             echo json_encode(false);
         } else {
             echo json_encode(true);
         }
     }
 
-    public function cityActiveInactive($type, $id)
+    public function stateActiveInactive($type, $id)
     {
         if ($type == 'active') {
-            City::where('id', $id)->update(['status' => 1]);
+            State::where('id', $id)->update(['status' => 1]);
             Helper::activeDeactiveMsg('active', $this->moduleName);
         } else {
-            City::where('id', $id)->update(['status' => 0]);
+            State::where('id', $id)->update(['status' => 0]);
             Helper::activeDeactiveMsg('inactive', $this->moduleName);
         }
         return redirect($this->route);

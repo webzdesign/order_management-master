@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{ url('city') }}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{ url('state') }}"><button class="btn btn-primary" >Back</button></a>
     </div>
     <div class="clearfix"></div>
 
@@ -19,29 +19,15 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form id="frm" method="post"  action ="{{route('city.store')}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
+                <form id="frm" method="post"  action ="{{route('state.store')}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="state_id">
-                            State Name <span class="requride_cls">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="select2_single form-control" name="state_id" id="state_id">
-                                <option value=""></option>
-                                @foreach($states as $key => $val)
-                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                            City Name<span class="requride_cls">*</span>
+                            State Name<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="Enter City Name">
+                        <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12" placeholder="Enter State Name">
                         </div>
                     </div>
 
@@ -65,7 +51,7 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('city') }}" class="btn btn-primary">Cancel</a>
+                            <a href=" {{ url('state') }}" class="btn btn-primary">Cancel</a>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                     </div>
@@ -83,12 +69,11 @@
 $(document).ready(function(){
     $('#frm').validate({
         rules:{
-            state_id:{ required:true, },
             name:{
                 required:true,
                 remote:{
                     type:'POST',
-                    url:"{{ url('checkCityName') }}",
+                    url:"{{ url('checkStateName') }}",
                     data:{
                         name:function(){
                             return $("#name").val();
@@ -100,8 +85,7 @@ $(document).ready(function(){
         },
         messages:
         {
-            state_id:{ required:"State Is Required.", },
-            name:{ required:"City Name Is Required.", remote: "City Name Already Exits.", },
+            name:{ required:"State Name Is Required", remote: "State Name Already Exits", },
             status:{ required:"Status Is Required.", },
         },
         errorPlacement: function(error, element) {

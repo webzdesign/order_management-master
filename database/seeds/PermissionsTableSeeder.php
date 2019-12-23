@@ -51,6 +51,24 @@ class PermissionsTableSeeder extends Seeder
 
         /* permission for user module end */
 
+        /* permission for States module start */
+        if (Permission::where('name', '=', 'Can View States')->first() === null) {
+            Permission::create(['name' => 'Can View States', 'slug' => 'view.states', 'description' => 'Can view States', 'model' => 'States',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Create States')->first() === null) {
+            Permission::create(['name' => 'Can Create States', 'slug' => 'create.states', 'description' => 'Can create new States', 'model' => 'States',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Edit States')->first() === null) {
+            Permission::create(['name' => 'Can Edit States', 'slug' => 'edit.states', 'description' => 'Can edit States', 'model' => 'States',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Active/DeActiate States')->first() === null) {
+            Permission::create(['name' => 'Can Active/DeActiate States', 'slug' => 'activeinactive.states', 'description' => 'Can activate/deactivate States', 'model' => 'States',]);
+        }
+        /* permission for States module end */
+
         /* permission for City module start */
         if (Permission::where('name', '=', 'Can View City')->first() === null) {
             Permission::create(['name' => 'Can View City', 'slug' => 'view.cities', 'description' => 'Can view city', 'model' => 'City',]);
@@ -63,28 +81,42 @@ class PermissionsTableSeeder extends Seeder
         if (Permission::where('name', '=', 'Can Edit City')->first() === null) {
             Permission::create(['name' => 'Can Edit City', 'slug' => 'edit.cities', 'description' => 'Can edit city', 'model' => 'City',]);
         }
-
-        if (Permission::where('name', '=', 'Can Delete City')->first() === null) {
-            Permission::create(['name' => 'Can Delete City', 'slug' => 'delete.cities', 'description' => 'Can delete city', 'model' => 'City',]);
+        if (Permission::where('name', '=', 'Can Active/DeActiate City')->first() === null) {
+            Permission::create(['name' => 'Can Active/DeActiate City', 'slug' => 'activeinactive.cities', 'description' => 'Can activate/deactivate City', 'model' => 'City',]);
         }
 
         /* permission for City module end */
 
-        /* permission for Category module start */
+        /* permission for Party module start */
+        if (Permission::where('name', '=', 'Can View Party')->first() === null) {
+            Permission::create(['name' => 'Can View Party', 'slug' => 'view.parties', 'description' => 'Can view Party', 'model' => 'Party',]);
+        }
+        if (Permission::where('name', '=', 'Can Create Party')->first() === null) {
+            Permission::create(['name' => 'Can Create Party', 'slug' => 'create.parties', 'description' => 'Can create new Party', 'model' => 'Party',]);
+        }
+        if (Permission::where('name', '=', 'Can Edit Party')->first() === null) {
+            Permission::create(['name' => 'Can Edit Party', 'slug' => 'edit.parties', 'description' => 'Can edit Party', 'model' => 'Party',]);
+        }
+        if (Permission::where('name', '=', 'Can Active/DeActiate Party')->first() === null) {
+            Permission::create(['name' => 'Can Active/DeActiate Party', 'slug' => 'activeinactive.parties', 'description' => 'Can activate/deactivate Party', 'model' => 'Party',]);
+        }
+        /* permission for Party module end */
+
+        /* permission for category module start */
         if (Permission::where('name', '=', 'Can View Category')->first() === null) {
-            Permission::create(['name' => 'Can View Category', 'slug' => 'view.categories', 'description' => 'Can view categories', 'model' => 'Category',]);
+            Permission::create(['name' => 'Can View Category', 'slug' => 'view.category', 'description' => 'Can view Category', 'model' => 'Category',]);
         }
 
         if (Permission::where('name', '=', 'Can Create Category')->first() === null) {
-            Permission::create(['name' => 'Can Create Category', 'slug' => 'create.categories', 'description' => 'Can create new categories', 'model' => 'Category',]);
+            Permission::create(['name' => 'Can Create Category', 'slug' => 'create.category', 'description' => 'Can create new Category', 'model' => 'Category',]);
         }
 
         if (Permission::where('name', '=', 'Can Edit Category')->first() === null) {
-            Permission::create(['name' => 'Can Edit Category', 'slug' => 'edit.categories', 'description' => 'Can edit categories', 'model' => 'Category',]);
+            Permission::create(['name' => 'Can Edit Category', 'slug' => 'edit.category', 'description' => 'Can edit Category', 'model' => 'Category',]);
         }
 
         if (Permission::where('name', '=', 'Can Active/DeActiate Category')->first() === null) {
-            Permission::create(['name' => 'Can Active/DeActiate Category', 'slug' => 'activeinactive.categories', 'description' => 'Can activate/deactivate categories', 'model' => 'Category',]);
+            Permission::create(['name' => 'Can Active/DeActiate Category', 'slug' => 'activeinactive.category', 'description' => 'Can activate/deactivate Category', 'model' => 'Category',]);
         }
         /* permission for Category module end */
 

@@ -18,7 +18,7 @@ class CreateStatesTable extends Migration
             $table->string('name');
             $table->integer('added_by')->unsigned()->index();
             $table->foreign('added_by')->references('id')->on('users');
-            $table->integer('updated_by')->unsigned()->index();
+            $table->integer('updated_by')->nullable()->unsigned()->index();
             $table->foreign('updated_by')->references('id')->on('users');
             $table->boolean('status')->comment('1-activate, 0-deactivate');
             $table->timestamps();

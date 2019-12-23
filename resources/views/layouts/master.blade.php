@@ -13,7 +13,6 @@
     <style>
       .error {
         color:red;
-        font-size: 11px !important;
       }
       .permissionHeader{
         color:black;

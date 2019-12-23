@@ -25,15 +25,26 @@
                 </ul>
             </li>
         @endif
+
+        @if(auth()->user()->hasPermission('view.states') || auth()->user()->hasPermission('view.cities') || auth()->user()->hasPermission('view.parties') || auth()->user()->hasPermission('view.category'))
         <li><a><i class="fa fa-arrows"></i>Masters <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
+                @permission('view.states')
                 <li><a href="{{ url('state') }}"> State Master</a></li>
-                <li><a href="{{ url('state') }}"> City Master</a></li>
-                <li><a href="{{ url('dealer') }}"> Party Master</a></li>
+                @endpermission
+                @permission('view.cities')
+                <li><a href="{{ url('city') }}"> City Master</a></li>
+                @endpermission
+                @permission('view.parties')
+                <li><a href="{{ url('party') }}"> Party Master</a></li>
+                @endpermission
+                @permission('view.category')
                 <li><a href="{{ url('category') }}"> Category</a></li>
+                @endpermission
                 <li><a href="{{ url('product') }}"> Product</a></li>
             </ul>
         </li>
+        @endif
 
         <li><a href="{{url('order')}}"><i class="fa fa-shopping-cart"></i> Orders</a></li>
         <li><a href="#"><i class="fa fa-line-chart"></i> Stock Adjustment / Purchase</a></li>
