@@ -15,6 +15,24 @@
         color:red;
         font-size: 11px !important;
       }
+      .permissionHeader{
+        color:black;
+        border-style: outset;
+        font-weight: bold;
+        background-color:#bbe7ff;
+    }
+    .selectalltitle{
+        color:#3e1ad0;
+        margin-right:10px;
+    }
+    .deselectalltitle{
+        color:#e8182b;
+        margin-right:10px;
+    }
+    .permissionOption{
+        color: black;
+        font-size: 13px;
+    }
     </style>
   </head>
 

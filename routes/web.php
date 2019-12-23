@@ -28,10 +28,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('settings', 'SettingController');
 
-    Route::get('getUserData','UserController@getUserData');
-    Route::get('useractivedeactive/{type}/{id}','UserController@useractivedeactive');
-    Route::post('checkUserEmail','UserController@checkUserEmail');
-    Route::resource('user', 'UserController');
 
     Route::get('getCityData','CityController@getCityData');
     Route::post('checkCityName','CityController@checkCityName');
@@ -64,4 +60,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('role/{role}','RoleController@update')->name('role.update')->middleware('permission:edit.roles');
     Route::get('getRoleData', 'RoleController@getRoleData')->middleware('permission:view.roles');
     Route::post('checkRoleName','RoleController@checkRoleName')->middleware('permission:view.roles');
+
+    /** Route for User */
+    Route::get('user','UserController@index')->name('user.index')->middleware('permission:view.users');
+    Route::get('user/create','UserController@create')->name('user.create')->middleware('permission:create.users');
+    Route::post('user','UserController@store')->name('user.store')->middleware('permission:create.users');
+    Route::get('user/{user}/edit','UserController@edit')->name('user.edit')->middleware('permission:edit.users');
+    Route::put('user/{user}','UserController@update')->name('user.update')->middleware('permission:edit.users');
+    Route::get('getUserData','UserController@getUserData')->middleware('permission:view.users');
+    Route::get('useractivedeactive/{type}/{id}','UserController@useractivedeactive')->middleware('permission:view.users');
+    Route::post('checkUserEmail','UserController@checkUserEmail')->middleware('permission:view.users');
+
+    
 });
