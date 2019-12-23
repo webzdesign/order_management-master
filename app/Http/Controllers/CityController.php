@@ -3,33 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\State;
 use App\Models\City;
-use App\Models\Dealer;
 use Helper;
 use DataTables;
 
 class CityController extends Controller
 {
-    public $route='city';
-    public $view ='city';
+    public $route = 'city';
+    public $view = 'city';
     public $moduleName = 'City';
 
     public function index()
     {
-        $route = $this->route;
         $moduleName = $this->moduleName;
 
-        return view($this->view.'/index', compact('route', 'moduleName'));
+        return view($this->view.'/index', compact('moduleName'));
     }
 
     public function getCityData()
     {
-        return DataTables::eloquent(City::query())
+        $city = City::with(['state', 'user'])->select('cities.*');
+        return DataTables::eloquent($city)
         ->addColumn('action', function ($city) {
 
-            $editUrl = route('city.edit', encrypt($city->id));
-            return "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger  btn-xs confirm-delete' data-id='$city->id' ><i class='fa fa-trash'></i> Delete</a>";
+            $action = '';
+            if (auth()->user()->hasPermission('edit.cities')) {
+                $editUrl = route('city.edit', encrypt($city->id));
+                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+            }
+
+            if (auth()->user()->hasPermission('activeinactive.cities')) {
+                if ($city->status == '0') {
+                    $activeUrl = url('cityActiveInactive/active/'.$city->id);
+                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                } else {
+                    $deactiveUrl = url('cityActiveInactive/deactive/'.$city->id);
+                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                }
+            }
+
+            return $action;
         })
+        ->editColumn('status', function ($city) {
+            if ($city->status == 1) {
+                return "<span class='label label-success' style='font-size: 12px;'>Activate</span>";
+            } else {
+                return "<span class='label label-danger' style='font-size: 12px;'>Deactivate</span>";
+            }
+        })
+        ->rawColumns(['action', 'status'])
         ->addIndexColumn()
         ->make(true);
     }
@@ -38,14 +61,15 @@ class CityController extends Controller
     public function create()
     {
         $moduleName = $this->moduleName;
+        $states = State::select('id', 'name')->active()->get();
 
-        return view($this->view.'/form', compact('moduleName'));
+        return view($this->view.'/form', compact('moduleName', 'states'));
     }
 
 
     public function store(Request $request)
     {
-        City::create(['name'=> ucwords($request->name)]);
+        City::create(['state_id' => $request->state_id, 'name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
 
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -55,47 +79,42 @@ class CityController extends Controller
     {
         $moduleName = $this->moduleName;
         $city = City::find(decrypt($id));
+        $states = State::select('id', 'name')->active()->get();
 
-        return view($this->view.'/_form', compact('city', 'moduleName'));
+        return view($this->view.'/_form', compact('city', 'moduleName', 'states'));
     }
 
     public function update(Request $request, $id)
     {
-        City::find($id)->update(['name' => ucwords($request->name)]);
+        City::find($id)->update(['state_id' => $request->state_id, 'name' => ucwords($request->name), 'status' => $request->status, 'updated_by' => auth()->user()->id]);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);
     }
 
-    public function destroy($id)
-    {
-        $dealercount = Dealer::where('city_id', $id)->count();
-        if($dealercount > 0){
-            echo json_encode(false);
-        }
-        else{
-            if (City::findOrFail($id)->delete()) {
-                echo json_encode(true);
-            } else {
-                echo json_encode(false);
-            }
-        }
-    }
-
     public function checkCityName(Request $request)
     {
-        $name =$request->name;
-
-        if(!isset($request->id)){
-            $cnt=City::where('name',$name)->count();
+        if (!isset($request->id)) {
+            $checkCity = City::where('name', $request->name)->count();
         } else {
-            $cnt=City::where('name',$name)->where('id','!=',$request->id)->count();
+            $checkCity = City::where('name', $request->name)->where('id', '!=', $request->id)->count();
         }
-        if($cnt>0)
-        {
+        if ($checkCity > 0) {
             echo json_encode(false);
         } else {
             echo json_encode(true);
         }
+    }
+
+    public function cityActiveInactive($type, $id)
+    {
+        if ($type == 'active') {
+            City::where('id', $id)->update(['status' => 1]);
+            Helper::activeDeactiveMsg('active', $this->moduleName);
+        } else {
+            City::where('id', $id)->update(['status' => 0]);
+            Helper::activeDeactiveMsg('inactive', $this->moduleName);
+        }
+        return redirect($this->route);
     }
 }

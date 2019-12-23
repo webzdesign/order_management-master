@@ -42,7 +42,7 @@
                                     <input type="radio" class="status" {{ ($state->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">Active
                                 </label>
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="2">Deactive
+                                    <input type="radio" class="status" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">Deactive
                                 </label>
                             </div>
                             </div>

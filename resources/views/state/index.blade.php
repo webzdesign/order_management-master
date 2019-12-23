@@ -16,7 +16,11 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>{{$moduleName }} Details</h2>
-                    <div><a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
+                    <div>
+                        @permission('create.states')
+                        <a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
+                        @endpermission
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -30,7 +34,6 @@
                                             <th>SrNo</th>
                                             <th>Name</th>
                                             <th>Status</th>
-                                            <th>Added By</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,6 +53,18 @@
 <script>
 $(document).ready(function() {
 
+    @if (Session::has('message'))
+    new PNotify({
+        title: '{{ $moduleName }}',
+        text: '{!! session('message') !!}',
+        type: 'success',
+        styling: 'bootstrap3',
+        delay: 1500,
+        animation: 'fade',
+        animateSpeed: 'slow'
+    });
+    @endif
+
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
@@ -58,7 +73,6 @@ $(document).ready(function() {
           { data: 'DT_RowIndex',searchable: false,orderable: false},
           { data: 'name'},
           { data: 'status'},
-          { data: 'user.name'},
           { data: 'action',orderable: false, searchable: false},
         ],
     });

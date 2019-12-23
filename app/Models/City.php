@@ -3,11 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
 {
-    use SoftDeletes;
-    protected $fillable = ['name'];
-    protected $dates = ['deleted_at'];
+    protected $fillable = ['name', 'state_id', 'status', 'added_by', 'updated_by'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'added_by');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo('App\Models\State', 'state_id');
+    }
 }
