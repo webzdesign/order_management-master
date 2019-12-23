@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('order', 'OrderController');
 
     /* Route for Role */
-    Route::get('role','RoleController@index')->name('role.index');
+    Route::get('role','RoleController@index')->name('role.index')->middleware('VerifyModulePermission');
     Route::get('role/create','RoleController@create')->name('role.create');
     Route::post('role','RoleController@store')->name('role.store');
     Route::get('role/{role}/edit','RoleController@edit')->name('role.edit');
