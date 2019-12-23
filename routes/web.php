@@ -29,10 +29,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('settings', 'SettingController');
 
-    Route::get('getUserData','UserController@getUserData');
-    Route::get('useractivedeactive/{type}/{id}','UserController@useractivedeactive');
-    Route::post('checkUserEmail','UserController@checkUserEmail');
-    Route::resource('user', 'UserController');
 
 
     Route::get('getDealerData','DealerController@getDealerData');
@@ -58,6 +54,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('getRoleData', 'RoleController@getRoleData')->middleware('permission:view.roles');
     Route::post('checkRoleName','RoleController@checkRoleName')->middleware('permission:view.roles');
 
+    /** Route for User */
+    Route::get('user','UserController@index')->name('user.index')->middleware('permission:view.users');
+    Route::get('user/create','UserController@create')->name('user.create')->middleware('permission:create.users');
+    Route::post('user','UserController@store')->name('user.store')->middleware('permission:create.users');
+    Route::get('user/{user}/edit','UserController@edit')->name('user.edit')->middleware('permission:edit.users');
+    Route::put('user/{user}','UserController@update')->name('user.update')->middleware('permission:edit.users');
+    Route::get('getUserData','UserController@getUserData')->middleware('permission:view.users');
+    Route::get('useractivedeactive/{type}/{id}','UserController@useractivedeactive')->middleware('permission:view.users');
+    Route::post('checkUserEmail','UserController@checkUserEmail')->middleware('permission:view.users');
+
+    
     /* Route For State */
     Route::get('state','StateController@index')->name('state.index')->middleware('permission:view.states');
     Route::get('state/create','StateController@create')->name('state.create')->middleware('permission:create.states');

@@ -18,19 +18,13 @@
     <div class="clearfix"></div>
 
     <div class="row">
-      @if (Session::has('message'))
-      <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">
-              <i class="ace-icon fa fa-times"></i>
-          </button>
-              {!! session('message') !!}
-      </div>
-      @endif
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
             <h2>{{$moduleName }}</h2>
+            @permission('create.users')
               <div><a href="{{route('user.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
+            @endpermission
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -65,6 +59,19 @@
 @section('script')
 <script>
   $(document).ready(function() {
+
+    @if (Session::has('message'))
+    new PNotify({
+        title: '{{ $moduleName }}',
+        text: '{!! session('message') !!}',
+        type: 'success',
+        styling: 'bootstrap3',
+        delay: 1500,
+        animation: 'fade',
+        animateSpeed: 'slow'
+    });
+    @endif
+    
     datatable=$('.datatable').DataTable({
           processing: true,
           serverSide: true,

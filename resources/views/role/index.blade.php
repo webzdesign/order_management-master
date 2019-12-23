@@ -18,7 +18,7 @@
 				<div class="x_title">
                     <h2><i class="fa fa-bars"></i> {{$moduleName }} Details</h2>
                     @permission('create.roles')
-                    <div><a href="{{route('role.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
+                        <div><a href="{{route('role.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
                     @endpermission
 					<div class="clearfix"></div>
 				</div>
