@@ -20,6 +20,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function() {
 
     Route::get('home', 'HomeController@index')->name('home');
+    Route::get('unauthorized','HomeController@unauthorised')->name('unauthorized');
 
     Route::get('changepassword','ChangePasswordController@index');
     Route::post('checkOldPassword','ChangePasswordController@checkOldPassword');
@@ -56,11 +57,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('order', 'OrderController');
 
     /* Route for Role */
-    Route::get('role','RoleController@index')->name('role.index')->middleware('VerifyModulePermission');
-    Route::get('role/create','RoleController@create')->name('role.create');
-    Route::post('role','RoleController@store')->name('role.store');
-    Route::get('role/{role}/edit','RoleController@edit')->name('role.edit');
-    Route::put('role/{role}','RoleController@update')->name('role.update');
-    Route::get('getRoleData', 'RoleController@getRoleData');
-    Route::post('checkRoleName','RoleController@checkRoleName');
+    Route::get('role','RoleController@index')->name('role.index')->middleware('permission:view.roles');
+    Route::get('role/create','RoleController@create')->name('role.create')->middleware('permission:create.roles');
+    Route::post('role','RoleController@store')->name('role.store')->middleware('permission:create.roles');
+    Route::get('role/{role}/edit','RoleController@edit')->name('role.edit')->middleware('permission:edit.roles');
+    Route::put('role/{role}','RoleController@update')->name('role.update')->middleware('permission:edit.roles');
+    Route::get('getRoleData', 'RoleController@getRoleData')->middleware('permission:view.roles');
+    Route::post('checkRoleName','RoleController@checkRoleName')->middleware('permission:view.roles');
 });

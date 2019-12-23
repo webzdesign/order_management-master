@@ -31,4 +31,9 @@ class HomeController extends Controller
         $userCount = User::where('status',1)->count();
         return view('home', compact('moduleName', 'userCount'));
     }
+
+    public function unauthorised()
+    {
+        return view('unauthorized');
+    }
 }
