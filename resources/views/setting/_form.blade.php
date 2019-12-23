@@ -20,12 +20,11 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>{{$moduleName}}</h2>
+              <h2>Update {{$moduleName}} Details</h2>
 
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              <br />
               <form id="frm" method="post"  action ="{{route('settings.update', $setting->id )}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
                 @method('PUT')
                 <input type="hidden" name="id" id="id" value="{{ $setting->id }}" />
@@ -57,17 +56,60 @@
                         <input type="file" id="favicon" name="favicon" class="form-control">
                         <input type="hidden" name="old_favicon" id="old_favicon" value="{{ $setting->favicon }}">
 
-                          <a href="{{ url('/public/images/'.$setting->favicon) }}" target="_blank"><img src="{{ url('/public/images/'.$setting->favicon) }}" style="height:50px; width: 50px; margin-top: 10px;"></a>
+                        <a href="{{ url('/public/images/'.$setting->favicon) }}" target="_blank"><img src="{{ url('/public/images/'.$setting->favicon) }}" style="height:50px; width: 50px; margin-top: 10px;"></a>
 
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gst_type">
+                      GST Type <span class="requride_cls">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="radio">
+                            <label style="margin-right:20px;">
+                            <input type="radio" value="0" checked class="gst_type" name="gst_type">Inter State
+                            </label>
+                            <label>
+                            <input type="radio" value="0" class="gst_type" name="gst_type">Out Of State
+                            </label>
+                        </div>
+                        <label id="gst_type-error" class="error" for="gst_type"></label>
+                    </div>
+                </div>
+
+                <div class="form-group interstate">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cgst">
+                        CGST <span class="requride_cls">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" id="cgst" name="cgst" class="form-control amountonly" value="{{ $setting->cgst }}" placeholder="Enter CGST">
+                    </div>
+                </div>
+
+                <div class="form-group interstate">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sgst">
+                        SGST <span class="requride_cls">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" id="sgst" name="sgst" class="form-control amountonly" value="{{ $setting->sgst }}" placeholder="Enter SGST">
+                    </div>
+                </div>
+
+                <div class="form-group outofstate" style="display:none;">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="igst">
+                        IGST <span class="requride_cls">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" id="igst" name="igst" class="form-control amountonly" value="{{ $setting->igst }}" placeholder="Enter IGST">
+                    </div>
+                </div>
 
 
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                    <a href=" {{ url('admin/settings') }}" class="btn btn-primary">Cancel</a>
+                    <a href=" {{ url('settings') }}" class="btn btn-primary">Cancel</a>
                     <button type="submit" class="btn btn-success focusClass" id="submitbtn">Submit</button>
                   </div>
                 </div>
@@ -87,6 +129,16 @@
 
 
 jQuery(document).ready(function() {
+
+	$('body').on('click', '.gst_type', function(e){
+		if($('#gst_type').is(':checked')) {
+
+		} else {
+
+		}
+	});
+
+
     $('#frm').validate({
       ignore: [],
         rules:{

@@ -29,9 +29,6 @@ class HomeController extends Controller
     {
         $moduleName = 'Dashboard';
         $userCount = User::where('status',1)->count();
-        $dealerCount = Dealer::where('status',1)->count();
-        $productCount = Product::where('status',1)->count();
-        $orderCount = Order::count();
-        return view('home', compact('moduleName', 'userCount', 'dealerCount', 'productCount', 'orderCount'));
+        return view('home', compact('moduleName', 'userCount'));
     }
 }
