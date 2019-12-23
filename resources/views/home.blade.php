@@ -31,36 +31,6 @@
 										</div>
 									</div>
                                 </a>
-                                <a href="{{ url('dealer') }}">
-									<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										<div class="tile-stats">
-											<div class="icon"><i class="fa fa-users"></i></div>
-											<div class="count">{{ $dealerCount }}</div>
-											<p></p>
-											<h3 class="titleClass">Active Dealer</h3>
-										</div>
-									</div>
-                                </a>
-                                <a href="{{ url('product') }}">
-									<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										<div class="tile-stats">
-											<div class="icon"><i class="fa fa-th-large"></i></div>
-											<div class="count">{{ $productCount }}</div>
-											<p></p>
-											<h3 class="titleClass">Active Product</h3>
-										</div>
-									</div>
-                                </a>
-                                <a href="{{ url('order') }}">
-									<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										<div class="tile-stats">
-											<div class="icon"><i class="fa fa-shopping-cart"></i></div>
-											<div class="count">{{ $orderCount }}</div>
-											<p></p>
-											<h3 class="titleClass">Total Order</h3>
-										</div>
-									</div>
-								</a>
 							</div>
 						</div>
 					</div>
