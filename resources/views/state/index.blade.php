@@ -34,6 +34,7 @@
                                             <th>SrNo</th>
                                             <th>Name</th>
                                             <th>Status</th>
+                                            <th>Added By</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -73,6 +74,7 @@ $(document).ready(function() {
           { data: 'DT_RowIndex',searchable: false,orderable: false},
           { data: 'name'},
           { data: 'status'},
+          { data: 'user.name'},
           { data: 'action',orderable: false, searchable: false},
         ],
     });
