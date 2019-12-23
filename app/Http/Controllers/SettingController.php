@@ -52,7 +52,18 @@ class SettingController extends Controller
             $faviconName = $request->input('old_favicon');
         }
 
-        Setting::find($id)->update(['name' => ucwords($request->name), 'logo' => $logoName, 'favicon' => $faviconName]);
+        $gstType = $request->gst_type;
+        if ($gstType == 1) {
+            $cgst = 0;
+            $sgst = 0;
+            $igst = $request->igst;
+        } else {
+            $cgst = $request->cgst;
+            $sgst = $request->sgst;
+            $igst = 0;
+        }
+
+        Setting::find($id)->update(['name' => ucwords($request->name), 'logo' => $logoName, 'favicon' => $faviconName, 'gst_type' => $gstType, 'cgst' => $cgst, 'sgst' => $sgst, 'igst' => $igst]);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);

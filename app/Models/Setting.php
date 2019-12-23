@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $fillable = ['name','logo','favicon'];
+    protected $fillable = ['name', 'logo', 'favicon', 'gst_type', 'cgst', 'igst', 'sgst'];
 }

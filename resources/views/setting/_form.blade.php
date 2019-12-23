@@ -68,17 +68,17 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:20px;">
-                            <input type="radio" value="0" checked class="gst_type" name="gst_type">Inter State
+                            <input type="radio" value="0" {{ ($setting->gst_type == 0) ? 'checked' : '' }} class="gst_type" name="gst_type">Inter State
                             </label>
                             <label>
-                            <input type="radio" value="0" class="gst_type" name="gst_type">Out Of State
+                            <input type="radio" value="1" {{ ($setting->gst_type == 1) ? 'checked' : '' }} class="gst_type" name="gst_type">Out Of State
                             </label>
                         </div>
                         <label id="gst_type-error" class="error" for="gst_type"></label>
                     </div>
                 </div>
 
-                <div class="form-group interstate">
+                <div class="form-group interstate" style="display:{{ ($setting->gst_type == 0) ? 'block' : 'none' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cgst">
                         CGST <span class="requride_cls">*</span>
                     </label>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <div class="form-group interstate">
+                <div class="form-group interstate" style="display:{{ ($setting->gst_type == 0) ? 'block' : 'none' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sgst">
                         SGST <span class="requride_cls">*</span>
                     </label>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
 
-                <div class="form-group outofstate" style="display:none;">
+                <div class="form-group outofstate" style="display:{{ ($setting->gst_type == 1) ? 'block' : 'none' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="igst">
                         IGST <span class="requride_cls">*</span>
                     </label>
@@ -125,46 +125,45 @@
 @endsection
 @section('script')
 <script>
-
-
-
 jQuery(document).ready(function() {
 
 	$('body').on('click', '.gst_type', function(e){
-		if($('#gst_type').is(':checked')) {
-
+		var gstType = $(this).val();
+        if (gstType == 1) {
+            $('body').find('.outofstate').show();
+            $('body').find('.interstate').hide();
 		} else {
-
+            $('body').find('.outofstate').hide();
+            $('body').find('.interstate').show();
 		}
 	});
 
-
     $('#frm').validate({
-      ignore: [],
+        ignore: [],
         rules:{
-          name:{
-            required:true,
-          },
-          logo:{
-              extension: 'jpg|JPG|png|PNG|jpeg|JPEG'
-          },
-          favicon:{
-              extension: 'jpg|JPG|png|PNG|jpeg|JPEG'
-          }
+			name:{ required:true, },
+			logo:{ extension: 'jpg|JPG|png|PNG|jpeg|JPEG', },
+			favicon:{ extension: 'jpg|JPG|png|PNG|jpeg|JPEG' },
+            gst_type:{ required:true, },
+            cgst:{ required:true, },
+            sgst:{ required:true, },
+            igst:{ required:true, },
         },
         messages:
         {
-          name:{ required: "Enter Name", },
-          logo: { extension:"Only JPG / PNG / JPEG Format Allowed.", },
-          favicon: { extension:"Only JPG / PNG / JPEG Format Allowed.", },
-
+			name:{ required: "Name Is Required.", },
+			logo: { extension:"Only JPG / PNG / JPEG Format Allowed.", },
+			favicon: { extension:"Only JPG / PNG / JPEG Format Allowed.", },
+            gst_type: { required: "GST Type Is Required.", },
+            cgst: { required: "CGST Is Required.", },
+            sgst: { required: "SGST Is Required.", },
+            igst: { required: "IGST Is Required.", },
         },
         submitHandler: function(form) {
             $(':input[type="submit"]').prop('disabled', true);
             form.submit();
         }
     });
-
 });
 </script>
 @endsection
