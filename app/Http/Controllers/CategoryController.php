@@ -15,10 +15,8 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $route = $this->route;
         $moduleName = $this->moduleName;
-
-        return view($this->view.'/index', compact('route', 'moduleName'));
+        return view($this->view.'/index', compact('moduleName'));
     }
 
     public function getCategoryData()
@@ -65,7 +63,6 @@ class CategoryController extends Controller
         return redirect($this->route);
     }
 
-
     public function create()
     {
         $moduleName = $this->moduleName;
@@ -75,7 +72,12 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        Category::create(['name'=> ucwords($request->name), 'status'=>$request->status]);
+        if($request->hasFile('image')){
+            $imageName =  $request->file('image')->store('category');
+        } else {
+            $imageName = '';
+        }
+        Category::create(['name'=> ucwords($request->name), 'image' => $imageName,'status'=>$request->status, 'added_by' => auth()->user()->id]);
 
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -90,7 +92,19 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        Category::find($id)->update(['name' => ucwords($request->name), 'status'=>$request->status]);
+        if($request->hasFile('image'))
+        {
+            $oldfile_name = $request->input('old_filename');
+            $image = $request->file('image');
+            $imageName =  $request->file('image')->store('category');
+            if($oldfile_name != NULL){
+                unlink(storage_path('app/').$oldfile_name);
+            }
+        }else{
+            $imageName = $request->input('old_filename');
+        }
+
+        Category::find($id)->update(['name'=> ucwords($request->name), 'image' => $imageName,'status'=>$request->status, 'updated_by' => auth()->user()->id]);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);
