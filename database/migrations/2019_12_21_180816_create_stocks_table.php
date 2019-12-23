@@ -23,7 +23,7 @@ class CreateStocksTable extends Migration
             $table->boolean('type')->comment('0-in, 1-out');
             $table->integer('added_by')->unsigned()->index();
             $table->foreign('added_by')->references('id')->on('users');
-            $table->integer('updated_by')->unsigned()->index();
+            $table->integer('updated_by')->default(null)->unsigned()->index();
             $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();
         });

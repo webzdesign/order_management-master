@@ -33,9 +33,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('checkUserEmail','UserController@checkUserEmail');
     Route::resource('user', 'UserController');
 
-    Route::get('getCityData','CityController@getCityData');
-    Route::post('checkCityName','CityController@checkCityName');
-    Route::resource('city', 'CityController');
 
     Route::get('getDealerData','DealerController@getDealerData');
     Route::get('dealeractivedeactive/{type}/{id}','DealerController@dealeractivedeactive');
@@ -64,4 +61,25 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('role/{role}','RoleController@update')->name('role.update')->middleware('permission:edit.roles');
     Route::get('getRoleData', 'RoleController@getRoleData')->middleware('permission:view.roles');
     Route::post('checkRoleName','RoleController@checkRoleName')->middleware('permission:view.roles');
+
+    /* Route For State */
+    Route::get('state','StateController@index')->name('state.index')->middleware('permission:view.states');
+    Route::get('state/create','StateController@create')->name('state.create')->middleware('permission:create.states');
+    Route::post('state','StateController@store')->name('state.store')->middleware('permission:create.states');
+    Route::get('state/{state}/edit','StateController@edit')->name('state.edit')->middleware('permission:edit.states');
+    Route::put('state/{state}','StateController@update')->name('state.update')->middleware('permission:edit.states');
+    Route::get('getStateData', 'StateController@getStateData')->middleware('permission:view.states');
+    Route::post('checkStateName','StateController@checkStateName')->middleware('permission:view.states');
+    Route::get('stateActiveInactive/{type}/{id}','StateController@stateActiveInactive')->middleware('permission:activeinactive.states');
+
+    /* Route For City */
+    Route::get('city','CityController@index')->name('city.index')->middleware('permission:view.cities');
+    Route::get('city/create','CityController@create')->name('city.create')->middleware('permission:create.cities');
+    Route::post('city','CityController@store')->name('city.store')->middleware('permission:create.cities');
+    Route::get('city/{city}/edit','CityController@edit')->name('city.edit')->middleware('permission:edit.cities');
+    Route::put('city/{city}','CityController@update')->name('city.update')->middleware('permission:edit.cities');
+    Route::get('getCityData', 'CityController@getCityData')->middleware('permission:view.cities');
+    Route::post('checkCityName','CityController@checkCityName')->middleware('permission:view.cities');
+    Route::get('cityActiveInactive/{type}/{id}','CityController@cityActiveInactive')->middleware('permission:activeinactive.cities');
+
 });

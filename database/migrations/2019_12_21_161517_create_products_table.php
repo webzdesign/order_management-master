@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->double('price');
             $table->integer('added_by')->unsigned()->index();
             $table->foreign('added_by')->references('id')->on('users');
-            $table->integer('updated_by')->unsigned()->index();
+            $table->integer('updated_by')->default(null)->unsigned()->index();
             $table->foreign('updated_by')->references('id')->on('users');
             $table->boolean('status')->comment('0-deactivate, 1-activate');
             $table->timestamps();

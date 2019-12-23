@@ -28,7 +28,7 @@
         <li><a><i class="fa fa-arrows"></i>Masters <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
                 <li><a href="{{ url('state') }}"> State Master</a></li>
-                <li><a href="{{ url('state') }}"> City Master</a></li>
+                <li><a href="{{ url('city') }}"> City Master</a></li>
                 <li><a href="{{ url('dealer') }}"> Party Master</a></li>
                 <li><a href="{{ url('category') }}"> Category</a></li>
                 <li><a href="{{ url('product') }}"> Product</a></li>

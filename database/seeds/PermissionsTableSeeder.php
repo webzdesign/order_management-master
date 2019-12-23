@@ -51,6 +51,24 @@ class PermissionsTableSeeder extends Seeder
 
         /* permission for user module end */
 
+        /* permission for States module start */
+        if (Permission::where('name', '=', 'Can View States')->first() === null) {
+            Permission::create(['name' => 'Can View States', 'slug' => 'view.states', 'description' => 'Can view States', 'model' => 'States',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Create States')->first() === null) {
+            Permission::create(['name' => 'Can Create States', 'slug' => 'create.states', 'description' => 'Can create new States', 'model' => 'States',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Edit States')->first() === null) {
+            Permission::create(['name' => 'Can Edit States', 'slug' => 'edit.states', 'description' => 'Can edit States', 'model' => 'States',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Active/DeActiate States')->first() === null) {
+            Permission::create(['name' => 'Can Active/DeActiate States', 'slug' => 'activeinactive.states', 'description' => 'Can activate/deactivate States', 'model' => 'States',]);
+        }
+        /* permission for States module end */
+
         /* permission for City module start */
         if (Permission::where('name', '=', 'Can View City')->first() === null) {
             Permission::create(['name' => 'Can View City', 'slug' => 'view.cities', 'description' => 'Can view city', 'model' => 'City',]);
@@ -63,9 +81,8 @@ class PermissionsTableSeeder extends Seeder
         if (Permission::where('name', '=', 'Can Edit City')->first() === null) {
             Permission::create(['name' => 'Can Edit City', 'slug' => 'edit.cities', 'description' => 'Can edit city', 'model' => 'City',]);
         }
-
-        if (Permission::where('name', '=', 'Can Delete City')->first() === null) {
-            Permission::create(['name' => 'Can Delete City', 'slug' => 'delete.cities', 'description' => 'Can delete city', 'model' => 'City',]);
+        if (Permission::where('name', '=', 'Can Active/DeActiate City')->first() === null) {
+            Permission::create(['name' => 'Can Active/DeActiate City', 'slug' => 'activeinactive.cities', 'description' => 'Can activate/deactivate City', 'model' => 'City',]);
         }
 
         /* permission for City module end */
