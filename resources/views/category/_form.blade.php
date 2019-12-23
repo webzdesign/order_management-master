@@ -38,13 +38,14 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="file" id="image" name="image"  class="form-control col-md-7 col-xs-12" value="{{$category->image}}">
-                            </div>
                             @if($category->image == '')
                                 <a href="{{ url('/public/noimage.png') }}" target="_blank"><img src = "{{url('/public/noimage.png')}}" style="height:50px; width: 50px; margin-top: 10px;"></a>
                             @else
                                 <a href="{{ url('/storage/app/'.$category->image) }}" target="_blank"><img src="{{ url('/storage/app/'.$category->image) }}" style="height:50px; width: 50px; margin-top: 10px;"></a>
                             @endif
+                            </div>
                         </div>
+
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">

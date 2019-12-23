@@ -21,8 +21,8 @@ class CategoryController extends Controller
 
     public function getCategoryData()
     {
-
-        return DataTables::eloquent(Category::query())
+        $category = Category::with('user')->select('categories.*');
+        return DataTables::eloquent($category)
             ->addColumn('action', function ($category) {
                 $editUrl = route('category.edit', encrypt($category->id));
                 $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
@@ -68,7 +68,6 @@ class CategoryController extends Controller
         $moduleName = $this->moduleName;
         return view($this->view.'/form', compact('moduleName'));
     }
-
 
     public function store(Request $request)
     {
