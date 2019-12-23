@@ -26,7 +26,7 @@
             </li>
         @endif
 
-        @if(auth()->user()->hasPermission('view.states') || auth()->user()->hasPermission('view.cities'))
+        @if(auth()->user()->hasPermission('view.states') || auth()->user()->hasPermission('view.cities') || auth()->user()->hasPermission('view.parties'))
         <li><a><i class="fa fa-arrows"></i>Masters <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
                 @permission('view.states')
@@ -35,7 +35,9 @@
                 @permission('view.cities')
                 <li><a href="{{ url('city') }}"> City Master</a></li>
                 @endpermission
-                <li><a href="{{ url('dealer') }}"> Party Master</a></li>
+                @permission('view.parties')
+                <li><a href="{{ url('party') }}"> Party Master</a></li>
+                @endpermission
                 <li><a href="{{ url('category') }}"> Category</a></li>
                 <li><a href="{{ url('product') }}"> Product</a></li>
             </ul>

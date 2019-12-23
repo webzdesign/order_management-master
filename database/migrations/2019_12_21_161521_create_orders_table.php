@@ -36,7 +36,7 @@ class CreateOrdersTable extends Migration
             $table->double('remaining_qty')->default('0');
             $table->integer('added_by')->unsigned()->index();
             $table->foreign('added_by')->references('id')->on('users');
-            $table->integer('updated_by')->default(null)->unsigned()->index();
+            $table->integer('updated_by')->nullable()->unsigned()->index();
             $table->foreign('updated_by')->references('id')->on('users');
             $table->double('status')->default('0')->comment('0-pending, 1-partial pending, 2-dispatch');
             $table->string('lr_no')->nullable();

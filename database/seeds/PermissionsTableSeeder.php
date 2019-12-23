@@ -87,6 +87,21 @@ class PermissionsTableSeeder extends Seeder
 
         /* permission for City module end */
 
+        /* permission for Party module start */
+        if (Permission::where('name', '=', 'Can View Party')->first() === null) {
+            Permission::create(['name' => 'Can View Party', 'slug' => 'view.parties', 'description' => 'Can view Party', 'model' => 'Party',]);
+        }
+        if (Permission::where('name', '=', 'Can Create Party')->first() === null) {
+            Permission::create(['name' => 'Can Create Party', 'slug' => 'create.parties', 'description' => 'Can create new Party', 'model' => 'Party',]);
+        }
+        if (Permission::where('name', '=', 'Can Edit Party')->first() === null) {
+            Permission::create(['name' => 'Can Edit Party', 'slug' => 'edit.parties', 'description' => 'Can edit Party', 'model' => 'Party',]);
+        }
+        if (Permission::where('name', '=', 'Can Active/DeActiate Party')->first() === null) {
+            Permission::create(['name' => 'Can Active/DeActiate Party', 'slug' => 'activeinactive.parties', 'description' => 'Can activate/deactivate Party', 'model' => 'Party',]);
+        }
+        /* permission for Party module end */
+
         /* permission for Category module start */
         if (Permission::where('name', '=', 'Can View Category')->first() === null) {
             Permission::create(['name' => 'Can View Category', 'slug' => 'view.categories', 'description' => 'Can view categories', 'model' => 'Category',]);

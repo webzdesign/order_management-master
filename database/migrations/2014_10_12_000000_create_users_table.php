@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('status')->comment('0-deactivate, 1-activate');
             $table->integer('added_by');
-            $table->integer('updated_by')->default(null);
+            $table->integer('updated_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
