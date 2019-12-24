@@ -55,7 +55,7 @@
                                 <input type="radio" class="status" checked id="status" name="status" value="1">Active
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" id="status" name="status" value="2">Deactive
+                                <input type="radio" class="status" id="status" name="status" value="0">Deactive
                             </label>
                         </div>
                         </div>
