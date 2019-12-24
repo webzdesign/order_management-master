@@ -22,4 +22,9 @@ class Party extends Model
     {
         return $this->belongsTo('App\Models\City', 'city_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }

@@ -35,12 +35,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dealeractivedeactive/{type}/{id}','DealerController@dealeractivedeactive');
     Route::resource('dealer', 'DealerController');
 
-    Route::get('getOrderData','OrderController@getOrderData');
-    Route::post('checkDispatchQty','OrderController@checkDispatchQty');
-    Route::post('getDispatchQty','OrderController@getDispatchQty');
-    Route::post('statusAll','OrderController@statusAll');
-    Route::resource('order', 'OrderController');
-
     /* Route for Role */
     Route::get('role','RoleController@index')->name('role.index')->middleware('permission:view.roles');
     Route::get('role/create','RoleController@create')->name('role.create')->middleware('permission:create.roles');
@@ -112,6 +106,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('checkProductName','ProductController@checkProductName')->middleware('permission:view.product');
     Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive')->middleware('permission:activeinactive.product');
 
+    Route::get('getOrderData','OrderController@getOrderData');
+    Route::post('getProductPrice','OrderController@getProductPrice');
+    Route::resource('order', 'OrderController');
 
 
 });
