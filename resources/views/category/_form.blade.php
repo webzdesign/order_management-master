@@ -37,12 +37,13 @@
                                 Image
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="file" id="image" name="image"  class="form-control col-md-7 col-xs-12" value="{{$category->image}}">
-                            @if($category->image == '')
-                                <a href="{{ url('/public/noimage.png') }}" target="_blank"><img src = "{{url('/public/noimage.png')}}" style="height:50px; width: 50px; margin-top: 10px;"></a>
-                            @else
-                                <a href="{{ url('/storage/app/'.$category->image) }}" target="_blank"><img src="{{ url('/storage/app/'.$category->image) }}" style="height:50px; width: 50px; margin-top: 10px;"></a>
-                            @endif
+                            <input type="file" id="image" name="image" >
+                            <input type="hidden" name="old_filename" id="old_filename" value="{{ $category->image }}">
+                                @if($category->image == NULL)
+                                    <a href="{{ url('/public/noimage.png') }}" target="_blank"><img src = "{{url('/public/noimage.png')}}" style="height:50px; width: 50px; margin-top: 10px;"></a>
+                                @else
+                                    <a href="{{ url('storage/app/'.$category->image) }}" target="_blank"><img src="{{ url('storage/app/'.$category->image) }}" style="height:50px; width: 50px; margin-top: 10px;"></a>
+                                @endif
                             </div>
                         </div>
 

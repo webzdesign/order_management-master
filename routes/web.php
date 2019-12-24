@@ -35,10 +35,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dealeractivedeactive/{type}/{id}','DealerController@dealeractivedeactive');
     Route::resource('dealer', 'DealerController');
 
-    Route::get('getProductData','ProductController@getProductData');
-    Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive');
-    Route::resource('product', 'ProductController');
-
     Route::get('getOrderData','OrderController@getOrderData');
     Route::post('checkDispatchQty','OrderController@checkDispatchQty');
     Route::post('getDispatchQty','OrderController@getDispatchQty');
@@ -64,7 +60,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('useractivedeactive/{type}/{id}','UserController@useractivedeactive')->middleware('permission:view.users');
     Route::post('checkUserEmail','UserController@checkUserEmail')->middleware('permission:view.users');
 
-    
+
     /* Route For State */
     Route::get('state','StateController@index')->name('state.index')->middleware('permission:view.states');
     Route::get('state/create','StateController@create')->name('state.create')->middleware('permission:create.states');
@@ -105,6 +101,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('getCategoryData', 'CategoryController@getCategoryData')->middleware('permission:view.category');
     Route::post('checkCategoryName','CategoryController@checkCategoryName')->middleware('permission:view.category');
     Route::get('categoryactivedeactive/{type}/{id}','CategoryController@categoryactivedeactive')->middleware('permission:activeinactive.category');
+
+    /* Route For Product */
+    Route::get('product','ProductController@index')->name('product.index')->middleware('permission:view.product');
+    Route::get('product/create','ProductController@create')->name('product.create')->middleware('permission:create.product');
+    Route::post('product','ProductController@store')->name('product.store')->middleware('permission:create.product');
+    Route::get('product/{product}/edit','ProductController@edit')->name('product.edit')->middleware('permission:edit.product');
+    Route::put('product/{product}','ProductController@update')->name('product.update')->middleware('permission:edit.product');
+    Route::get('getProductData', 'ProductController@getProductData')->middleware('permission:view.product');
+    Route::post('checkProductName','ProductController@checkProductName')->middleware('permission:view.product');
+    Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive')->middleware('permission:activeinactive.product');
+
 
 
 });
