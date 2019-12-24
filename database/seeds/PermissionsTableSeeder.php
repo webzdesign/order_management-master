@@ -185,5 +185,22 @@ class PermissionsTableSeeder extends Seeder
         }
         /* permission for Settings module end */
 
+        /* permission for Stock/Adjustment Purchase module start */
+        if (Permission::where('name', '=', 'Can View Purchase')->first() === null) {
+            Permission::create(['name' => 'Can View Purchase', 'slug' => 'view.purchases', 'description' => 'Can view Purchase', 'model' => 'Purchase',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Create Purchase')->first() === null) {
+            Permission::create(['name' => 'Can Create Purchase', 'slug' => 'create.purchases', 'description' => 'Can create new Purchase', 'model' => 'Purchase',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Edit Purchase')->first() === null) {
+            Permission::create(['name' => 'Can Edit Purchase', 'slug' => 'edit.purchases', 'description' => 'Can edit Purchase', 'model' => 'Purchase',]);
+        }
+
+        if (Permission::where('name', '=', 'Can Delete Purchase')->first() === null) {
+            Permission::create(['name' => 'Can Delete Purchase', 'slug' => 'delete.purchases', 'description' => 'Can delete Purchase', 'model' => 'Purchase',]);
+        }
+
     }
 }
