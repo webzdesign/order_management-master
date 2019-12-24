@@ -88,7 +88,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('party/{party}/edit','PartyController@edit')->name('party.edit')->middleware('permission:edit.parties');
     Route::put('party/{party}','PartyController@update')->name('party.update')->middleware('permission:edit.parties');
     Route::get('getPartyData', 'PartyController@getPartyData')->middleware('permission:view.parties');
-    Route::get('getStateCity', 'PartyController@getStateCity')->middleware('permission:view.parties');
+    Route::post('getStateCity', 'PartyController@getStateCity')->middleware('permission:view.parties');
     Route::post('checkPartyMobile','PartyController@checkPartyMobile')->middleware('permission:view.parties');
     Route::get('partyActiveInactive/{type}/{id}','PartyController@partyActiveInactive')->middleware('permission:activeinactive.parties');
 

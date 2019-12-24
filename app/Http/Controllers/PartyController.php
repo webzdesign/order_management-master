@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\State;
 use App\Models\City;
+use App\Models\Party;
 use Helper;
 use DataTables;
 
 class PartyController extends Controller
 {
     public $route = 'party';
-    public $view = 'city';
-    public $moduleName = 'City';
+    public $view = 'party';
+    public $moduleName = 'Party';
 
     public function index()
     {
@@ -29,7 +30,7 @@ class PartyController extends Controller
 
             $action = '';
             if (auth()->user()->hasPermission('edit.parties')) {
-                $editUrl = route('parties.edit', encrypt($party->id));
+                $editUrl = route('party.edit', encrypt($party->id));
                 $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
             }
 
@@ -78,8 +79,9 @@ class PartyController extends Controller
         $moduleName = $this->moduleName;
         $party = Party::find(decrypt($id));
         $states = State::select('id', 'name')->active()->get();
+        $cities = City::active()->where('state_id', $party->state_id)->get();
 
-        return view($this->view.'/_form', compact('party', 'moduleName', 'states'));
+        return view($this->view.'/_form', compact('party', 'moduleName', 'states', 'cities'));
     }
 
     public function update(Request $request, $id)
@@ -114,5 +116,12 @@ class PartyController extends Controller
             Helper::activeDeactiveMsg('inactive', $this->moduleName);
         }
         return redirect($this->route);
+    }
+
+    public function getStateCity(Request $request)
+    {
+        $cities = City::active()->where('state_id', $request->state_id)->pluck('name', 'id');
+        
+        return json_encode($cities);
     }
 }
