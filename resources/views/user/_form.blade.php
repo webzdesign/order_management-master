@@ -19,7 +19,6 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              <br />
               <form id="frm" method="post"  action ="{{route('user.update', $user->id)}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
                 @method('PUT')
                 <input type="hidden" id="id" name="id" value="{{$user->id}}" />
