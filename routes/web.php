@@ -35,10 +35,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dealeractivedeactive/{type}/{id}','DealerController@dealeractivedeactive');
     Route::resource('dealer', 'DealerController');
 
-    Route::get('getProductData','ProductController@getProductData');
-    Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive');
-    Route::resource('product', 'ProductController');
-
     Route::get('getOrderData','OrderController@getOrderData');
     Route::post('checkDispatchQty','OrderController@checkDispatchQty');
     Route::post('getDispatchQty','OrderController@getDispatchQty');
@@ -114,5 +110,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('purchase/{purchase}','PurchaseController@update')->name('purchase.update')->middleware('permission:edit.purchases');
     Route::get('getPurchaseData', 'PurchaseController@getPurchaseData')->middleware('permission:view.purchases');
     Route::get('purchaseDelete/{purchase}','PurchaseController@destroy')->middleware('permission:delete.purchases');
+    /* Route For Product */
+    Route::get('product','ProductController@index')->name('product.index')->middleware('permission:view.product');
+    Route::get('product/create','ProductController@create')->name('product.create')->middleware('permission:create.product');
+    Route::post('product','ProductController@store')->name('product.store')->middleware('permission:create.product');
+    Route::get('product/{product}/edit','ProductController@edit')->name('product.edit')->middleware('permission:edit.product');
+    Route::put('product/{product}','ProductController@update')->name('product.update')->middleware('permission:edit.product');
+    Route::get('getProductData', 'ProductController@getProductData')->middleware('permission:view.product');
+    Route::post('checkProductName','ProductController@checkProductName')->middleware('permission:view.product');
+    Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive')->middleware('permission:activeinactive.product');
+
+
 
 });

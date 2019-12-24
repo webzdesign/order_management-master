@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Stock;
 use Helper;
 use DataTables;
 
@@ -16,15 +17,13 @@ class ProductController extends Controller
 
     public function index()
     {
-        $route = $this->route;
         $moduleName = $this->moduleName;
-
         return view($this->view.'/index', compact('route', 'moduleName'));
     }
 
     public function getProductData()
     {
-        $product = Product::with('category');
+        $product = Product::with(['category','user']);
         return DataTables::eloquent($product)
             ->addColumn('action', function ($product) {
                 $editUrl = route('product.edit', encrypt($product->id));
@@ -77,7 +76,7 @@ class ProductController extends Controller
     public function create()
     {
         $moduleName = $this->moduleName;
-        $category = Category::get();
+        $category = Category::select('id', 'name')->active()->get();
         return view($this->view.'/form', compact('moduleName', 'category'));
     }
 
@@ -89,8 +88,9 @@ class ProductController extends Controller
             $imageName = '';
         }
 
+        $productInsertedId = Product::create(['category_id'=>$request->category_id, 'name'=> ucwords($request->name), 'image'=>$imageName, 'op_stock' => $request->op_stock, 'price' => $request->price, 'added_by'=>auth()->user()->id, 'status'=>$request->status]);
 
-        Product::create(['category_id'=>$request->category_id, 'name'=> ucwords($request->name), 'image'=>$imageName, 'status'=>$request->status]);
+        Stock::create(['transaction_id' => $productInsertedId->id, 'voucher'=> '0', 'product_id'  => $productInsertedId->id, 'qty'=> $request->op_stock, 'type'=>'0', 'added_by'=>auth()->user()->id]);
 
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
@@ -100,7 +100,7 @@ class ProductController extends Controller
     {
         $moduleName = $this->moduleName;
         $product = Product::find(decrypt($id));
-        $category = Category::get();
+        $category = Category::select('id', 'name')->active()->get();
         return view($this->view.'/_form', compact('product', 'moduleName', 'category'));
     }
 
@@ -120,10 +120,28 @@ class ProductController extends Controller
             $imageName = $request->input('old_filename');
         }
 
-        Product::find($id)->update(['category_id'=>$request->category_id, 'name' => ucwords($request->name), 'image'=> $imageName, 'status'=>$request->status]);
+        Product::find($id)->update(['category_id'=>$request->category_id, 'name'=> ucwords($request->name), 'image'=>$imageName, 'op_stock' => $request->op_stock, 'price' => $request->price, 'updated_by'=>auth()->user()->id, 'status'=>$request->status]);
+
+
+        Stock::where('transaction_id', $id)->update(['transaction_id' => $id, 'voucher'=> '0', 'product_id'  => $id, 'qty'=> $request->op_stock, 'type'=>'0', 'updated_by'=>auth()->user()->id]);
 
         Helper::successMsg('update', $this->moduleName);
         return redirect($this->route);
+    }
+
+    public function checkProductName(Request $request)
+    {
+        if (!isset($request->id)) {
+            $checkProduct = Product::where('name', trim($request->name))->count();
+        } else {
+            $checkProduct = Product::where('name', trim($request->name))->where('id', '!=', $request->id)->count();
+        }
+
+        if ($checkProduct > 0) {
+            echo json_encode(false);
+        } else {
+            echo json_encode(true);
+        }
     }
 
 }
