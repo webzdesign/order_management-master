@@ -96,6 +96,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('checkCategoryName','CategoryController@checkCategoryName')->middleware('permission:view.category');
     Route::get('categoryactivedeactive/{type}/{id}','CategoryController@categoryactivedeactive')->middleware('permission:activeinactive.category');
 
+    /* Route For Stock Adjustment / Purchase */
+    Route::get('purchase','PurchaseController@index')->name('purchase.index')->middleware('permission:view.purchases');
+    Route::get('purchase/create','PurchaseController@create')->name('purchase.create')->middleware('permission:create.purchases');
+    Route::post('purchase','PurchaseController@store')->name('purchase.store')->middleware('permission:create.purchases');
+    Route::get('purchase/{purchase}/edit','PurchaseController@edit')->name('purchase.edit')->middleware('permission:edit.purchases');
+    Route::put('purchase/{purchase}','PurchaseController@update')->name('purchase.update')->middleware('permission:edit.purchases');
+    Route::get('getPurchaseData', 'PurchaseController@getPurchaseData')->middleware('permission:view.purchases');
+    Route::get('purchaseDelete/{purchase}','PurchaseController@destroy')->middleware('permission:delete.purchases');
     /* Route For Product */
     Route::get('product','ProductController@index')->name('product.index')->middleware('permission:view.product');
     Route::get('product/create','ProductController@create')->name('product.create')->middleware('permission:create.product');

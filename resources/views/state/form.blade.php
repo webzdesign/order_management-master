@@ -27,7 +27,7 @@
                             State Name<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12" placeholder="Enter State Name">
+                        <input type="text" id="name" focus name="name" index="0"  class="form-control col-md-7 col-xs-12" placeholder="Enter State Name">
                         </div>
                     </div>
 
@@ -38,10 +38,10 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" checked id="status" name="status" value="1">Active
+                                <input type="radio" class="status" index="1" checked id="status" name="status" value="1">Active
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" id="status" name="status" value="2">Deactive
+                                <input type="radio" class="status" index="2" id="status" name="status" value="0">Deactive
                             </label>
                         </div>
                         </div>
@@ -67,6 +67,7 @@
 @section('script')
 <script>
 $(document).ready(function(){
+
     $('#frm').validate({
         rules:{
             name:{
