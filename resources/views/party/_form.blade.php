@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	<div class="title_left">
-		<a href="{{ url('city') }}"><button class="btn btn-primary" >Back</button></a>
+		<a href="{{ url('party') }}"><button class="btn btn-primary" >Back</button></a>
 	</div>
 	<div class="clearfix"></div>
 	<div class="row">
@@ -18,55 +18,91 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<form id="frm" method="post"  action ="{{route('city.update', $city->id)}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
+					<form id="frm" method="post"  action ="{{route('party.update', $party->id)}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
 						@method('PUT')
-						<input type="hidden" id="id" name="id" value="{{ $city->id }}" />
+						<input type="hidden" id="id" name="id" value="{{ $party->id }}" />
                         @csrf
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="state_id">
-                                State Name <span class="requride_cls">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="select2_single form-control" name="state_id" id="state_id">
-                                    <option value=""></option>
-                                    @foreach($states as $key => $val)
-                                        <option {{ ($val->id == $city->state_id) ? 'selected' : '' }} value="{{ $val->id }}">{{ $val->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="name">
+                                        Party Name <span class="requride_cls">*</span>
+                                    </label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Party Name" value="{{ $party->name }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="mobile_no">
+                                        Party Mobile <span class="requride_cls">*</span>
+                                    </label>
+                                    <input type="text" id="mobile_no" name="mobile_no" class="form-control numberonly" minlength="10" maxlength="10" placeholder="Enter Party Mobile No" value="{{ $party->mobile_no }}">
+                                </div>
                             </div>
                         </div>
 
-						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-								City Name<span class="requride_cls">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter City Name" value="{{ $city->name }}">
-							</div>
+                        <hr class="hrClass">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="state_id">
+                                        State Name <span class="requride_cls">*</span>
+                                    </label>
+                                    <select class="select2_single form-control" name="state_id" id="state_id">
+                                        <option value=""></option>
+                                        @foreach($states as $key => $val)
+                                            <option {{ ($party->state_id == $val->id) ? 'selected' : '' }} value="{{ $val->id }}">{{ $val->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="city_id">
+                                        City Name <span class="requride_cls">*</span>
+                                    </label>
+                                    <select class="select2_single form-control" name="city_id" id="city_id">
+                                        <option value=""></option>
+                                        @foreach($cities as $key => $val)
+                                            <option {{ ($party->city_id == $val->id) ? 'selected' : '' }} value="{{ $val->id }}">{{ $val->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
-                                Status<span class="requride_cls">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="radio">
-                                <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($city->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">Active
-                                </label>
-                                <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($city->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">Deactive
-                                </label>
+                        <hr class="hrClass">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="city_id">
+                                        Party Address <span class="requride_cls">*</span>
+                                    </label>
+                                    <textarea id="address" name="address" class="form-control" placeholder="Enter party Address">{{ $party->address }}</textarea>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="status">
+                                        Status <span class="requride_cls">*</span>
+                                    </label>
+
+                                    <div class="radio">
+                                        <label style="margin-right:20px;">
+                                            <input type="radio" value="1" {{ ($party->status == 1) ? 'checked' : '' }} name="status">Active
+                                        </label>
+                                        <label>
+                                            <input type="radio" value="0" {{ ($party->status == 0) ? 'checked' : '' }} name="status">Deactive
+                                        </label>
+                                    </div>
+                                    <label id="status-error" class="error" for="status"></label>
+                                </div>
                             </div>
-                            </div>
-                            <label id="status-error" class="error requride_cls" for="status"></label>
                         </div>
 
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('city') }}" class="btn btn-primary">Cancel</a>
+								<a href="{{ url('party') }}" class="btn btn-primary">Cancel</a>
 								<button type="submit" class="btn btn-success focusClass">Submit</button>
 							</div>
 						</div>
@@ -82,17 +118,46 @@
 @section('script')
 <script>
 $(document).ready(function(){
-	$('#frm').validate({
+
+    $('body').on('change', '#state_id', function(e){
+        $("#city_id").prop('disabled', true);
+        var state_id = $('#state_id').val();
+
+        if (state_id != '') {
+            $.ajax({
+                url:"{{ url('getStateCity') }}",
+                type:'POST',
+                dataType:'json',
+                data:{
+                    state_id:state_id
+                },
+                success:function(res){
+                    $("#city_id").prop('disabled', false);
+                    $("#city_id").val('').trigger('change');
+                    $("#city_id").html('<option value=""></option>');
+                    $.each(res,function(key,value) {
+                        $("#city_id").append('<option value="'+key+'">'+value+'</option>');
+                    });
+                }
+            });
+
+        } else {
+            $("#city_id").prop('disabled', false);
+            $('#city_id').val('').trigger('change').html('<option value=""></option>');
+        }
+    });
+
+    $('#frm').validate({
         rules:{
-            state_id:{ required:true, },
-            name:{
+            name:{ required:true, },
+            mobile_no:{
                 required:true,
                 remote:{
                     type:'POST',
-                    url:"{{ url('checkCityName') }}",
+                    url:"{{ url('checkPartyMobile') }}",
                     data:{
-                        name:function(){
-                            return $("#name").val();
+                        mobile_no:function(){
+                            return $("#mobile_no").val();
                         },
                         id:function(){
                             return $("#id").val();
@@ -100,12 +165,18 @@ $(document).ready(function(){
                     },
                 },
             },
+            state_id:{ required:true, },
+            city_id:{ required:true, },
+            address:{ required:true, },
             status:{ required:true, },
         },
         messages:
         {
+            name:{ required:"Party Name Is Required.", },
+            mobile_no:{ required:"Mobile Number Is Required.", remote: "Mobile Number Already Exits.", },
             state_id:{ required:"State Is Required.", },
-            name:{ required:"City Name Is Required", remote: "City Name Already Exits", },
+            city_id:{ required:"City Is Required.", },
+            address:{ required:"Address Is Required.", },
             status:{ required:"Status Is Required.", },
         },
         errorPlacement: function(error, element) {
@@ -115,7 +186,7 @@ $(document).ready(function(){
             $(':input[type="submit"]').prop('disabled', true);
             form.submit();
         }
-	});
+    });
 });
 </script>
 @endsection

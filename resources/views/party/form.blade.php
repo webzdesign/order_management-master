@@ -75,7 +75,7 @@
                                 <label for="city_id">
                                     Party Address <span class="requride_cls">*</span>
                                 </label>
-                                <textarea id="address" name="address" class="form-control numberonly" placeholder="Enter party Address"></textarea>
+                                <textarea id="address" name="address" class="form-control" placeholder="Enter party Address"></textarea>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="status">
@@ -95,7 +95,6 @@
                         </div>
                     </div>
 
-
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -103,7 +102,6 @@
                             <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                     </div>
-
                 </form>
             </div>
             </div>
@@ -115,6 +113,35 @@
 @section('script')
 <script>
 $(document).ready(function(){
+
+    $('body').on('change', '#state_id', function(e){
+        $("#city_id").prop('disabled', true);
+        var state_id = $('#state_id').val();
+
+        if (state_id != '') {
+            $.ajax({
+                url:"{{ url('getStateCity') }}",
+                type:'POST',
+                dataType:'json',
+                data:{
+                    state_id:state_id
+                },
+                success:function(res){
+                    $("#city_id").prop('disabled', false);
+                    $("#city_id").val('').trigger('change');
+                    $("#city_id").html('<option value=""></option>');
+                    $.each(res,function(key,value) {
+                        $("#city_id").append('<option value="'+key+'">'+value+'</option>');
+                    });
+                }
+			});
+
+        } else {
+            $("#city_id").prop('disabled', false);
+            $('#city_id').val('').trigger('change').html('<option value=""></option>');
+        }
+    });
+
     $('#frm').validate({
         rules:{
             name:{ required:true, },
@@ -137,8 +164,11 @@ $(document).ready(function(){
         },
         messages:
         {
+            name:{ required:"Party Name Is Required.", },
+            mobile_no:{ required:"Mobile Number Is Required.", remote: "Mobile Number Already Exits.", },
             state_id:{ required:"State Is Required.", },
-            name:{ required:"City Name Is Required.", remote: "City Name Already Exits.", },
+            city_id:{ required:"City Is Required.", },
+            address:{ required:"Address Is Required.", },
             status:{ required:"Status Is Required.", },
         },
         errorPlacement: function(error, element) {

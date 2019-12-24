@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('useractivedeactive/{type}/{id}','UserController@useractivedeactive')->middleware('permission:view.users');
     Route::post('checkUserEmail','UserController@checkUserEmail')->middleware('permission:view.users');
 
-    
+
     /* Route For State */
     Route::get('state','StateController@index')->name('state.index')->middleware('permission:view.states');
     Route::get('state/create','StateController@create')->name('state.create')->middleware('permission:create.states');
@@ -92,7 +92,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('party/{party}/edit','PartyController@edit')->name('party.edit')->middleware('permission:edit.parties');
     Route::put('party/{party}','PartyController@update')->name('party.update')->middleware('permission:edit.parties');
     Route::get('getPartyData', 'PartyController@getPartyData')->middleware('permission:view.parties');
-    Route::get('getStateCity', 'PartyController@getStateCity')->middleware('permission:view.parties');
+    Route::post('getStateCity', 'PartyController@getStateCity')->middleware('permission:view.parties');
     Route::post('checkPartyMobile','PartyController@checkPartyMobile')->middleware('permission:view.parties');
     Route::get('partyActiveInactive/{type}/{id}','PartyController@partyActiveInactive')->middleware('permission:activeinactive.parties');
 
