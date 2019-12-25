@@ -118,5 +118,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('getProductPrice','OrderController@getProductPrice');
     Route::resource('order', 'OrderController');
 
+    /** Route For Party Report */
+    Route::get('partyreport','PartyReportController@index')->name('partyreport.index');
+    Route::get('getPartyReportData', 'PartyReportController@getPartyReportData');
+    // Route::resource('inventorystock-report', 'InventoryStockReportController')->middleware('permission:view.inventorystock.report');
+    // Route::get('getInventoryStockData', 'InventoryStockReportController@getInventoryStockReportData')->middleware('permission:view.inventorystock.report');
+    // Route::post('getInventroyStockItem', 'InventoryStockReportController@getStockItems')->middleware('permission:view.inventorystock.report');
+    // Route::post('printInventoryStockReport', 'InventoryStockReportController@printInventoryStock')->middleware('permission:view.inventorystock.report');
+
+
 
 });

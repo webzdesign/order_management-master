@@ -18,7 +18,6 @@ class PartyController extends Controller
     public function index()
     {
         $moduleName = $this->moduleName;
-
         return view($this->view.'/index', compact('moduleName'));
     }
 
