@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $moduleName = $this->moduleName;
-        return view($this->view.'/index', compact('route', 'moduleName'));
+        return view($this->view.'/index', compact('moduleName'));
     }
 
     public function getProductData()

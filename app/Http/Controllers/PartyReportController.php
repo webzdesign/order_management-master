@@ -8,7 +8,7 @@ use App\Models\City;
 use App\Models\Order;
 use App\Models\Party;
 use Helper, DataTables;
-
+use DB;
 class PartyReportController extends Controller
 {
     public $route = 'partyreport';
@@ -26,41 +26,37 @@ class PartyReportController extends Controller
 
     public function getPartyReportData(Request $request)
     {
-
         $partyreport = Order::with(['party']);
         if ($party = $request->party) {
             if ($party != '') {
                 $partyreport->where('party_id', $party);
             }
-        }
-        //$partyreport->get();
-        echo "<pre>";
-        print_r($partyreport->get()->toArray());
-        echo "</pre>";
-        exit;
-
+        } 
+        $partyreport->where('date', '>=', date('Y-m-d', strtotime($request->from)))->where('date', '<=', date('Y-m-d',strtotime($request->to)));
+     
         return DataTables::eloquent($partyreport)
-            ->addColumn('stockitem.name', function ($inventorystocks) {
-                    return $inventorystocks->name;
+            ->editColumn('date', function($partyreport){
+                return date('d-m-Y', strtotime($partyreport->date));
             })
-            ->addColumn('stock_in', function ($inventorystocks) {
-                    return $inventorystocks->qty;
+            ->editColumn('amount', function($partyreport){
+                return '₹'.number_format($partyreport->amount,2); 
             })
-            ->addColumn('stock_out', function ($inventorystocks) {
-                    return Helper::getStockOut(
-                        $inventorystocks->stockcategory->id, $inventorystocks->id
-                    );
-            })
-            ->addColumn('qty', function ($inventorystocks) {
-                    return ($inventorystocks->qty - Helper::getStockOut(
-                        $inventorystocks->stockcategory->id, $inventorystocks->id
-                    )
-                );
-            })
-            ->rawColumns(['stock_in', 'stock_out'])
+            ->rawColumns(['date', 'amount'])
             ->addIndexColumn()
             ->make(true);
     }
+
+    function convertToObject($array) {
+        $object = new stdClass();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = convertToObject($value);
+            }
+            $object->$key = $value;
+        }
+        return $object;
+    }
+
     public function create()
     {
         //

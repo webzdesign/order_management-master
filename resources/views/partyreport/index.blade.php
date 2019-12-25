@@ -64,6 +64,7 @@
                             <thead>
                                 <tr>
                                     <th>SrNo</th>
+                                    <th>Party</th>
                                     <th>Orde No</th>
                                     <th>Orde Date</th>
                                     <th>Order Amount</th>
@@ -87,6 +88,9 @@
 <script>
 $(document).ready(function() {
 
+    var from = $('#from').val();
+    var to = $('#to').val();
+
     @if (Session::has('message'))
     new PNotify({
         title: '{{ $moduleName }}',
@@ -98,34 +102,11 @@ $(document).ready(function() {
         animateSpeed: 'slow'
     });
     @endif
-
-    $('#stockcategory').on('change', function(e){
-        var stockCategoryId = $(this).val();
-        var th = $(this);
-
-        if (stockCategoryId != '') {
-            $.ajax({
-                url:"{{ url('admin/getInventroyStockItem') }}",
-                type:'POST',
-                data:{
-                    stockCategoryId:stockCategoryId
-                },
-                success:function(res){
-                    $("#stockitem").val('').trigger('change');
-					$("#stockitem").html('<option value=""></option>');
-					$.each(res,function(key,value){
-						$("#stockitem").append('<option value="'+key+'">'+value+'</option>');
-					});
-                }
-            });
-        } else {
-            $('#stockitem').val(null).trigger('change').html('<option value=""></option>');
-        }
-    });
-
+    
     var datatable = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        paging: false,
         ajax: {
             "url": "{{ url('getPartyReportData') }}",
 			"dataType": "json",
@@ -134,16 +115,23 @@ $(document).ready(function() {
                 party:function(){
                     return $("#party").val();
                 },
+                from:function(){
+                    return $('#from').val();
+                },
+                to:function(){
+                    return $('#to').val();
+                },
             }
         },
         columns: [
             { data: 'DT_RowIndex', searchable: false, orderable: false},
+            { data: 'party.name'},
             { data: 'order_no'},
             { data: 'date'},
             { data: 'amount'},
         ],
     });
-
+    $('.datatable').append('<tbody><tr><td colspan="4" align="right">Grand Total</td><td>'+to+'</td></tr></tbody>');
     $('.searchData').on('click', function(e) {
         e.preventDefault();
         datatable.draw();
@@ -152,9 +140,10 @@ $(document).ready(function() {
     $('.searchClear').on('click', function(e) {
         e.preventDefault();
         $('#party').val('').trigger('change');
+        $('#from').val(from);
+        $('#to').val(to);
         datatable.draw();
     });
-
     
 });
 </script>
