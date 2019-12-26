@@ -55,7 +55,7 @@
         @endpermission
         <li><a><i class="fa fa-bar-chart"></i>Reports <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-                <li><a href="{{ url('/') }}"> Party Wise Report</a></li>
+                <li><a href="{{ url('/partyreport') }}"> Party Wise Report</a></li>
                 <li><a href="{{ url('/') }}"> Product Wise Report</a></li>
                 <li><a href="{{ url('/') }}"> Date Wise Report</a></li>
                 <li><a href="{{ url('/') }}"> City Wise Report</a></li>
