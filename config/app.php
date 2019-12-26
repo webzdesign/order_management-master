@@ -167,6 +167,7 @@ return [
          */
          Yajra\DataTables\DataTablesServiceProvider::class,
          jeremykenedy\LaravelRoles\RolesServiceProvider::class,
+         Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Helper'       => App\Helpers\Helper::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

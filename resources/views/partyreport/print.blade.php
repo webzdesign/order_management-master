@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory Stock Report</title>
+        <title>Party Report</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             @page {
@@ -74,6 +74,9 @@
             {
                 border-bottom:1px solid rgb(0,0,0) !important;
             }
+            #grandtotal{
+                text-align:right;    
+            }
 
         </style>
     </head>
@@ -84,25 +87,33 @@
                 <thead>
                     <tr class="trClass">
                         <th width="5%">No</th>
-                        <th width="20%">Category</th>
-                        <th width="20%">Item</th>
-                        <th width="20%">Stock In</th>
-                        <th width="20%">Stock Out</th>
-                        <th width="15%">Available Stock</th>
+                        <th width="20%">Party</th>
+                        <th width="20%">Order No</th>
+                        <th width="20%">Order Date</th>
+                        <th width="20%">Order Amount</th>
                     </tr>
                 </thead>
 
                 <tbody class="tbodyCss">
-                    @foreach($inventorystock as $key => $val)
+                    @php 
+                        $totalAmount = 0;
+                    @endphp
+                    @foreach($partyreport as $key => $val)
                     <tr>
                         <td>{{$key+1}}</td>
-                        <td>{{$val->stockcategory->name}}</td>
-                        <td>{{$val->name}}</td>
-                        <td>{{$val->qty}}</td>
-                        <td>{{ Helper::getStockOut($val->stock_category_id, $val->id) }}</td>
-                        <td>{{ ($val->qty - Helper::getStockOut($val->stockcategory->id, $val->id)) }}</td>
+                        <td>{{$val->party->name}}</td>
+                        <td>{{$val->order_no}}</td>
+                        <td>{{ date('d-m-Y', strtotime($val->date))}}</td>
+                        <td>{{ $val->amount }}</td>
                     </tr>
+                    @php 
+                        $totalAmount = $totalAmount + $val->amount;
+                    @endphp
                     @endforeach
+                    <tr>
+                        <td colspan="4" id="grandtotal">GRAND TOTAL</td>
+                        <td>{{ $totalAmount }}</td>
+                    </tr>
                 </tbody>
                 
             </table>
