@@ -96,8 +96,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Discount <span class="requride_cls">*</span></td>
-                                        <td><input type="text" id="discount" name="discount" class="form-control discount" placeholder="Discount"></td>
+                                        <td>Discount</td>
+                                        <td><input type="text" id="discount" name="discount" class="form-control discount" placeholder="Discount" value="0"></td>
                                         <td></td>
                                     </tr>
                                     <input type="hidden" id="gst_type" name="gst_type" value="{{ ((Helper::setting()->gst_type) == 0) ? '0' : '1' }}">
@@ -105,7 +105,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>CGST {{ Helper::setting()->cgst.'%' }}<span class="requride_cls">*</span></td>
+                                        <input type="hidden" name="cgst_per" id="cgst_per" value="{{ Helper::setting()->cgst }}">
+                                        <td>CGST {{ Helper::setting()->cgst.'%' }} </td>
                                         <td><input type="text" id="cgst" name="cgst" class="form-control" placeholder="CGST" readonly value="">
                                         <input type="hidden" id="cgst_hidn" name="cgst_hidn" value="{{ Helper::setting()->cgst }}"></td>
                                         <td></td>
@@ -114,7 +115,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>SGST {{ Helper::setting()->sgst.'%' }}<span class="requride_cls">*</span></td>
+                                        <input type="hidden" name="sgst_per" id="sgst_per" value="{{ Helper::setting()->sgst }}">
+                                        <td>SGST {{ Helper::setting()->sgst.'%' }} </td>
                                         <td><input type="text" id="sgst" name="sgst" class="form-control" placeholder="SGST" readonly value="">
                                         <input type="hidden" id="sgst_hidn" name="sgst_hidn" value="{{ Helper::setting()->sgst }}"></td>
                                         </td>
@@ -124,7 +126,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>IGST {{ Helper::setting()->igst.'%' }}<span class="requride_cls">*</span></td>
+                                        <input type="hidden" name="igst_per" id="igst_per" value="{{ Helper::setting()->igst }}">
+                                        <td>IGST {{ Helper::setting()->igst.'%' }} </td>
                                         <td><input type="text" id="igst" name="igst" class="form-control" placeholder="IGST" readonly value="">
                                         <input type="hidden" id="igst_hidn" name="igst_hidn" value="{{ Helper::setting()->igst }}"></td>
                                         </td>
@@ -134,7 +137,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Grand Total <span class="requride_cls">*</span></td>
+                                        <td>Grand Total </td>
                                         <td><input type="text" id="grand_total" name="grand_total" class="form-control" placeholder="Grand Total" value="" readonly></td>
                                         <td></td>
                                     </tr>
@@ -218,12 +221,14 @@ $(document).ready(function(){
 
         $tr.after($clone);
         sr_change();
+        total();
     });
 
     $('body').on('click','.minus' ,function(event){
         if($(".ordertable").length > 1){
             $(this).closest(".ordertable").remove();
             sr_change();
+            total();
         }
     });
 

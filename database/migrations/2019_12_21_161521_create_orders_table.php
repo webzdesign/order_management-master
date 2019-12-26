@@ -25,11 +25,14 @@ class CreateOrdersTable extends Migration
             $table->double('price');
             $table->double('qty');
             $table->double('amount');
-            $table->double('discount');
+            $table->double('discount')->default(0);
             $table->boolean('gst_type')->comment('0-inter state, 1-out of state');
             $table->double('cgst')->default(0);
             $table->double('sgst')->default(0);
             $table->double('igst')->default(0);
+            $table->double('cgst_per')->default(0);
+            $table->double('sgst_per')->default(0);
+            $table->double('igst_per')->default(0);
             $table->double('grand_total');
             $table->string('instruction');
             $table->double('dispatch_qty')->default('0');
@@ -38,7 +41,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('added_by')->references('id')->on('users');
             $table->integer('updated_by')->nullable()->unsigned()->index();
             $table->foreign('updated_by')->references('id')->on('users');
-            $table->double('status')->default('0')->comment('0-pending, 1-partial pending, 2-dispatch');
+            $table->double('status')->default('0')->comment('0-pending, 1-dispatch');
             $table->string('lr_no')->nullable();
             $table->string('transporter')->nullable();
             $table->timestamps();

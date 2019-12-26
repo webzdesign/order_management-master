@@ -25,14 +25,18 @@ class CategoryController extends Controller
         return DataTables::eloquent($category)
             ->addColumn('action', function ($category) {
                 $editUrl = route('category.edit', encrypt($category->id));
-                $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                if (auth()->user()->hasPermission('edit.category')) {
+                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                }
 
-                if ($category->status == '0') {
-                    $activeUrl = url('categoryactivedeactive/active/'.$category->id);
-                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
-                } else {
-                    $deactiveUrl = url('categoryactivedeactive/deactive/'.$category->id);
-                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                if (auth()->user()->hasPermission('activeinactive.category')) {
+                    if ($category->status == '0') {
+                        $activeUrl = url('categoryactivedeactive/active/'.$category->id);
+                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                    } else {
+                        $deactiveUrl = url('categoryactivedeactive/deactive/'.$category->id);
+                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                    }
                 }
                 return $action;
             })
