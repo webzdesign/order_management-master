@@ -27,14 +27,17 @@ class ProductController extends Controller
         return DataTables::eloquent($product)
             ->addColumn('action', function ($product) {
                 $editUrl = route('product.edit', encrypt($product->id));
-                $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
-
-                if ($product->status == '0') {
-                    $activeUrl = url('productactivedeactive/active/'.$product->id);
-                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
-                } else {
-                    $deactiveUrl = url('productactivedeactive/deactive/'.$product->id);
-                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                if (auth()->user()->hasPermission('edit.product')) {
+                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                }
+                if (auth()->user()->hasPermission('activeinactive.product')) {
+                    if ($product->status == '0') {
+                        $activeUrl = url('productactivedeactive/active/'.$product->id);
+                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                    } else {
+                        $deactiveUrl = url('productactivedeactive/deactive/'.$product->id);
+                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                    }
                 }
                 return $action;
             })

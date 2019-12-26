@@ -158,19 +158,19 @@ class PermissionsTableSeeder extends Seeder
 
         /* permission for Order module start */
         if (Permission::where('name', '=', 'Can View Order')->first() === null) {
-            Permission::create(['name' => 'Can View Order', 'slug' => 'view.orders', 'description' => 'Can view order', 'model' => 'Order',]);
+            Permission::create(['name' => 'Can View Order', 'slug' => 'view.order', 'description' => 'Can view order', 'model' => 'Order',]);
         }
 
         if (Permission::where('name', '=', 'Can Create Order')->first() === null) {
-            Permission::create(['name' => 'Can Create Order', 'slug' => 'create.orders', 'description' => 'Can create new orders', 'model' => 'Order',]);
+            Permission::create(['name' => 'Can Create Order', 'slug' => 'create.order', 'description' => 'Can create new orders', 'model' => 'Order',]);
         }
 
         if (Permission::where('name', '=', 'Can Edit Order')->first() === null) {
-            Permission::create(['name' => 'Can Edit Order', 'slug' => 'edit.orders', 'description' => 'Can edit orders', 'model' => 'Order',]);
+            Permission::create(['name' => 'Can Edit Order', 'slug' => 'edit.order', 'description' => 'Can edit orders', 'model' => 'Order',]);
         }
 
-        if (Permission::where('name', '=', 'Can Delete Order')->first() === null) {
-            Permission::create(['name' => 'Can Delete Order', 'slug' => 'delete.orders', 'description' => 'Can delete orders', 'model' => 'Order',]);
+        if (Permission::where('name', '=', 'Can Dispatch Order')->first() === null) {
+            Permission::create(['name' => 'Can Dispatch Order', 'slug' => 'dispatch.order', 'description' => 'Can dispatch orders', 'model' => 'Order',]);
         }
 
         /* permission for City module end */

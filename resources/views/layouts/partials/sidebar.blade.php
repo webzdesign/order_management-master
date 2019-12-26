@@ -47,10 +47,11 @@
             </ul>
         </li>
         @endif
-
-        <li><a href="{{url('order')}}"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+		@permission('view.order')
+			<li><a href="{{url('order')}}"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+		@endpermission
         @permission('view.purchases')
-          <li><a href="{{url('purchase')}}"><i class="fa fa-line-chart"></i> Stock Adjustment / Purchase</a></li>
+          	<li><a href="{{url('purchase')}}"><i class="fa fa-line-chart"></i> Stock Adjustment / Purchase</a></li>
         @endpermission
         <li><a><i class="fa fa-bar-chart"></i>Reports <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">

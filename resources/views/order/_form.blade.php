@@ -61,30 +61,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($order as $key => $value)
                                     <tr class="ordertable">
-                                        <td><label class="sr_no">1 </label></td>
+                                        <td><label class="sr_no">{{ $key+1 }}</label></td>
                                         <td>
                                             <select id="product_id" name="product_id[]" class="form-control m-bot15 select2_single col-lg-12 product_id">
                                                 <option></option>
                                                 @foreach ($product as $key => $val)
-                                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                    <option value="{{ $val->id }}" {{ ($val->id == $value->product_id) ? 'selected':''  }}>{{ $val->name }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" id="price" name="price[]" class="form-control" placeholder="Price" readonly>
+                                            <input type="text" id="price" name="price[]" class="form-control" placeholder="Price"  value={{ $value->price }} readonly>
                                         </td>
                                         <td>
-                                            <input type="text" id="qty" name="qty[]" class="form-control numberonly qty" placeholder="Qty">
+                                            <input type="text" id="qty" name="qty[]" class="form-control numberonly qty" value={{ $value->qty }} placeholder="Qty">
                                         </td>
                                         <td>
-                                            <input type="text" id="amount" name="amount[]" class="form-control numberonly amount" placeholder="Amount" readonly>
+                                            <input type="text" id="amount" name="amount[]" class="form-control numberonly amount" placeholder="Amount" value={{ $value->amount }} readonly>
                                         </td>
                                         <td>
                                             <button  tabindex="1" type="button" class="btn btn-success add btn-xs " onclick="">+</button>
                                             <button tabindex="1" type="button" class="btn btn-danger minus btn-xs">-</button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     <tr>
                                         <td></td>
                                         <td><label id="product_id_err"></label></td>
@@ -97,37 +99,37 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Discount <span class="requride_cls">*</span></td>
-                                        <td><input type="text" id="discount" name="discount" class="form-control discount" placeholder="Discount"></td>
+                                        <td>Discount </td>
+                                        <td><input type="text" id="discount" name="discount" class="form-control discount" placeholder="Discount" value="{{ $order[0]->discount }}"></td>
                                         <td></td>
                                     </tr>
-                                    <input type="hidden" id="gst_type" name="gst_type" value="{{ ((Helper::setting()->gst_type) == 0) ? '0' : '1' }}">
-                                    <tr style="display:{{ ((Helper::setting()->gst_type) == 0) ? '' : 'none' }}">
+                                    <input type="hidden" id="gst_type" name="gst_type" value="{{ (($order[0]->gst_type) == 0) ? '0' : '1' }}">
+                                    <tr style="display:{{ (($order[0]->gst_type) == 0) ? '' : 'none' }}">
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>CGST {{ Helper::setting()->cgst.'%' }}<span class="requride_cls">*</span></td>
-                                        <td><input type="text" id="cgst" name="cgst" class="form-control" placeholder="CGST" readonly value="">
-                                        <input type="hidden" id="cgst_hidn" name="cgst_hidn" value="{{ Helper::setting()->cgst }}"></td>
+                                        <td>CGST {{ $order[0]->cgst_per.'%' }} </td>
+                                        <td><input type="text" id="cgst" name="cgst" class="form-control" placeholder="CGST" readonly value="{{ $order[0]->cgst }}">
+                                        <input type="hidden" id="cgst_hidn" name="cgst_hidn" value="{{ $order[0]->cgst_per }}"></td>
                                         <td></td>
                                     </tr>
-                                    <tr style="display:{{ ((Helper::setting()->gst_type) == 0) ? '' : 'none' }}">
+                                    <tr style="display:{{ (($order[0]->gst_type) == 0) ? '' : 'none' }}">
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>SGST {{ Helper::setting()->sgst.'%' }}<span class="requride_cls">*</span></td>
-                                        <td><input type="text" id="sgst" name="sgst" class="form-control" placeholder="SGST" readonly value="">
-                                        <input type="hidden" id="sgst_hidn" name="sgst_hidn" value="{{ Helper::setting()->sgst }}"></td>
+                                        <td>SGST {{ $order[0]->sgst_per.'%' }} </td>
+                                        <td><input type="text" id="sgst" name="sgst" class="form-control" placeholder="SGST" readonly value="{{ $order[0]->sgst }}">
+                                        <input type="hidden" id="sgst_hidn" name="sgst_hidn" value="{{ $order[0]->sgst_per }}"></td>
                                         </td>
                                         <td></td>
                                     </tr>
-                                    <tr style="display:{{ ((Helper::setting()->gst_type) == 1) ? '' : 'none' }}">
+                                    <tr style="display:{{ (($order[0]->gst_type) == 1) ? '' : 'none' }}">
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>IGST {{ Helper::setting()->igst.'%' }}<span class="requride_cls">*</span></td>
-                                        <td><input type="text" id="igst" name="igst" class="form-control" placeholder="IGST" readonly value="">
-                                        <input type="hidden" id="igst_hidn" name="igst_hidn" value="{{ Helper::setting()->igst }}"></td>
+                                        <td>IGST {{ $order[0]->igst_per.'%' }} </td>
+                                        <td><input type="text" id="igst" name="igst" class="form-control" placeholder="IGST" readonly value="{{ $order[0]->igst }}">
+                                        <input type="hidden" id="igst_hidn" name="igst_hidn" value="{{ $order[0]->igst_per }}"></td>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -135,8 +137,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Grand Total <span class="requride_cls">*</span></td>
-                                        <td><input type="text" id="grand_total" name="grand_total" class="form-control" placeholder="Grand Total" value="" readonly></td>
+                                        <td>Grand Total </td>
+                                        <td><input type="text" id="grand_total" name="grand_total" class="form-control" placeholder="Grand Total" value="{{ $order[0]->grand_total }}" readonly></td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -218,13 +220,16 @@ $(document).ready(function(){
         $clone.find('span:nth-child(3)').remove();
 
         $tr.after($clone);
+        $clone.find('select').val('').trigger('change');
         sr_change();
+        total();
     });
 
     $('body').on('click','.minus' ,function(event){
         if($(".ordertable").length > 1){
             $(this).closest(".ordertable").remove();
             sr_change();
+            total();
         }
     });
 
@@ -337,6 +342,7 @@ $(document).ready(function(){
             $('body').find('#grand_total').val(igstwithAmount.toFixed(2));
         }
     }
+    total();
 
     $(document).on('change', '.product_id' ,function(){
         product_id = $(this).val();

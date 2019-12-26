@@ -114,9 +114,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('checkProductName','ProductController@checkProductName')->middleware('permission:view.product');
     Route::get('productactivedeactive/{type}/{id}','ProductController@productactivedeactive')->middleware('permission:activeinactive.product');
 
-    Route::get('getOrderData','OrderController@getOrderData');
-    Route::post('getProductPrice','OrderController@getProductPrice');
-    Route::resource('order', 'OrderController');
+    /* Route For Order */
+    Route::get('order','OrderController@index')->name('order.index')->middleware('permission:view.order');
+    Route::get('order/create','OrderController@create')->name('order.create')->middleware('permission:create.order');
+    Route::post('order','OrderController@store')->name('order.store')->middleware('permission:create.order');
+    Route::get('order/{order}/edit','OrderController@edit')->name('order.edit')->middleware('permission:edit.order');
+    Route::put('order/{order}','OrderController@update')->name('order.update')->middleware('permission:edit.order');
+    Route::get('getOrderData', 'OrderController@getOrderData')->middleware('permission:view.order');
+    Route::post('getProductPrice','OrderController@getProductPrice')->middleware('permission:view.order');
+    Route::post('getExistOrderDetail','OrderController@getExistOrderDetail')->middleware('permission:view.order');
+    Route::post('getDispatchQty','OrderController@getDispatchQty')->middleware('permission:view.order');
 
     /** Route For Party Report */
     Route::get('partyreport','PartyReportController@index')->name('partyreport.index');

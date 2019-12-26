@@ -2,7 +2,7 @@
 namespace App\Helpers;
 
 use App\Models\Setting;
-
+use App\Models\Order;
 class Helper
 {
 	public static function successMsg($type,$msg)
