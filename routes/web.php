@@ -120,6 +120,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('order','OrderController@store')->name('order.store')->middleware('permission:create.order');
     Route::get('order/{order}/edit','OrderController@edit')->name('order.edit')->middleware('permission:edit.order');
     Route::put('order/{order}','OrderController@update')->name('order.update')->middleware('permission:edit.order');
+    Route::get('order/{show}','OrderController@show')->name('order.show')->middleware('permission:view.order');
     Route::get('getOrderData', 'OrderController@getOrderData')->middleware('permission:view.order');
     Route::post('getProductPrice','OrderController@getProductPrice')->middleware('permission:view.order');
     Route::post('getExistOrderDetail','OrderController@getExistOrderDetail')->middleware('permission:view.order');
