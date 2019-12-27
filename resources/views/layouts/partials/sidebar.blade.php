@@ -55,10 +55,12 @@
         @endpermission
         <li><a><i class="fa fa-bar-chart"></i>Reports <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-                <li><a href="{{ url('/partyreport') }}"> Party Wise Report</a></li>
-                <li><a href="{{ url('/') }}"> Product Wise Report</a></li>
-                <li><a href="{{ url('/') }}"> Date Wise Report</a></li>
-                <li><a href="{{ url('/') }}"> City Wise Report</a></li>
+                @permission('view.partywisereport')
+                  <li><a href="{{ url('partywisereport') }}"> Party Wise Report</a></li>
+                @endpermission
+                <li><a href="{{ url('productwisereport') }}"> Product Wise Report</a></li>
+                <li><a href="{{ url('') }}"> Date Wise Report</a></li>
+                <li><a href="{{ url('') }}"> City Wise Report</a></li>
             </ul>
         </li>
         <li><a href="{{url('settings')}}"><i class="fa fa-cog"></i> Settings</a></li>

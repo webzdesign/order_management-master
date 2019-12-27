@@ -15,7 +15,7 @@
                         <div class="clearfix"></div>
                 </div>
 
-                <form action="{{ url('printPartyReport')}}" method="post" target="_blank" name="form">
+                <form action="{{ url('printPartywiseReport')}}" method="post" target="_blank" name="form">
                 @csrf
 
                 <div class="form-group">
@@ -148,7 +148,7 @@ $(document).ready(function() {
             $(api.column(4).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
         },
         ajax: {
-            "url": "{{ url('getPartyReportData') }}",
+            "url": "{{ url('getPartywiseReportData') }}",
 			"dataType": "json",
             "type": "get",
             data: {
@@ -168,7 +168,7 @@ $(document).ready(function() {
             { data: 'party.name'},
             { data: 'order_no'},
             { data: 'date'},
-            { data: 'amount'},
+            { data: 'grand_total'},
         ],
     });
     

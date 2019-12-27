@@ -126,15 +126,24 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('getExistOrderDetail','OrderController@getExistOrderDetail')->middleware('permission:view.order');
     Route::post('getDispatchQty','OrderController@getDispatchQty')->middleware('permission:view.order');
 
-    /** Route For Party Report */
-    Route::get('partyreport','PartyReportController@index')->name('partyreport.index');
-    Route::get('getPartyReportData', 'PartyReportController@getPartyReportData');
-    Route::post('printPartyReport', 'PartyReportController@printPartyReport');
-    // Route::resource('inventorystock-report', 'InventoryStockReportController')->middleware('permission:view.inventorystock.report');
-    // Route::get('getInventoryStockData', 'InventoryStockReportController@getInventoryStockReportData')->middleware('permission:view.inventorystock.report');
-    // Route::post('getInventroyStockItem', 'InventoryStockReportController@getStockItems')->middleware('permission:view.inventorystock.report');
-    // Route::post('printInventoryStockReport', 'InventoryStockReportController@printInventoryStock')->middleware('permission:view.inventorystock.report');
+    /** Route For Party Report Start*/
+    Route::get('partyreport','PartyReportController@index')->name('partyreport.index')->middleware('permission:view.partywisereport');
+    Route::get('getPartyReportData', 'PartyReportController@getPartyReportData')->middleware('permission:view.partywisereport');
+    Route::post('printPartyReport', 'PartyReportController@printPartyReport')->middleware('permission:view.partywisereport');
+    /** Route For Party Report End */
 
+    /** Route For Party Report Start*/
+    Route::get('partywisereport','PartyReportController@index')->name('partywisereport.index')->middleware('permission:view.partywisereport');
+    Route::get('getPartywiseReportData', 'PartyReportController@getPartyReportData')->middleware('permission:view.partywisereport');
+    Route::post('printPartywiseReport', 'PartyReportController@printPartyReport')->middleware('permission:view.partywisereport');
+    /** Route For Party Report End */
+
+    /** Route For Product Report Start*/
+    Route::get('productwisereport','ProductWiseReportController@index')->name('productwisereport.index');
+    Route::get('getProductwiseReportData', 'ProductWiseReportController@getProductWiseReportData');
+    Route::post('printProductwiseReport', 'ProductWiseReportController@printProductWiseReport');
+    Route::post('getCategoryProduct', 'ProductWiseReportController@getCategoryProduct');
+    /** Route For Product Report End */
 
 
 });

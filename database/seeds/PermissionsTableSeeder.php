@@ -201,6 +201,26 @@ class PermissionsTableSeeder extends Seeder
         if (Permission::where('name', '=', 'Can Delete Purchase')->first() === null) {
             Permission::create(['name' => 'Can Delete Purchase', 'slug' => 'delete.purchases', 'description' => 'Can delete Purchase', 'model' => 'Purchase',]);
         }
+        /* permission for Stock/Adjustment Purchase module end */
+
+        /* permission for Report module start */
+        if (Permission::where('name', '=', 'Can View Party Wise Report')->first() === null) {
+            Permission::create(['name' => 'Can View Party Wise Report', 'slug' => 'view.partywisereport', 'description' => 'Can view Party Report', 'model' => 'Reports',]);
+        }
+
+        if (Permission::where('name', '=', 'Can View Product Wise Report')->first() === null) {
+            Permission::create(['name' => 'Can View Product Wise Report', 'slug' => 'view.productwisereport', 'description' => 'Can view Product Report', 'model' => 'Reports',]);
+        }
+
+        if (Permission::where('name', '=', 'Can View Date Wise Report')->first() === null) {
+            Permission::create(['name' => 'Can View Date Wise Report', 'slug' => 'view.datewisereport', 'description' => 'Can view Date Report', 'model' => 'Reports',]);
+        }
+
+        if (Permission::where('name', '=', 'Can View City Wise Report')->first() === null) {
+            Permission::create(['name' => 'Can View City Wise Report', 'slug' => 'view.citywisereport', 'description' => 'Can view City Report', 'model' => 'Reports',]);
+        }
+        /* permission for Stock/Adjustment Purchase module end */
+
 
     }
 }
