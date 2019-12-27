@@ -12,14 +12,6 @@
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            @if (Session::has('message'))
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <i class="ace-icon fa fa-times"></i>
-                    </button>
-                        {!! session('message') !!}
-                </div>
-            @endif
             <div class="x_panel">
                 <div class="x_title">
                 <h2>Change Password</h2>
@@ -67,6 +59,18 @@
 @section('script')
 <script>
 jQuery(document).ready(function() {
+
+    @if (Session::has('message'))
+    new PNotify({
+        title: '{{ $moduleName }}',
+        text: '{!! session('message') !!}',
+        type: 'success',
+        styling: 'bootstrap3',
+        delay: 1500,
+        animation: 'fade',
+        animateSpeed: 'slow'
+    });
+    @endif
 
     $('#frm').validate({
         rules:

@@ -19,7 +19,7 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              
+
               <form id="frm" method="post"  action ="{{route('user.store')}}"  class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
                 @csrf
 
@@ -63,7 +63,7 @@
                   <div>
                     <div class="radio">
                       <label style="margin-right:20px;">
-                        <input type="radio" value="1" name="status">Active
+                        <input type="radio" value="1" name="status" checked>Active
                       </label>
                       <label>
                         <input type="radio" value="0" name="status">Deactive
@@ -94,7 +94,7 @@
                             <div class="col-lg-12 permission-card">
                             @php $cnt = 1; @endphp
                             @foreach($permissions as $k=>$permission)
-                                @if($cnt%3 == 1)    
+                                @if($cnt%3 == 1)
                                     <div class="row">
                                 @endif
                                     <div class="col-lg-4 permission-listing">
@@ -121,7 +121,7 @@
                     <button type="submit" class="btn btn-success focusClass">Submit</button>
                   </div>
                 </div>
-                
+
 
               </form>
             </div>

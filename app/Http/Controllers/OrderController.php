@@ -28,6 +28,7 @@ class OrderController extends Controller
         return DataTables::eloquent($order)
         ->addColumn('action', function ($order) {
             $editUrl = route('order.edit', encrypt($order->order_id));
+            $viewUrl = route('order.show', encrypt($order->order_id));
             $action = '';
 
             $exstingOrder = Order::where('order_id', $order->order_id)->count();
@@ -51,6 +52,9 @@ class OrderController extends Controller
                     $action .= "<a class='btn btn-dark  btn-xs dispatch-confirm' data-toggle='modal' data-target='.bs-example-modal-sm' id='dispatchQtyBtn' data-id='$order->order_id'><i class='fa fa-arrow-up'></i> Dispatch</a>";
                 }
             }
+
+            $action .=  "<a href='".$viewUrl."' class='btn btn-info btn-xs'><i class='fa fa-eye'></i> View</a>";
+
             return $action;
         })
 
@@ -103,6 +107,15 @@ class OrderController extends Controller
 
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
+    }
+
+    public function show($id)
+    {
+        $moduleName = $this->moduleName;
+        $order = Order::where('order_id', decrypt($id))->get();
+        $party = Party::select('id', 'name')->active()->get();
+        $product = Product::select('id', 'name')->active()->get();
+        return view($this->view.'/view', compact('order', 'party', 'moduleName', 'category', 'product'));
     }
 
     public function edit($id)
