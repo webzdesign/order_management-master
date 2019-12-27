@@ -43,7 +43,7 @@ class ProductWiseReportController extends Controller
             ->editColumn('grand_total', function($productreport){
                 return number_format($productreport->grand_total,2); 
             })
-            ->rawColumns(['date', 'amount'])
+            ->rawColumns(['date', 'amount', 'grand_total'])
             ->addIndexColumn()
             ->make(true);
     }
