@@ -10,6 +10,9 @@
 <!-- bootstrap-daterangepicker -->
 <link href="{{asset('public/assets/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
+<!-- bootstrap-datepicker -->
+<link href="{{asset('public/assets/vendors/bootstrap-datepicker/datepicker.min.css')}}" rel="stylesheet">
+
  <!-- Datatables -->
 <link href="{{asset('public/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('public/assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">

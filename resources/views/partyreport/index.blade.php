@@ -15,7 +15,7 @@
                         <div class="clearfix"></div>
                 </div>
 
-                <form action="{{ url('admin/printInventoryStockReport')}}" method="post" target="_blank" name="form">
+                <form action="{{ url('printPartyReport')}}" method="post" target="_blank" name="form">
                 @csrf
 
                 <div class="form-group">
@@ -36,7 +36,7 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <label for="from">From Date
                             </label>
-                                <input type="text" id="from" name="from"  class="form-control col-md-7 col-xs-12 focusClass datepicker " placeholder="Select From Date" value="{{ date('d-m-Y')}}" readonly>
+                                <input type="text" id="from" name="from"  class="form-control col-md-7 col-xs-12 focusClass " placeholder="Select From Date" value="{{ date('d-m-Y')}}" readonly>
                             <div id="fromerror">
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <label for="to">To Date
                             </label>
-                                <input type="text" id="to" name="to"  class="form-control col-md-7 col-xs-12 focusClass datepicker " placeholder="Select To Date" value="{{ date('d-m-Y')}}" readonly>
+                                <input type="text" id="to" name="to"  class="form-control col-md-7 col-xs-12 focusClass " placeholder="Select To Date" value="{{ date('d-m-Y')}}" readonly>
                             <div id="toerror">
                             </div>
                         </div>
@@ -66,12 +66,17 @@
                                     <th>SrNo</th>
                                     <th>Party</th>
                                     <th>Orde No</th>
-                                    <th>Orde Date</th>
+                                    <th>Order Date</th>
                                     <th>Order Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+		                        <tr>
+                                    <th colspan="4"></th><th></th>
+                                </tr>
+	                        </tfoot>
                         </table>
                     </div>
                 </div>
@@ -90,6 +95,26 @@ $(document).ready(function() {
 
     var from = $('#from').val();
     var to = $('#to').val();
+    
+    $('#from').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd-mm-yyyy',
+    })
+    .on('changeDate', function(selected){
+        var minDate = new Date(selected.date.valueOf());
+        $('#to').datepicker('setStartDate', minDate);
+    });
+
+    $('#to').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+        format: 'dd-mm-yyyy',
+    })
+    .on('changeDate', function(selected){
+        var maxDate = new Date(selected.date.valueOf());
+        $('#from').datepicker('setEndDate', maxDate);
+    });
 
     @if (Session::has('message'))
     new PNotify({
@@ -102,11 +127,26 @@ $(document).ready(function() {
         animateSpeed: 'slow'
     });
     @endif
-    
+
     var datatable = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
         paging: false,
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.substring(0).replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            var amountTotal = api.column(4).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            $(api.column(0).footer()).css("text-align", "right");
+            $(api.column(0).footer()).html('GRAND TOTAL');
+            $(api.column(4).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
+        },
         ajax: {
             "url": "{{ url('getPartyReportData') }}",
 			"dataType": "json",
@@ -131,7 +171,7 @@ $(document).ready(function() {
             { data: 'amount'},
         ],
     });
-    $('.datatable').append('<tbody><tr><td colspan="4" align="right">Grand Total</td><td>'+to+'</td></tr></tbody>');
+    
     $('.searchData').on('click', function(e) {
         e.preventDefault();
         datatable.draw();

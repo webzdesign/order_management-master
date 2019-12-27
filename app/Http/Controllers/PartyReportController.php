@@ -8,7 +8,7 @@ use App\Models\City;
 use App\Models\Order;
 use App\Models\Party;
 use Helper, DataTables;
-use DB;
+use DB, PDF;
 class PartyReportController extends Controller
 {
     public $route = 'partyreport';
@@ -39,24 +39,29 @@ class PartyReportController extends Controller
                 return date('d-m-Y', strtotime($partyreport->date));
             })
             ->editColumn('amount', function($partyreport){
-                return '₹'.number_format($partyreport->amount,2); 
+                return number_format($partyreport->amount,2); 
             })
             ->rawColumns(['date', 'amount'])
             ->addIndexColumn()
             ->make(true);
     }
 
-    function convertToObject($array) {
-        $object = new stdClass();
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $value = convertToObject($value);
+    public function printPartyReport(Request $request)
+    {
+        $partyreport = Order::with(['party']);
+        if ($party = $request->party) {
+            if ($party != '') {
+                $partyreport->where('party_id', $party);
             }
-            $object->$key = $value;
-        }
-        return $object;
-    }
+        } 
+        $partyreport->where('date', '>=', date('Y-m-d', strtotime($request->from)))->where('date', '<=', date('Y-m-d',strtotime($request->to)));
+        $partyreport = $partyreport->get();
+        //return view($this->view.'.print', compact('partyreport'));
 
+        $html = view($this->view.'.print', compact('partyreport'))->render();
+        $pdf = PDF::loadHTML($html)->setPaper('a4')->setWarnings(false);
+        return $pdf->stream();
+    }
     public function create()
     {
         //
