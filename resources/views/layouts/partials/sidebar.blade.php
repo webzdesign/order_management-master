@@ -53,16 +53,24 @@
         @permission('view.purchases')
           	<li><a href="{{url('purchase')}}"><i class="fa fa-line-chart"></i> Stock Adjustment / Purchase</a></li>
         @endpermission
-        <li><a><i class="fa fa-bar-chart"></i>Reports <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-                @permission('view.partywisereport')
-                  <li><a href="{{ url('partywisereport') }}"> Party Wise Report</a></li>
-                @endpermission
-                <li><a href="{{ url('productwisereport') }}"> Product Wise Report</a></li>
-                <li><a href="{{ url('') }}"> Date Wise Report</a></li>
-                <li><a href="{{ url('') }}"> City Wise Report</a></li>
-            </ul>
-        </li>
+        @if(auth()->user()->hasPermission('view.partywisereport') || auth()->user()->hasPermission('view.productwisereport') || auth()->user()->hasPermission('view.datewisereport') || auth()->user()->hasPermission('view.citywisereport'))
+          <li><a><i class="fa fa-bar-chart"></i>Reports <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                  @permission('view.partywisereport')
+                    <li><a href="{{ url('partywisereport') }}"> Party Wise Report</a></li>
+                  @endpermission
+                  @permission('view.productwisereport')
+                    <li><a href="{{ url('productwisereport') }}"> Product Wise Report</a></li>
+                  @endpermission
+                  @permission('view.datewisereport')
+                    <li><a href="{{ url('datewisereport') }}"> Date Wise Report</a></li>
+                  @endpermission
+                  @permission('view.citywisereport')
+                    <li><a href="{{ url('citywisereport') }}"> City Wise Report</a></li>
+                  @endpermission
+              </ul>
+          </li>
+        @endif
         <li><a href="{{url('settings')}}"><i class="fa fa-cog"></i> Settings</a></li>
       </ul>
     </div>

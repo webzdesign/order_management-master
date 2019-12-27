@@ -15,23 +15,10 @@
                         <div class="clearfix"></div>
                 </div>
 
-                <form action="{{ url('printPartywiseReport')}}" method="post" target="_blank" name="form">
+                <form action="{{ url('printDatewiseReport')}}" method="post" target="_blank" name="form">
                 @csrf
 
                 <div class="form-group">
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <label for="party">Party  <span class="requride_cls">*</span>
-                        </label>
-                    
-                        <select id="party" name="party" class="form-control select2_single">
-                            <option></option>
-                            @foreach ($party as $party)
-                            <option {{ (old('party')== $party->id)?'selected':'' }} value="{{ $party->id }}">{{ $party->name }} ({{ $party->mobile_no }})</option>
-                            @endforeach
-                        </select>
-                        <div id="partyerror">
-                        </div>
-                    </div>
                 
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <label for="from">From Date
@@ -148,13 +135,10 @@ $(document).ready(function() {
             $(api.column(4).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
         },
         ajax: {
-            "url": "{{ url('getPartywiseReportData') }}",
+            "url": "{{ url('getDatewiseReportData') }}",
 			"dataType": "json",
             "type": "get",
             data: {
-                party:function(){
-                    return $("#party").val();
-                },
                 from:function(){
                     return $('#from').val();
                 },
@@ -179,7 +163,6 @@ $(document).ready(function() {
 
     $('.searchClear').on('click', function(e) {
         e.preventDefault();
-        $('#party').val('').trigger('change');
         $('#from').val(from);
         $('#to').val(to);
         datatable.draw();

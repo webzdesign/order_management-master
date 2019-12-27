@@ -20,7 +20,7 @@
 
                 <div class="form-group">
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <label for="category">Category 
+                        <label for="category">Category  <span class="requride_cls">*</span>
                         </label>
                     
                         <select id="category" name="category" class="form-control select2_single">
@@ -32,7 +32,7 @@
                     </div>
                 
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <label for="product">Product
+                        <label for="product">Product  <span class="requride_cls">*</span>
                         </label>
                     
                         <select id="product" name="product" class="form-control select2_single">
