@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	<div class="title_left">
-		<a href="{{ url('state') }}"><button class="btn btn-primary" >Back</button></a>
+		<a href="{{ url('state') }}"><button class="btn btn-primary" >{{ trans('state.Back') }}</button></a>
 	</div>
 	<div class="clearfix"></div>
 	<div class="row">
@@ -52,8 +52,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('state') }}" class="btn btn-primary">Cancel</a>
-								<button type="submit" class="btn btn-success focusClass">Submit</button>
+								<a href="{{ url('state') }}" class="btn btn-primary">{{ trans('state.Cancel') }}</a>
+								<button type="submit" class="btn btn-success focusClass">{{ trans('state.Submit') }}</button>
 							</div>
 						</div>
 

@@ -15,10 +15,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{$moduleName }} Details</h2>
+                    <h2>{{$moduleName }} {{ trans('state.Details') }}</h2>
                     <div>
                         @permission('create.states')
-                        <a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
+                        <a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('state.New') }}</button></a>
                         @endpermission
                     </div>
                     <div class="clearfix"></div>
@@ -31,7 +31,7 @@
                                 width="100%" role="grid" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>SrNo</th>
+                                            <th>{{ trans('state.srNo') }}</th>
                                             <th>Name</th>
                                             <th>Status</th>
                                             <th>Added By</th>

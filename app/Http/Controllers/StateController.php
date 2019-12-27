@@ -29,7 +29,7 @@ class StateController extends Controller
             $action = '';
             if (auth()->user()->hasPermission('edit.states')) {
                 $editUrl = route('state.edit', encrypt($state->id));
-                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
             }
 
             if (auth()->user()->hasPermission('activeinactive.states')) {
