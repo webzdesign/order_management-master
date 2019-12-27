@@ -30,11 +30,17 @@ class OrderController extends Controller
             $editUrl = route('order.edit', encrypt($order->order_id));
             $action = '';
 
-            if (auth()->user()->hasPermission('edit.order')) {
-                if($order->status != 0){
-                    $action = '';
-                } else {
-                    $action =  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+            $exstingOrder = Order::where('order_id', $order->order_id)->count();
+            $remaningOrder = Order::where('dispatch_qty', 0)->where('order_id', $order->order_id)->count();
+
+            if ($exstingOrder == $remaningOrder) {
+
+                if (auth()->user()->hasPermission('edit.order')) {
+                    if($order->status != 0){
+                        $action = '';
+                    } else {
+                        $action =  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                    }
                 }
             }
 
@@ -59,6 +65,7 @@ class OrderController extends Controller
         ->editColumn('date', function ($order) {
             return date("d-m-Y", strtotime($order->date));
         })
+
         ->rawColumns(['action', 'status'])
         ->addIndexColumn()
         ->make(true);

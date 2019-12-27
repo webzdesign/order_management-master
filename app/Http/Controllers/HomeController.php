@@ -29,7 +29,8 @@ class HomeController extends Controller
     {
         $moduleName = 'Dashboard';
         $userCount = User::where('status',1)->count();
-        return view('home', compact('moduleName', 'userCount'));
+        $totalOrder = Order::groupBy('order_id')->count();
+        return view('home', compact('moduleName', 'userCount', 'totalOrder'));
     }
 
     public function unauthorised()
