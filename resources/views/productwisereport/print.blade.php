@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Party Report</title>
+        <title>Product Wise Report</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             @page {
@@ -90,7 +90,8 @@
                         <th width="20%">Party</th>
                         <th width="20%">Order No</th>
                         <th width="20%">Order Date</th>
-                        <th width="20%">Order Amount</th>
+                        <th width="10%">Product Amount</th>
+                        <th width="10%">Order Amount</th>
                     </tr>
                 </thead>
 
@@ -98,20 +99,21 @@
                     @php 
                         $totalAmount = 0;
                     @endphp
-                    @foreach($partyreport as $key => $val)
+                    @foreach($productreport as $key => $val)
                     <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$val->party->name}}</td>
                         <td>{{$val->order_no}}</td>
                         <td>{{ date('d-m-Y', strtotime($val->date))}}</td>
                         <td>{{ $val->amount }}</td>
+                        <td>{{ $val->grand_total }}</td>
                     </tr>
                     @php 
-                        $totalAmount = $totalAmount + $val->amount;
+                        $totalAmount = $totalAmount + $val->grand_total;
                     @endphp
                     @endforeach
                     <tr>
-                        <td colspan="4" id="grandtotal">GRAND TOTAL</td>
+                        <td colspan="5" id="grandtotal">GRAND TOTAL</td>
                         <td>{{ $totalAmount }}</td>
                     </tr>
                 </tbody>

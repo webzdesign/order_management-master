@@ -11,9 +11,9 @@ use Helper, DataTables;
 use DB, PDF;
 class PartyReportController extends Controller
 {
-    public $route = 'partyreport';
-    public $view = 'partyreport';
-    public $moduleName = 'Party Report';
+    public $route = 'partywisereport';
+    public $view = 'partywisereport';
+    public $moduleName = 'Party Wise Report';
 
     public function index()
     {
@@ -38,10 +38,10 @@ class PartyReportController extends Controller
             ->editColumn('date', function($partyreport){
                 return date('d-m-Y', strtotime($partyreport->date));
             })
-            ->editColumn('amount', function($partyreport){
-                return number_format($partyreport->amount,2); 
+            ->editColumn('grand_total', function($partyreport){
+                return number_format($partyreport->grand_total,2); 
             })
-            ->rawColumns(['date', 'amount'])
+            ->rawColumns(['date', 'grand_total'])
             ->addIndexColumn()
             ->make(true);
     }
@@ -56,39 +56,10 @@ class PartyReportController extends Controller
         } 
         $partyreport->where('date', '>=', date('Y-m-d', strtotime($request->from)))->where('date', '<=', date('Y-m-d',strtotime($request->to)));
         $partyreport = $partyreport->get();
-        //return view($this->view.'.print', compact('partyreport'));
 
         $html = view($this->view.'.print', compact('partyreport'))->render();
         $pdf = PDF::loadHTML($html)->setPaper('a4')->setWarnings(false);
         return $pdf->stream();
     }
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
+    
 }
