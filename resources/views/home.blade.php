@@ -30,6 +30,16 @@
 											<h3 class="titleClass">Active Users</h3>
 										</div>
 									</div>
+								</a>
+								<a href="{{ url('order') }}">
+									<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										<div class="tile-stats">
+											<div class="icon"><i class="fa fa-shopping-cart"></i></div>
+											<div class="count">{{ $totalOrder }}</div>
+											<p></p>
+											<h3 class="titleClass">Total Order</h3>
+										</div>
+									</div>
                                 </a>
 							</div>
 						</div>
