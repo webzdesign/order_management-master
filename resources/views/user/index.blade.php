@@ -21,9 +21,9 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>{{$moduleName }} Details</h2>
+            <h2>{{ trans('user.detail', [ 'module' => $moduleName ]) }} </h2>
             @permission('create.users')
-              <div><a href="{{route('user.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
+              <div><a href="{{route('user.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('user.btn.New') }}</button></a></div>
             @endpermission
             <div class="clearfix"></div>
           </div>
@@ -35,12 +35,12 @@
                       width="100%" role="grid" style="width: 100%;">
                       <thead>
                         <tr>
-                          <th>SrNo</th>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Status</th>
-                          <th>User Role</th>
-                          <th>Action</th>
+                          <th>{{ trans('user.tfield.sr_no') }}</th>
+                          <th>{{ trans('user.tfield.name') }}</th>
+                          <th>{{ trans('user.tfield.email') }}</th>
+                          <th>{{ trans('user.tfield.status') }}</th>
+                          <th>{{ trans('user.tfield.user_role') }}</th>
+                          <th>{{ trans('user.tfield.action') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -60,9 +60,17 @@
 <script>
   $(document).ready(function() {
 
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
+
     @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("user.user") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -75,6 +83,9 @@
     datatable=$('.datatable').DataTable({
           processing: true,
           serverSide: true,
+          "language": {
+              "url": lang_url
+          },
           ajax: "{{url('/getUserData') }}",
           columns: [
             { data: 'DT_RowIndex',searchable: false,orderable: false},
@@ -92,11 +103,12 @@
   e.preventDefault();
   var linkURL = $(this).attr("href");
   swal({
-      title: "Are you sure want to Activate?",
-      text: "As that can be undone by doing reverse.",
+      title: "{{ trans('user.alert.confirm_activate') }}",
+      text: "{{ trans('user.alert.confirm_text') }}",
       icon: "success",
       buttons: true,
       dangerMode: true,
+      buttons: [ "{{ trans('user.alert.cancel_alert') }}" , "{{ trans('user.alert.confirm_alert') }}"]
   })
   .then((willDelete) => {
       if (willDelete) {
@@ -110,11 +122,12 @@ $(document).on('click', '#deactive', function(e) {
   e.preventDefault();
   var linkURL = $(this).attr("href");
   swal({
-  title: "Are you sure want to Deactivate?",
-  text: "As that can be undone by doing reverse.",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
+      title: "{{ trans('user.alert.confirm_deactivate') }}",
+      text: "{{ trans('user.alert.confirm_text') }}",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+      buttons: [ "{{ trans('user.alert.cancel_alert') }}" , "{{ trans('user.alert.confirm_alert') }}"]
   })
 
   .then((willDelete) => {

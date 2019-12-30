@@ -7,14 +7,14 @@
   <div class="right_col" role="main">
     <div class="">
       <div class="title_left">
-        <a href="{{route('user.index')}}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{route('user.index')}}"><button class="btn btn-primary" >{{ trans('user.btn.Back') }}</button></a>
       </div>
       <div class="clearfix"></div>
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Add {{$moduleName}}</h2>
+              <h2>{{ trans('user.add', [ 'module' => $moduleName ]) }}</h2>
 
               <div class="clearfix"></div>
             </div>
@@ -24,7 +24,7 @@
                 @csrf
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="name">Name<span class="requride_cls">*</span>
+                  <label class="control-label" for="name">{{ trans('user.user_name') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
                     <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Name" value="{{old('name')}}">
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="email">Email<span class="requride_cls">*</span>
+                  <label class="control-label" for="email">{{ trans('user.user_email') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
                     <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Email" value="{{old('email')}}">
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="password">Password<span class="requride_cls">*</span>
+                  <label class="control-label" for="password">{{ trans('user.password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
                     <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Password" value="{{old('password')}}" >
@@ -49,7 +49,7 @@
 
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="confirm_password">Confirm Password<span class="requride_cls">*</span>
+                  <label class="control-label" for="confirm_password">{{ trans('user.confirm_password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
                     <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Confirm Password" value="{{old('confirm_password')}}" >
@@ -57,8 +57,8 @@
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="status">
-                    Status <span class="requride_cls">*</span>
+                  <label class="control-label" for="status">{{ trans('user.status') }}
+                     <span class="requride_cls">*</span>
                   </label>
                   <div>
                     <div class="radio">
@@ -75,7 +75,7 @@
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <label class="control-label" for="role">
-                    Select Role
+                    {{ trans('user.select_role') }}
                   </label>
                   <div>
                     <select class="select2_single form-control" name="role" id="role">
@@ -89,7 +89,7 @@
 
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
                 <div class="form-group">
-                            <label for="name">Permissions :</label>
+                            <label for="name">{{ trans('user.permissions') }} :</label>
 
                             <div class="col-lg-12 permission-card">
                             @php $cnt = 1; @endphp
@@ -117,8 +117,8 @@
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
-                    <a href=" {{ url('user') }}" class="btn btn-primary">Cancel</a>
-                    <button type="submit" class="btn btn-success focusClass">Submit</button>
+                    <a href=" {{ url('user') }}" class="btn btn-primary">{{ trans('user.btn.Cancel') }}</a>
+                    <button type="submit" class="btn btn-success focusClass">{{ trans('user.btn.Cancel') }}</button>
                   </div>
                 </div>
 

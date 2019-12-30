@@ -20,9 +20,11 @@ class Helper
 
     public static function activeDeactiveMsg($type, $msg) {
         if($type == 'active') {
-            Session()->flash('message', $msg.' Active Successfully !');
+            //Session()->flash('message', $msg.' Active Successfully !');
+            Session()->flash('message', $msg);
         } else {
-            Session()->flash('message', $msg.' Deactive Successfully !');
+            //Session()->flash('message', $msg.' Deactive Successfully !');
+            Session()->flash('message', $msg);
         }
     }
 

@@ -26,14 +26,14 @@
 </style>
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{url('role')}}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{url('role')}}"><button class="btn btn-primary" >{{ trans('role.btn.Back') }}</button></a>
     </div>
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2><i class="fa fa-bars"></i>  Edit {{$moduleName}}</h2>
+                    <h2><i class="fa fa-bars"></i>{{ trans('role.edit', [ 'module' => $moduleName ]) }}</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -45,24 +45,24 @@
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Role Name <span class="requride_cls">*</span>
+                                {{ trans('role.role_name') }} <span class="requride_cls">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="Enter Role Name" value="{{ $role->name }}">
+                                <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="{{ trans('role.placeholder.role_name') }}" value="{{ $role->name }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">
-                                Description
+                                {{ trans('role.role_description') }}
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea id="description" name="description" class="form-control col-md-7 col-xs-12" placeholder="Enter Description" rows="3">{{ $role->description }}</textarea>
+                                <textarea id="description" name="description" class="form-control col-md-7 col-xs-12" placeholder="{{ trans('role.placeholder.role_description') }}" rows="3">{{ $role->description }}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="name">Permissions :</label>
+                            <label for="name">{{ trans('role.permissions') }} :</label>
 
                             <div class="col-lg-12 permission-card">
                             @php $cnt = 1; @endphp
@@ -90,8 +90,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <a href=" {{ url('role') }}" class="btn btn-primary">Cancel</a>
-                                <button type="submit" id="submitButton" class="btn btn-success focusClass">Submit</button>
+                                <a href=" {{ url('role') }}" class="btn btn-primary">{{ trans('role.btn.Cancel') }}</a>
+                                <button type="submit" id="submitButton" class="btn btn-success focusClass">{{ trans('role.btn.Submit') }}</button>
                             </div>
                         </div>
                     </form>
@@ -136,7 +136,7 @@ jQuery(document).ready(function() {
         },
         messages:
         {
-            name: { required: "Role Name Is Required.", remote:"Role Already Exist", },
+            name: { required: "{{ trans('role.message.role_name') }}", remote:"{{ trans('role.message.role_remote') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));
