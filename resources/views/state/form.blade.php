@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{ url('state') }}"><button class="btn btn-primary" >{{ trans('state.Back') }}</button></a>
+        <a href="{{ url('state') }}"><button class="btn btn-primary" >{{ trans('state.btn.Back') }}</button></a>
     </div>
     <div class="clearfix"></div>
 
@@ -14,7 +14,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
             <div class="x_title">
-                <h2>Add {{$moduleName}}</h2>
+                <h2>{{ trans('state.add', [ 'module' => $moduleName ]) }}</h2>
 
                 <div class="clearfix"></div>
             </div>
@@ -24,24 +24,24 @@
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                            State Name<span class="requride_cls">*</span>
+                            {{ trans('state.state_name') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" focus name="name" index="0"  class="form-control col-md-7 col-xs-12" placeholder="Enter State Name">
+                        <input type="text" id="name" focus name="name" index="0"  class="form-control col-md-7 col-xs-12" placeholder="{{ trans('state.placeholder.state_name') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
-                            Status<span class="requride_cls">*</span>
+                            {{ trans('state.status') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" index="1" checked id="status" name="status" value="1">Active
+                                <input type="radio" class="status" index="1" checked id="status" name="status" value="1">{{ trans('state.active')}}
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" index="2" id="status" name="status" value="0">Deactive
+                                <input type="radio" class="status" index="2" id="status" name="status" value="0">{{ trans('state.deactive')}}
                             </label>
                         </div>
                         </div>
@@ -51,11 +51,10 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('state') }}" class="btn btn-primary">{{ trans('state.Cancel') }}</a>
-                            <button type="submit" class="btn btn-success">{{ trans('state.Submit') }}</button>
+                            <a href=" {{ url('state') }}" class="btn btn-primary">{{ trans('state.btn.Cancel') }}</a>
+                            <button type="submit" class="btn btn-success">{{ trans('state.btn.Submit') }}</button>
                         </div>
                     </div>
-
                 </form>
             </div>
             </div>
@@ -67,7 +66,6 @@
 @section('script')
 <script>
 $(document).ready(function(){
-
     $('#frm').validate({
         rules:{
             name:{
@@ -86,8 +84,8 @@ $(document).ready(function(){
         },
         messages:
         {
-            name:{ required:"State Name Is Required", remote: "State Name Already Exits", },
-            status:{ required:"Status Is Required.", },
+            name:{ required:"{{ trans('state.message.state_name') }}", remote: "{{ trans('state.message.state_remote') }}", },
+            status:{ required:"{{ trans('state.message.status') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));

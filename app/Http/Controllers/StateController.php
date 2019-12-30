@@ -29,16 +29,16 @@ class StateController extends Controller
             $action = '';
             if (auth()->user()->hasPermission('edit.states')) {
                 $editUrl = route('state.edit', encrypt($state->id));
-                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
+                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> ".trans('state.btn.Edit')." </a>";
             }
 
             if (auth()->user()->hasPermission('activeinactive.states')) {
                 if ($state->status == '0') {
                     $activeUrl = url('stateActiveInactive/active/'.$state->id);
-                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> ".trans('state.btn.Active')."</a>";
                 } else {
                     $deactiveUrl = url('stateActiveInactive/deactive/'.$state->id);
-                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> ".trans('state.btn.Deactive')."</a>";
                 }
             }
 
@@ -68,8 +68,8 @@ class StateController extends Controller
     public function store(Request $request)
     {
         State::create(['name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
-
         Helper::successMsg('insert', $this->moduleName);
+
         return redirect($this->route);
     }
 

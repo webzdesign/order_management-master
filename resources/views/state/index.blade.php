@@ -15,10 +15,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{$moduleName }} {{ trans('state.Details') }}</h2>
+                    <h2>{{ trans('state.detail', [ 'module' => $moduleName ]) }} </h2>
                     <div>
                         @permission('create.states')
-                        <a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('state.New') }}</button></a>
+                        <a href="{{ route('state.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('state.btn.New') }}</button></a>
                         @endpermission
                     </div>
                     <div class="clearfix"></div>
@@ -31,11 +31,11 @@
                                 width="100%" role="grid" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>{{ trans('state.srNo') }}</th>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                            <th>Added By</th>
-                                            <th>Action</th>
+                                            <th>{{ trans('state.tfield.sr_no') }}</th>
+                                            <th>{{ trans('state.tfield.name')}}</th>
+                                            <th>{{ trans('state.tfield.status')}}</th>
+                                            <th>{{ trans('state.tfield.added_by')}}</th>
+                                            <th>{{ trans('state.tfield.action')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
     @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("state.state") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -71,11 +71,11 @@ $(document).ready(function() {
         serverSide: true,
         ajax: "{{url('getStateData') }}",
         columns: [
-          { data: 'DT_RowIndex',searchable: false,orderable: false},
-          { data: 'name'},
-          { data: 'status'},
-          { data: 'user.name'},
-          { data: 'action',orderable: false, searchable: false},
+            { data: 'DT_RowIndex',searchable: false,orderable: false},
+            { data: 'name'},
+            { data: 'status'},
+            { data: 'user.name'},
+            { data: 'action',orderable: false, searchable: false},
         ],
     });
 

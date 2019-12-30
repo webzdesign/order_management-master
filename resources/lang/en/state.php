@@ -1,27 +1,50 @@
 <?php
 
 return [
-	/** Button */
-
-	'New'       => 'New',
-	'Edit'      => 'Edit',
-	'Active'    => 'Active',
-	'Deactive'  => 'Deactive',
-	'Back'      => 'Back',
-	'Cancel'    => 'Cancel',
-	'Submit'    => 'Submit',
-	'Add'       => 'Add',
-
-	/** Form Field */
+    'state'      => 'State',
+    'detail'     => ':module Details',
+    'add'        => 'Add :module',
+    'edit'       => 'Edit :module',
 	'state_name' => 'State Name',
 	'status'     => 'Status',
+	'active'     => 'Active',
+    'deactive'   => 'deactive',
+
+	/** Button */
+	'btn' =>
+	[
+		'New'       => 'New',
+		'Edit'      => 'Edit',
+		'Active'    => 'Activate',
+		'Deactive'  => 'Deactivate',
+		'Back'      => 'Back',
+		'Cancel'    => 'Cancel',
+		'Submit'    => 'Submit',
+		'Add'       => 'Add',
+	],
 
 	/** Placeholder */
-	'state_name' => 'Enter State Name',
+	'placeholder' =>
+	[
+		'state_name' => 'Enter State Name',
+	],
 
 	/** Error Message */
-	'state_name' => 'State Name Is Required',
-	'state_remote' => 'State Name Already Exits',
-    'status'       => 'Status Is Required.',
+	'message' =>
+	[
+		'state_name'   => 'State Name Is Required.',
+		'state_remote' => 'State Name Already Exits.',
+		'status'       => 'Status Is Required.',
+		'insert'       => 'State Insert Successfully.',
+        'update'       => 'State Update Successfully.',
+	],
 
+	'tfield' =>
+	[
+		'sr_no'    => 'SrNo',
+		'name'     => 'Name',
+		'status'   => 'Status',
+		'added_by' => 'Added By',
+		'action'   => 'Action'
+	],
 ];

@@ -6,14 +6,14 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	<div class="title_left">
-		<a href="{{ url('state') }}"><button class="btn btn-primary" >{{ trans('state.Back') }}</button></a>
+		<a href="{{ url('state') }}"><button class="btn btn-primary" >{{ trans('state.btn.Back') }}</button></a>
 	</div>
 	<div class="clearfix"></div>
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2>Edit {{$moduleName}}</h2>
+					<h2>{{ trans('state.edit', [ 'module' => $moduleName ]) }}</h2>
 
 					<div class="clearfix"></div>
 				</div>
@@ -25,24 +25,24 @@
 
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-								State Name<span class="requride_cls">*</span>
+								{{ trans('state.state_name') }}<span class="requride_cls">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter State Name" value="{{ $state->name }}">
+								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('state.placeholder.state_name') }}" value="{{ $state->name }}">
 							</div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
-                                Status<span class="requride_cls">*</span>
+                                {{ trans('state.status') }}<span class="requride_cls">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="radio">
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($state->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">Active
+                                    <input type="radio" class="status" {{ ($state->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">{{ trans('state.active')}}
                                 </label>
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">Deactive
+                                    <input type="radio" class="status" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">{{ trans('state.deactive')}}
                                 </label>
                             </div>
                             </div>
@@ -52,8 +52,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('state') }}" class="btn btn-primary">{{ trans('state.Cancel') }}</a>
-								<button type="submit" class="btn btn-success focusClass">{{ trans('state.Submit') }}</button>
+								<a href="{{ url('state') }}" class="btn btn-primary">{{ trans('state.btn.Cancel') }}</a>
+								<button type="submit" class="btn btn-success focusClass">{{ trans('state.btn.Submit') }}</button>
 							</div>
 						</div>
 
@@ -89,8 +89,8 @@ $(document).ready(function(){
         },
         messages:
         {
-            name:{ required:"State Name Is Required", remote: "State Name Already Exits", },
-            status:{ required:"Status Is Required.", },
+            name:{ required:"{{ trans('state.message.state_name') }}", remote: "{{ trans('state.message.state_remote') }}", },
+            status:{ required:"{{ trans('state.message.status') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));
