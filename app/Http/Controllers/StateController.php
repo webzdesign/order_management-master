@@ -68,8 +68,7 @@ class StateController extends Controller
     public function store(Request $request)
     {
         State::create(['name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
-        Helper::successMsg('insert', $this->moduleName);
-
+        Helper::successMsg('custom', trans('state.message.insert'));
         return redirect($this->route);
     }
 
@@ -85,7 +84,7 @@ class StateController extends Controller
     {
         State::find($id)->update(['name' => ucwords($request->name), 'status' => $request->status, 'updated_by' => auth()->user()->id]);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('state.message.update'));
         return redirect($this->route);
     }
 
@@ -107,10 +106,10 @@ class StateController extends Controller
     {
         if ($type == 'active') {
             State::where('id', $id)->update(['status' => 1]);
-            Helper::activeDeactiveMsg('active', $this->moduleName);
+            Helper::activeDeactiveMsg('active', trans('state.message.active'));
         } else {
             State::where('id', $id)->update(['status' => 0]);
-            Helper::activeDeactiveMsg('inactive', $this->moduleName);
+            Helper::activeDeactiveMsg('inactive', trans('state.message.deactive'));
         }
         return redirect($this->route);
     }

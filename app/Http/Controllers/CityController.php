@@ -30,16 +30,16 @@ class CityController extends Controller
             $action = '';
             if (auth()->user()->hasPermission('edit.cities')) {
                 $editUrl = route('city.edit', encrypt($city->id));
-                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> ".trans('state.btn.Edit')."</a>";
             }
 
             if (auth()->user()->hasPermission('activeinactive.cities')) {
                 if ($city->status == '0') {
                     $activeUrl = url('cityActiveInactive/active/'.$city->id);
-                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> ".trans('state.btn.Active')."</a>";
                 } else {
                     $deactiveUrl = url('cityActiveInactive/deactive/'.$city->id);
-                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> ".trans('state.btn.Deactive')."</a>";
                 }
             }
 
@@ -71,7 +71,7 @@ class CityController extends Controller
     {
         City::create(['state_id' => $request->state_id, 'name'=> ucwords($request->name), 'status' => $request->status, 'added_by' => auth()->user()->id]);
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('city.message.insert'));
         return redirect($this->route);
     }
 
@@ -88,7 +88,7 @@ class CityController extends Controller
     {
         City::find($id)->update(['state_id' => $request->state_id, 'name' => ucwords($request->name), 'status' => $request->status, 'updated_by' => auth()->user()->id]);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('city.message.update'));
         return redirect($this->route);
     }
 
@@ -110,10 +110,10 @@ class CityController extends Controller
     {
         if ($type == 'active') {
             City::where('id', $id)->update(['status' => 1]);
-            Helper::activeDeactiveMsg('active', $this->moduleName);
+            Helper::activeDeactiveMsg('active', trans('city.message.active'));
         } else {
             City::where('id', $id)->update(['status' => 0]);
-            Helper::activeDeactiveMsg('inactive', $this->moduleName);
+            Helper::activeDeactiveMsg('inactive', trans('city.message.deactive'));
         }
         return redirect($this->route);
     }
