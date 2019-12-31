@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{ url('party') }}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{ url('party') }}"><button class="btn btn-primary" >{{ trans('party.btn.Back') }}</button></a>
     </div>
     <div class="clearfix"></div>
 
@@ -14,7 +14,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
             <div class="x_title">
-                <h2>Add {{$moduleName}}</h2>
+                <h2>{{ trans('party.add', [ 'module' => $moduleName ]) }}</h2>
 
                 <div class="clearfix"></div>
             </div>
@@ -26,16 +26,16 @@
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="name">
-                                    Party Name <span class="requride_cls">*</span>
+                                    {{ trans('party.party_name') }} <span class="requride_cls">*</span>
                                 </label>
-                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter Party Name">
+                                <input type="text" id="name" name="name" class="form-control" placeholder="{{ trans('party.placeholder.party_name') }}">
                             </div>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="mobile_no">
-                                    Party Mobile <span class="requride_cls">*</span>
+                                   {{ trans('party.party_mobile') }} <span class="requride_cls">*</span>
                                 </label>
-                                <input type="text" id="mobile_no" name="mobile_no" class="form-control numberonly" minlength="10" maxlength="10" placeholder="Enter Party Mobile No">
+                                <input type="text" id="mobile_no" name="mobile_no" class="form-control numberonly" minlength="10" maxlength="10" placeholder="{{ trans('party.placeholder.party_mobile') }}">
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="state_id">
-                                    State Name <span class="requride_cls">*</span>
+                                    {{ trans('party.state_name') }} <span class="requride_cls">*</span>
                                 </label>
                                 <select class="select2_single form-control" name="state_id" id="state_id">
                                     <option value=""></option>
@@ -58,7 +58,7 @@
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="city_id">
-                                    City Name <span class="requride_cls">*</span>
+                                   {{ trans('party.city_name') }} <span class="requride_cls">*</span>
                                 </label>
                                 <select class="select2_single form-control" name="city_id" id="city_id">
                                     <option value=""></option>
@@ -73,21 +73,21 @@
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="city_id">
-                                    Party Address <span class="requride_cls">*</span>
+                                    {{ trans('party.party_add') }} <span class="requride_cls">*</span>
                                 </label>
-                                <textarea id="address" name="address" class="form-control" placeholder="Enter party Address"></textarea>
+                                <textarea id="address" name="address" class="form-control" placeholder="{{ trans('party.placeholder.party_add') }}"></textarea>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="status">
-                                    Status <span class="requride_cls">*</span>
+                                    {{ trans('party.status') }} <span class="requride_cls">*</span>
                                 </label>
 
                                 <div class="radio">
                                     <label style="margin-right:20px;">
-                                        <input type="radio" value="1" checked  name="status">Active
+                                        <input type="radio" value="1" checked  name="status">{{ trans('party.active')}}
                                     </label>
                                     <label>
-                                        <input type="radio" value="0" name="status">Deactive
+                                        <input type="radio" value="0" name="status">{{ trans('party.deactive')}}
                                     </label>
                                 </div>
                                 <label id="status-error" class="error" for="status"></label>
@@ -98,8 +98,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('party') }}" class="btn btn-primary">Cancel</a>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <a href=" {{ url('party') }}" class="btn btn-primary">{{ trans('party.btn.Cancel') }}</a>
+                            <button type="submit" class="btn btn-success">{{ trans('party.btn.Submit') }}</button>
                         </div>
                     </div>
                 </form>
@@ -164,12 +164,12 @@ $(document).ready(function(){
         },
         messages:
         {
-            name:{ required:"Party Name Is Required.", },
-            mobile_no:{ required:"Mobile Number Is Required.", remote: "Mobile Number Already Exits.", },
-            state_id:{ required:"State Is Required.", },
-            city_id:{ required:"City Is Required.", },
-            address:{ required:"Address Is Required.", },
-            status:{ required:"Status Is Required.", },
+            name:{ required:"{{ trans('party.message.party_name') }}" },
+            mobile_no:{ required:"{{ trans('party.message.party_mobile') }}", remote: "{{ trans('party.message.mobile_remote') }}", },
+            state_id:{ required:"{{ trans('party.message.state_name') }}", },
+            city_id:{ required:"{{ trans('party.message.city_name') }}", },
+            address:{ required:"{{ trans('party.message.party_add') }}", },
+            status:{ required:"{{ trans('party.message.status') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));
