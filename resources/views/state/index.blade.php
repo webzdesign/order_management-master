@@ -53,6 +53,13 @@
 @section('script')
 <script>
 $(document).ready(function() {
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
 
     @if (Session::has('message'))
     new PNotify({
@@ -69,6 +76,9 @@ $(document).ready(function() {
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+			"url": lang_url
+		},
         ajax: "{{url('getStateData') }}",
         columns: [
             { data: 'DT_RowIndex',searchable: false,orderable: false},
@@ -83,11 +93,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Activate?",
-            text: "As that can be undone by doing reverse.",
+            title: "{{ trans('state.message.active_title') }}",
+            text: "{{ trans('state.message.active_text') }}",
             icon: "success",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('state.btn.Cancel') }}" , "{{ trans('state.btn.ok') }}"]
         })
         .then((willActive) => {
             if (willActive) {
@@ -101,11 +112,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Deactivate?",
-            text: "As that can be undone by doing reverse.",
+            title: "{{ trans('state.message.deactive_title') }}",
+            text: "{{ trans('state.message.deactive_text') }}",
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('state.btn.Cancel') }}" , "{{ trans('state.btn.ok') }}"]
         })
         .then((willDeactivate) => {
             if (willDeactivate) {

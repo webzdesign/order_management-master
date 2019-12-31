@@ -8,7 +8,7 @@ return [
 	'state_name' => 'State Name',
 	'status'     => 'Status',
 	'active'     => 'Active',
-    'deactive'   => 'deactive',
+	'deactive'   => 'deactive',
 
 	/** Button */
 	'btn' =>
@@ -21,6 +21,7 @@ return [
 		'Cancel'    => 'Cancel',
 		'Submit'    => 'Submit',
 		'Add'       => 'Add',
+		'ok' 		 => 'Ok',
 	],
 
 	/** Placeholder */
@@ -38,9 +39,11 @@ return [
 		'insert'       => 'State Insert Successfully.',
 		'update'       => 'State Update Successfully.',
 		'active_title' => 'Are you sure want to Activate?',
-		'active'       => 'As that can be undone by doing reverse.',
-		'deactive' 		 => 'Are you sure want to Deactivate?',
-		'deactive_title' => 'As that can be undone by doing reverse.'
+		'active_text'       => 'As that can be undone by doing reverse.',
+		'deactive_title' 		 => 'Are you sure want to Deactivate?',
+		'deactive_text' => 'As that can be undone by doing reverse.',
+		'active'        => 'State Activated Successfully !',
+		'deactive'      => 'State Deactivated Successfully !',
 	],
 
 	'tfield' =>
