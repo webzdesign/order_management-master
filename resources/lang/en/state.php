@@ -36,7 +36,11 @@ return [
 		'state_remote' => 'State Name Already Exits.',
 		'status'       => 'Status Is Required.',
 		'insert'       => 'State Insert Successfully.',
-        'update'       => 'State Update Successfully.',
+		'update'       => 'State Update Successfully.',
+		'active_title' => 'Are you sure want to Activate?',
+		'active'       => 'As that can be undone by doing reverse.',
+		'deactive' 		 => 'Are you sure want to Deactivate?',
+		'deactive_title' => 'As that can be undone by doing reverse.'
 	],
 
 	'tfield' =>
