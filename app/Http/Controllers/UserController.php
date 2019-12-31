@@ -32,18 +32,24 @@ class UserController extends Controller
                 if($user->name != 'Admin' && $user->name !='Super Admin'){
                     $editUrl = route('user.edit', encrypt($user->id));
                     if (auth()->user()->hasPermission('edit.users')) {
-                        $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                        $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> ".trans('user.btn.Edit')." </a>";
                     }
 
                     if (auth()->user()->hasPermission('activeinactive.users')) {
                         if ($user->status == '0') {
                             $activeUrl = url('useractivedeactive/active/'.$user->id);
-                            $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                            $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> ".trans('user.btn.Active')."</a>";
                         } else {
                             $deactiveUrl = url('useractivedeactive/deactive/'.$user->id);
-                            $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                            $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> ".trans('user.btn.Deactive')."</a>";
                         }
                     }
+                    return $action;
+                } else if ($user->name == 'Admin') {
+                    $action .=  "<a class='btn btn-success btn-xs'>".trans('user.btn.Admin')."</a>";
+                    return $action;
+                } else if ($user->name == 'Super Admin') {
+                    $action .=  "<a class='btn btn-success btn-xs'>".trans('user.btn.Super_Admin')."</a>";
                     return $action;
                 }
             })
@@ -52,9 +58,9 @@ class UserController extends Controller
             })
             ->editColumn('status', function($user) {
                 if ($user->status == '0') {
-                    $status = '<label class="label label-danger">Deactivate</label>';
+                    $status = '<label class="label label-danger"> '.trans("user.deactive").'</label>';
                 } else{
-                    $status = '<label class="label label-success">Activate</label>';
+                    $status = '<label class="label label-success"> '.trans("user.active").'</label>';
                 }
                 return $status;
             })
@@ -68,10 +74,10 @@ class UserController extends Controller
     {
         if ($type == 'active') {
             User::where('id', $id)->update(['status'=>'1']);
-            Helper::activeDeactiveMsg('active', $this->moduleName);
+            Helper::activeDeactiveMsg('active', trans('user.alert.activate'));
         } else {
             User::where('id', $id)->update(['status'=>'0']);
-            Helper::activeDeactiveMsg('deactive', $this->moduleName);
+            Helper::activeDeactiveMsg('deactive', trans('user.alert.deactivate'));
         }
         return redirect($this->route);
     }
@@ -99,7 +105,7 @@ class UserController extends Controller
         $user->attachRole($roles);
         $user->attachPermission($request->permission);
              
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('user.alert.insert'));
         return redirect($this->route);
     }
 
@@ -136,7 +142,7 @@ class UserController extends Controller
         $user->syncPermissions($roles);
         $user->syncPermissions($request->permission);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('user.alert.update'));
         return redirect($this->route);
     }
 

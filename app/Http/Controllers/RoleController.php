@@ -33,16 +33,14 @@ class RoleController extends Controller
                 $action = '';
 
                 if ($role->id == 1) {
-                    $action =  "<a class='btn btn-success btn-xs'>Super Admin
-                                </a>";
+                    $action =  "<a class='btn btn-success btn-xs'>".trans('role.btn.Super_Admin')."</a>";
                 } else if ($role->id == 2) {
-                    $action =  "<a class='btn btn-success btn-xs'>Admin
-                                </a>";
+                    $action =  "<a class='btn btn-success btn-xs'>".trans('role.btn.Admin')."</a>";
                 } else {
                     if (auth()->user()->hasPermission('edit.roles')) {
                         $action =  "<a href='".$editUrl."'
                                     class='btn btn-warning btn-xs'>
-                                    <i class='fa fa-pencil'></i> Edit</a>";
+                                    <i class='fa fa-pencil'></i>".trans('role.btn.Edit')." </a>";
                     }
                 }
                 return $action;
@@ -75,7 +73,7 @@ class RoleController extends Controller
 
         $role->attachPermission($request->permission);
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('role.alert.insert'));
         return redirect($this->route);
     }
 
@@ -110,7 +108,8 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->syncPermissions($request->permission);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('role.alert.update'));
+        
         return redirect($this->route);   
     }
     
