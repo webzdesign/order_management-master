@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{ url('city') }}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{ url('city') }}"><button class="btn btn-primary" >{{ trans('city.btn.Back') }}</button></a>
     </div>
     <div class="clearfix"></div>
 
@@ -14,7 +14,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
             <div class="x_title">
-                <h2>Add {{$moduleName}}</h2>
+                <h2>{{ trans('city.add', [ 'module' => $moduleName ]) }}</h2>
 
                 <div class="clearfix"></div>
             </div>
@@ -24,7 +24,7 @@
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="state_id">
-                            State Name <span class="requride_cls">*</span>
+                            {{ trans('city.state_name') }} <span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select class="select2_single form-control" name="state_id" id="state_id">
@@ -38,24 +38,24 @@
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                            City Name<span class="requride_cls">*</span>
+                            {{ trans('city.city_name') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="Enter City Name">
+                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="{{ trans('city.placeholder.city_name') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
-                            Status<span class="requride_cls">*</span>
+                            {{ trans('city.status') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" checked id="status" name="status" value="1">Active
+                                <input type="radio" class="status" checked id="status" name="status" value="1">{{ trans('city.active')}}
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" id="status" name="status" value="0">Deactive
+                                <input type="radio" class="status" id="status" name="status" value="0">{{ trans('city.deactive')}}
                             </label>
                         </div>
                         </div>
@@ -65,8 +65,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('city') }}" class="btn btn-primary">Cancel</a>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <a href=" {{ url('city') }}" class="btn btn-primary">{{ trans('city.btn.Cancel') }}</a>
+                            <button type="submit" class="btn btn-success">{{ trans('city.btn.Submit') }}</button>
                         </div>
                     </div>
 
@@ -100,9 +100,9 @@ $(document).ready(function(){
         },
         messages:
         {
-            state_id:{ required:"State Is Required.", },
-            name:{ required:"City Name Is Required.", remote: "City Name Already Exits.", },
-            status:{ required:"Status Is Required.", },
+            state_id:{ required:"{{ trans('city.message.state_name') }}", },
+            name:{ required:"{{ trans('city.message.city_name') }}", remote: "{{ trans('city.message.city_remote') }}", },
+            status:{ required:"{{ trans('city.message.status') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));

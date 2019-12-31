@@ -15,10 +15,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{$moduleName }} Details</h2>
+                    <h2>{{ trans('city.detail', [ 'module' => $moduleName ]) }}</h2>
                     <div>
                         @permission('create.cities')
-                        <a href="{{ route('city.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
+                        <a href="{{ route('city.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('city.btn.New') }}</button></a>
                         @endpermission
                     </div>
                     <div class="clearfix"></div>
@@ -31,12 +31,12 @@
                                 width="100%" role="grid" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>SrNo</th>
-                                            <th>State Name</th>
-                                            <th>City Name</th>
-                                            <th>Status</th>
-                                            <th>Added By</th>
-                                            <th>Action</th>
+                                            <th>{{ trans('city.tfield.sr_no') }}</th>
+                                            <th>{{ trans('city.tfield.state_name')}}</th>
+                                            <th>{{ trans('city.tfield.city_name')}}</th>
+                                            <th>{{ trans('city.tfield.status')}}</th>
+                                            <th>{{ trans('city.tfield.added_by')}}</th>
+                                            <th>{{ trans('city.tfield.action')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,9 +55,17 @@
 <script>
 $(document).ready(function() {
 
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
+
     @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("city.city") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -70,6 +78,9 @@ $(document).ready(function() {
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+			"url": lang_url
+		},
         ajax: "{{url('getCityData') }}",
         columns: [
           { data: 'DT_RowIndex',searchable: false,orderable: false},
@@ -85,11 +96,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Activate?",
-            text: "As that can be undone by doing reverse.",
+            title: "{{ trans('city.message.active_title') }}",
+            text: "{{ trans('city.message.active_text') }}",
             icon: "success",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('city.btn.Cancel') }}" , "{{ trans('city.btn.ok') }}"]
         })
         .then((willActive) => {
             if (willActive) {
@@ -103,11 +115,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Deactivate?",
-            text: "As that can be undone by doing reverse.",
+            title: "{{ trans('city.message.deactive_title') }}",
+            text: "{{ trans('city.message.deactive_text') }}",
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('city.btn.Cancel') }}" , "{{ trans('city.btn.ok') }}"]
         })
         .then((willDeactivate) => {
             if (willDeactivate) {
