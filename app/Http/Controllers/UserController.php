@@ -45,6 +45,12 @@ class UserController extends Controller
                         }
                     }
                     return $action;
+                } else if ($user->name == 'Admin') {
+                    $action .=  "<a class='btn btn-success btn-xs'>".trans('user.btn.Admin')."</a>";
+                    return $action;
+                } else if ($user->name == 'Super Admin') {
+                    $action .=  "<a class='btn btn-success btn-xs'>".trans('user.btn.Super_Admin')."</a>";
+                    return $action;
                 }
             })
             ->editColumn('user.role', function($user){

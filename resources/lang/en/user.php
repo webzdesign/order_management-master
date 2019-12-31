@@ -9,11 +9,12 @@ return [
     'email'      => 'Email',
     'password'   => 'Password',
     'confirm_password'   => 'Confirm Password',    
-    'select_role'   => 'Select Role',
+    'select'     =>  'Select',
+    'select_role'=> 'Select Role',
     'status'     => 'Status',
 	'active'     => 'Active',
     'deactive'   => 'deactive',
-    'permissions' => 'Permissions',
+    'permissions'=> 'Permissions',
 
 	/** Button */
 	'btn' =>
@@ -25,7 +26,9 @@ return [
 		'Back'      => 'Back',
 		'Cancel'    => 'Cancel',
 		'Submit'    => 'Submit',
-		'Add'       => 'Add',
+        'Add'       => 'Add',
+        'Admin'    => 'Admin',
+        'Super_Admin' => 'Super Admin',
 	],
 
 	/** Placeholder */
@@ -35,7 +38,6 @@ return [
         'user_email'    => 'Enter User Email',
         'user_password' => 'Enter Password',
         'user_confirm'  => 'Enter Confirm Password',
-        'user_email'    => 'Enter User Email',
 	],
 
 	/** Error Message */

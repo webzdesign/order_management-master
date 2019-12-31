@@ -7,14 +7,14 @@
   <div class="right_col" role="main">
     <div class="">
         <div class="title_left">
-          <a href="{{route('user.index')}}"><button class="btn btn-primary" >Back</button></a>
+          <a href="{{route('user.index')}}"><button class="btn btn-primary" >{{ trans('user.btn.Back') }}</button></a>
         </div>
       <div class="clearfix"></div>
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Edit {{$moduleName}}</h2>
+              <h2>{{ trans('user.edit', [ 'module' => $moduleName ]) }}</h2>
 
               <div class="clearfix"></div>
             </div>
@@ -25,50 +25,50 @@
                 @csrf
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="name">Name<span class="requride_cls">*</span>
+                  <label class="control-label" for="name">{{ trans('user.name') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Name" value="{{$user->name}}">
+                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_name') }}" value="{{$user->name}}">
                   </div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="email">Email<span class="requride_cls">*</span>
+                  <label class="control-label" for="email">{{ trans('user.email') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Email" value="{{$user->email}}">
+                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_email') }}" value="{{$user->email}}">
 
                   </div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="password">Password<span class="requride_cls">*</span>
+                  <label class="control-label" for="password">{{ trans('user.password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Password">
+                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_password') }}">
                   </div>
                 </div>
 
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="confirm_password">Confirm Password<span class="requride_cls">*</span>
+                  <label class="control-label" for="confirm_password">{{ trans('user.confirm_password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Confirm Password" >
+                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_confirm') }}" >
                   </div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <label class="control-label" for="status">
-                    Status <span class="requride_cls">*</span>
+                  {{ trans('user.status') }} <span class="requride_cls">*</span>
                   </label>
                   <div>
                     <div class="radio">
                       <label style="margin-right:20px;">
-                        <input type="radio" value="1" name="status" {{($user->status == 1) ? 'checked' : '' }}>Active
+                        <input type="radio" value="1" name="status" {{($user->status == 1) ? 'checked' : '' }}>{{ trans('user.active') }}
                       </label>
                       <label>
-                        <input type="radio" value="0" name="status" {{($user->status == 0) ? 'checked' : '' }}>Deactive
+                        <input type="radio" value="0" name="status" {{($user->status == 0) ? 'checked' : '' }}>{{ trans('user.deactive') }}
                       </label>
                     </div>
                     <label id="status-error" class="error" for="status"></label>
@@ -77,11 +77,11 @@
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <label class="control-label" for="role">
-                    Select Role
+                  {{ trans('user.select_role') }}
                   </label>
                   <div>
                     <select class="select2_single form-control" name="role" id="role">
-                        <option value="">Select</option>
+                        <option value="">{{ trans('user.select') }}</option>
                         @foreach($role_details as $key=>$value)
                           <option value="{{$value->id}}" {{ ($value->id == $user->roles[0]->id) ? 'selected': ''}}>{{$value->name}}</option>
                         @endforeach
@@ -92,7 +92,7 @@
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
 
                 <div class="form-group">
-                    <label for="name">Permissions :</label>
+                    <label for="name">{{ trans('user.permissions') }} :</label>
 
                     <div class="col-lg-12 permission-card">
                     @php $cnt = 1; @endphp
@@ -121,8 +121,8 @@
 
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                      <a href="{{route('user.index')}}" class="btn btn-primary">Cancel</a>
-                    <button type="submit" class="btn btn-success focusClass">Submit</button>
+                      <a href="{{route('user.index')}}" class="btn btn-primary">{{ trans('user.btn.Cancel') }}</a>
+                    <button type="submit" class="btn btn-success focusClass">{{ trans('user.btn.Submit') }}</button>
                   </div>
                 </div>
 
@@ -187,24 +187,24 @@
         messages:
         {
             name:{
-              required:"Name Is Required",
+              required:"{{ trans('user.message.user_name') }}",
             },
             email:{
-              required:"Email Is Required",
-              remote: "Email Already exits",
+              required:"{{ trans('user.message.user_email') }}",
+              remote: "{{ trans('user.message.email_remote') }}",
             },
             password:{
-              minlength:"Password Minimum 6 Characters",
-              maxlength:"Password Maximum 10 Characters"
+              minlength:"{{ trans('user.message.password_minlength') }}",
+              maxlength:"{{ trans('user.message.password_maxlength') }}"
             },
             confirm_password:{
-              equalTo: " Enter Confirm Password Same as Password"
+              equalTo: "{{ trans('user.message.password_equalTo') }}"
             },
             status:{
-              required:"Status Is Required",
+              required:"{{ trans('user.message.user_status') }}",
             },
             role:{
-              required:"Role Is Required",
+              required:"{{ trans('user.message.user_role') }}",
             },
         },
         errorPlacement: function(error, element){

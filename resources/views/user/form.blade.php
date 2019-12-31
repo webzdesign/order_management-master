@@ -24,18 +24,18 @@
                 @csrf
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="name">{{ trans('user.user_name') }}<span class="requride_cls">*</span>
+                  <label class="control-label" for="name">{{ trans('user.name') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Name" value="{{old('name')}}">
+                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_name') }}" value="{{old('name')}}">
                   </div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label" for="email">{{ trans('user.user_email') }}<span class="requride_cls">*</span>
+                  <label class="control-label" for="email">{{ trans('user.email') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Email" value="{{old('email')}}">
+                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_email') }}" value="{{old('email')}}">
                   </div>
                 </div>
 
@@ -43,7 +43,7 @@
                   <label class="control-label" for="password">{{ trans('user.password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Password" value="{{old('password')}}" >
+                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_password') }}" value="{{old('password')}}" >
                   </div>
                 </div>
 
@@ -52,7 +52,7 @@
                   <label class="control-label" for="confirm_password">{{ trans('user.confirm_password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Confirm Password" value="{{old('confirm_password')}}" >
+                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_confirm') }}" value="{{old('confirm_password')}}" >
                   </div>
                 </div>
 
@@ -63,10 +63,10 @@
                   <div>
                     <div class="radio">
                       <label style="margin-right:20px;">
-                        <input type="radio" value="1" name="status" checked>Active
+                        <input type="radio" value="1" name="status" checked>{{ trans('user.active') }}
                       </label>
                       <label>
-                        <input type="radio" value="0" name="status">Deactive
+                        <input type="radio" value="0" name="status">{{ trans('user.deactive') }}
                       </label>
                     </div>
                     <label id="status-error" class="error" for="status"></label>
@@ -79,7 +79,7 @@
                   </label>
                   <div>
                     <select class="select2_single form-control" name="role" id="role">
-                        <option value="">Select</option>
+                        <option value="">{{ trans('user.select') }}</option>
                         @foreach($role_details as $key=>$value)
                           <option value="{{$value->id}}">{{$value->name}}</option>
                         @endforeach
@@ -118,7 +118,7 @@
                 <div class="form-group">
                   <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
                     <a href=" {{ url('user') }}" class="btn btn-primary">{{ trans('user.btn.Cancel') }}</a>
-                    <button type="submit" class="btn btn-success focusClass">{{ trans('user.btn.Cancel') }}</button>
+                    <button type="submit" class="btn btn-success focusClass">{{ trans('user.btn.Submit') }}</button>
                   </div>
                 </div>
 
@@ -183,26 +183,26 @@
         messages:
         {
             name:{
-              required:"Name Is Required",
+              required:"{{ trans('user.message.user_name') }}",
             },
             email:{
-              required:"Email Is Required",
-              remote: "Email Already exits",
+              required:"{{ trans('user.message.user_email') }}",
+              remote: "{{ trans('user.message.email_remote') }}",
             },
             password:{
-              required:"Enter Password",
-              minlength:"Password Minimum 6 Characters",
-              maxlength:"Password Maximum 10 Characters"
+              required:"{{ trans('user.message.user_password') }}",
+              minlength:"{{ trans('user.message.password_minlength') }}",
+              maxlength:"{{ trans('user.message.password_maxlength') }}"
             },
             confirm_password:{
-              required:"Confirm Password Is Required",
-              equalTo: " Enter Confirm Password Same as Password"
+              required:"{{ trans('user.message.confirm_password') }}",
+              equalTo: "{{ trans('user.message.password_equalTo') }}"
             },
             status:{
-              required:"Status Is Required",
+              required:"{{ trans('user.message.user_status') }}",
             },
             role:{
-              required:"Role Is Required",
+              required:"{{ trans('user.message.user_role') }}",
             },
         },
         errorPlacement: function(error, element){
