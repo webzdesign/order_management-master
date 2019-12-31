@@ -11,7 +11,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                        <h2><i class="fa fa-bars"></i> {{$moduleName }} Details</h2>
+                        <h2><i class="fa fa-bars"></i> {{ trans('productwisereport.detail', [ 'module' => $moduleName ]) }}</h2>
                         <div class="clearfix"></div>
                 </div>
 
@@ -20,7 +20,7 @@
 
                 <div class="form-group">
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <label for="category">Category  <span class="requride_cls">*</span>
+                        <label for="category"> {{ trans('productwisereport.category') }} <span class="requride_cls">*</span>
                         </label>
                     
                         <select id="category" name="category" class="form-control select2_single">
@@ -32,7 +32,7 @@
                     </div>
                 
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <label for="product">Product  <span class="requride_cls">*</span>
+                        <label for="product">{{ trans('productwisereport.product') }}  <span class="requride_cls">*</span>
                         </label>
                     
                         <select id="product" name="product" class="form-control select2_single">
@@ -41,7 +41,7 @@
                     </div>
 
                         <div class="col-md-2 col-sm-2 col-xs-12">
-                            <label for="from">From Date
+                            <label for="from">{{ trans('productwisereport.from_date') }}
                             </label>
                                 <input type="text" id="from" name="from"  class="form-control col-md-7 col-xs-12 focusClass " placeholder="Select From Date" value="{{ date('d-m-Y')}}" readonly>
                             <div id="fromerror">
@@ -49,7 +49,7 @@
                         </div>
                 
                         <div class="col-md-2 col-sm-2 col-xs-12">
-                            <label for="to">To Date
+                            <label for="to">{{ trans('productwisereport.to_date') }}
                             </label>
                                 <input type="text" id="to" name="to"  class="form-control col-md-7 col-xs-12 focusClass " placeholder="Select To Date" value="{{ date('d-m-Y')}}" readonly>
                             <div id="toerror">
@@ -57,9 +57,9 @@
                         </div>
                 
                     <div class="col-md-4 col-sm-4 col-xs-12" style="margin-top:2%;">
-                        <button type="submit" class="btn btn-success searchData"><i class="fa fa-search"></i> Search</button>
-                        <button class="btn btn-danger searchClear"><i class="fa fa-close"></i> Clear</button>
-                        <button class="btn btn-primary printData" type="submit"><i class="fa fa-print"></i> Print</button>
+                        <button type="submit" class="btn btn-success searchData"><i class="fa fa-search"></i>{{ trans('productwisereport.btn.Search') }} </button>
+                        <button class="btn btn-danger searchClear"><i class="fa fa-close"></i> {{ trans('productwisereport.btn.Clear') }}</button>
+                        <button class="btn btn-primary printData" type="submit"><i class="fa fa-print"></i> {{ trans('productwisereport.btn.Print') }}</button>
                     </div>
                 </div>
                 </form>
@@ -70,12 +70,12 @@
                         width="100%" role="grid" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>SrNo</th>
-                                    <th>Party</th>
-                                    <th>Orde No</th>
-                                    <th>Order Date</th>
-                                    <th>Product Amount</th>
-                                    <th>Order Amount</th>
+                                    <th>{{ trans('productwisereport.tfield.sr_no') }}</th>
+                                    <th>{{ trans('productwisereport.tfield.party') }}</th>
+                                    <th>{{ trans('productwisereport.tfield.order_no') }}</th>
+                                    <th>{{ trans('productwisereport.tfield.order_date') }}</th>
+                                    <th>{{ trans('productwisereport.tfield.product_amount') }}</th>
+                                    <th>{{ trans('productwisereport.tfield.order_amount') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,6 +101,13 @@
 <script>
 $(document).ready(function() {
 
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
     var from = $('#from').val();
     var to = $('#to').val();
 
@@ -152,21 +159,12 @@ $(document).ready(function() {
         $('#from').datepicker('setEndDate', maxDate);
     });
 
-    @if (Session::has('message'))
-    new PNotify({
-        title: '{{ $moduleName }}',
-        text: '{!! session('message') !!}',
-        type: 'success',
-        styling: 'bootstrap3',
-        delay: 1500,
-        animation: 'fade',
-        animateSpeed: 'slow'
-    });
-    @endif
-
     var datatable = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+              "url": lang_url
+        },
         paging: false,
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -180,8 +178,9 @@ $(document).ready(function() {
                     return intVal(a) + intVal(b);
                 }, 0 );
             $(api.column(0).footer()).css("text-align", "right");
-            $(api.column(0).footer()).html('GRAND TOTAL');
-            $(api.column(5).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
+            $(api.column(0).footer()).html("{{ trans('productwisereport.grand_total') }}");
+            // $(api.column(5).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
+            $(api.column(5).footer()).html(amountTotal.toLocaleString('en-IN'));
         },
         ajax: {
             "url": "{{ url('getProductwiseReportData') }}",

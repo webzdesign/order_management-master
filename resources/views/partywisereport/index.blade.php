@@ -11,7 +11,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                        <h2><i class="fa fa-bars"></i> {{$moduleName }} Details</h2>
+                        <h2><i class="fa fa-bars"></i> {{ trans('partywisereport.detail', [ 'module' => $moduleName ]) }} </h2>
                         <div class="clearfix"></div>
                 </div>
 
@@ -20,7 +20,7 @@
 
                 <div class="form-group">
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <label for="party">Party  <span class="requride_cls">*</span>
+                        <label for="party">{{ trans('partywisereport.party') }}  <span class="requride_cls">*</span>
                         </label>
                     
                         <select id="party" name="party" class="form-control select2_single">
@@ -34,7 +34,7 @@
                     </div>
                 
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <label for="from">From Date
+                            <label for="from">{{ trans('partywisereport.from_date') }}
                             </label>
                                 <input type="text" id="from" name="from"  class="form-control col-md-7 col-xs-12 focusClass " placeholder="Select From Date" value="{{ date('d-m-Y')}}" readonly>
                             <div id="fromerror">
@@ -42,7 +42,7 @@
                         </div>
                 
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <label for="to">To Date
+                            <label for="to">{{ trans('partywisereport.to_date') }}
                             </label>
                                 <input type="text" id="to" name="to"  class="form-control col-md-7 col-xs-12 focusClass " placeholder="Select To Date" value="{{ date('d-m-Y')}}" readonly>
                             <div id="toerror">
@@ -50,9 +50,9 @@
                         </div>
                 
                     <div class="col-md-3 col-sm-3 col-xs-12" style="margin-top:2%;">
-                        <button type="submit" class="btn btn-success searchData"><i class="fa fa-search"></i> Search</button>
-                        <button class="btn btn-danger searchClear"><i class="fa fa-close"></i> Clear</button>
-                        <button class="btn btn-primary printData" type="submit"><i class="fa fa-print"></i> Print</button>
+                        <button type="submit" class="btn btn-success searchData"><i class="fa fa-search"></i> {{ trans('partywisereport.btn.Search') }}</button>
+                        <button class="btn btn-danger searchClear"><i class="fa fa-close"></i> {{ trans('partywisereport.btn.Clear') }}</button>
+                        <button class="btn btn-primary printData" type="submit"><i class="fa fa-print"></i> {{ trans('partywisereport.btn.Print') }}</button>
                     </div>
                 </div>
                 </form>
@@ -63,11 +63,11 @@
                         width="100%" role="grid" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>SrNo</th>
-                                    <th>Party</th>
-                                    <th>Orde No</th>
-                                    <th>Order Date</th>
-                                    <th>Order Amount</th>
+                                    <th>{{ trans('partywisereport.tfield.sr_no') }}</th>
+                                    <th>{{ trans('partywisereport.tfield.party') }}</th>
+                                    <th>{{ trans('partywisereport.tfield.order_no') }}</th>
+                                    <th>{{ trans('partywisereport.tfield.order_date') }}</th>
+                                    <th>{{ trans('partywisereport.tfield.order_amount') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,6 +92,14 @@
 @section('script')
 <script>
 $(document).ready(function() {
+
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
 
     var from = $('#from').val();
     var to = $('#to').val();
@@ -131,6 +139,9 @@ $(document).ready(function() {
     var datatable = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+              "url": lang_url
+        },
         paging: false,
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -144,8 +155,9 @@ $(document).ready(function() {
                     return intVal(a) + intVal(b);
                 }, 0 );
             $(api.column(0).footer()).css("text-align", "right");
-            $(api.column(0).footer()).html('GRAND TOTAL');
-            $(api.column(4).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
+            $(api.column(0).footer()).html("{{ trans('partywisereport.grand_total') }}");
+            // $(api.column(4).footer()).html(amountTotal.toLocaleString('en-US', { style: 'currency', currency: 'INR' }));
+            $(api.column(4).footer()).html(amountTotal.toLocaleString('en-IN'));
         },
         ajax: {
             "url": "{{ url('getPartywiseReportData') }}",
