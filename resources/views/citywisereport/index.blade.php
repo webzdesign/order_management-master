@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ $moduleName.' - '.Helper::setting()->name }}
+{{ trans('citywisereport.detail', [ 'module' => $moduleName ]).' - '.Helper::setting()->name }}
 @endsection
 @section('content')
 

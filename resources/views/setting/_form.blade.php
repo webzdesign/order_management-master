@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{$moduleName}}
+{{ trans('settings.setting') }}
 @endsection
 @section('content')
   <!-- page content -->
@@ -12,7 +12,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Update {{$moduleName}} Details</h2>
+              <h2>{{ trans('settings.detail', [ 'module' => $moduleName ]) }}</h2>
 
               <div class="clearfix"></div>
             </div>
@@ -22,15 +22,15 @@
                 <input type="hidden" name="id" id="id" value="{{ $setting->id }}" />
                 @csrf
                 <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="requride_cls">*</span>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">{{ trans('settings.name') }} <span class="requride_cls">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="name" name="name" class="form-control" value="{{ $setting->name }}" placeholder="Enter Name">
+                  <input type="text" id="name" name="name" class="form-control" value="{{ $setting->name }}" placeholder="{{ trans('settings.placeholder.name') }}">
                   </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="logo">Logo <span class="requride_cls">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="logo">{{ trans('settings.logo') }} <span class="requride_cls">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="file" id="logo" name="logo" class="form-control">
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="favicon">Favicon <span class="requride_cls">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="favicon">{{ trans('settings.favicon') }} <span class="requride_cls">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="file" id="favicon" name="favicon" class="form-control">
@@ -55,7 +55,7 @@
 
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gst_type">
-                      GST Type <span class="requride_cls">*</span>
+                    {{ trans('settings.gst_type') }} <span class="requride_cls">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
@@ -72,28 +72,28 @@
 
                 <div class="form-group interstate" style="display:{{ ($setting->gst_type == 0) ? 'block' : 'none' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cgst">
-                        CGST <span class="requride_cls">*</span>
+                    {{ trans('settings.cgst') }}<span class="requride_cls">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="cgst" name="cgst" class="form-control amountonly" value="{{ $setting->cgst }}" placeholder="Enter CGST">
+                        <input type="text" id="cgst" name="cgst" class="form-control amountonly" value="{{ $setting->cgst }}" placeholder="{{ trans('settings.placeholder.cgst') }}">
                     </div>
                 </div>
 
                 <div class="form-group interstate" style="display:{{ ($setting->gst_type == 0) ? 'block' : 'none' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sgst">
-                        SGST <span class="requride_cls">*</span>
+                    {{ trans('settings.cgst') }} <span class="requride_cls">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="sgst" name="sgst" class="form-control amountonly" value="{{ $setting->sgst }}" placeholder="Enter SGST">
+                        <input type="text" id="sgst" name="sgst" class="form-control amountonly" value="{{ $setting->sgst }}" placeholder="{{ trans('settings.placeholder.sgst') }}">
                     </div>
                 </div>
 
                 <div class="form-group outofstate" style="display:{{ ($setting->gst_type == 1) ? 'block' : 'none' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="igst">
-                        IGST <span class="requride_cls">*</span>
+                    {{ trans('settings.igst') }} <span class="requride_cls">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="igst" name="igst" class="form-control amountonly" value="{{ $setting->igst }}" placeholder="Enter IGST">
+                        <input type="text" id="igst" name="igst" class="form-control amountonly" value="{{ $setting->igst }}" placeholder="{{ trans('settings.placeholder.igst') }}">
                     </div>
                 </div>
 
@@ -101,8 +101,8 @@
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                    <a href=" {{ url('settings') }}" class="btn btn-primary">Cancel</a>
-                    <button type="submit" class="btn btn-success focusClass" id="submitbtn">Submit</button>
+                    <a href=" {{ url('settings') }}" class="btn btn-primary">{{ trans('settings.btn.Cancel') }}</a>
+                    <button type="submit" class="btn btn-success focusClass" id="submitbtn">{{ trans('settings.btn.Submit') }}</button>
                   </div>
                 </div>
 
@@ -121,7 +121,7 @@ jQuery(document).ready(function() {
 
     @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("settings.setting") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -133,21 +133,21 @@ jQuery(document).ready(function() {
 
 	$('body').on('click', '.gst_type', function(e){
 		var gstType = $(this).val();
-        if (gstType == 1) {
-            $('body').find('.outofstate').show();
-            $('body').find('.interstate').hide();
+    if (gstType == 1) {
+        $('body').find('.outofstate').show();
+        $('body').find('.interstate').hide();
 		} else {
-            $('body').find('.outofstate').hide();
-            $('body').find('.interstate').show();
+        $('body').find('.outofstate').hide();
+        $('body').find('.interstate').show();
 		}
 	});
 
     $('#frm').validate({
         ignore: [],
         rules:{
-			name:{ required:true, },
-			logo:{ extension: 'jpg|JPG|png|PNG|jpeg|JPEG', },
-			favicon:{ extension: 'jpg|JPG|png|PNG|jpeg|JPEG' },
+            name:{ required:true, },
+            logo:{ extension: 'jpg|JPG|png|PNG|jpeg|JPEG', },
+            favicon:{ extension: 'jpg|JPG|png|PNG|jpeg|JPEG' },
             gst_type:{ required:true, },
             cgst:{ required:true, },
             sgst:{ required:true, },
@@ -155,13 +155,13 @@ jQuery(document).ready(function() {
         },
         messages:
         {
-			name:{ required: "Name Is Required.", },
-			logo: { extension:"Only JPG / PNG / JPEG Format Allowed.", },
-			favicon: { extension:"Only JPG / PNG / JPEG Format Allowed.", },
-            gst_type: { required: "GST Type Is Required.", },
-            cgst: { required: "CGST Is Required.", },
-            sgst: { required: "SGST Is Required.", },
-            igst: { required: "IGST Is Required.", },
+            name:{ required: "{{ trans('settings.message.name') }}", },
+            logo: { extension:"{{ trans('settings.message.logo') }}", },
+            favicon: { extension:"{{ trans('settings.message.favicon') }}", },
+            gst_type: { required: "{{ trans('settings.message.gst_type') }}", },
+            cgst: { required: "{{ trans('settings.message.cgst') }}", },
+            sgst: { required: "{{ trans('settings.message.sgst') }}", },
+            igst: { required: "{{ trans('settings.message.igst') }}", },
         },
         submitHandler: function(form) {
             $(':input[type="submit"]').prop('disabled', true);

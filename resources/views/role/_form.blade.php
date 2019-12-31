@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ $moduleName.' - '.Helper::setting()->name }}
+{{ trans('role.detail', [ 'module' => $moduleName ]).' - '.Helper::setting()->name  }}
 @endsection
 @section('content')
 <!-- page content -->

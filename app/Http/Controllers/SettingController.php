@@ -65,7 +65,8 @@ class SettingController extends Controller
 
         Setting::find($id)->update(['name' => ucwords($request->name), 'logo' => $logoName, 'favicon' => $faviconName, 'gst_type' => $gstType, 'cgst' => $cgst, 'sgst' => $sgst, 'igst' => $igst]);
 
-        Helper::successMsg('update', $this->moduleName);
+        //Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('settings.alert.update'));
         return redirect($this->route);
     }
 
