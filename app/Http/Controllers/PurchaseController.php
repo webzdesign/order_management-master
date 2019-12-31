@@ -38,11 +38,11 @@ class PurchaseController extends Controller
                 $action = "";
                 $editUrl = route('purchase.edit', encrypt($purchase->purchase_id));
                 if (auth()->user()->hasPermission('edit.purchases')) {
-                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";                
+                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> ".trans('stockpurchase.btn.Edit')." </a>";                
                 }
                 if (auth()->user()->hasPermission('delete.purchases')) {
                     $deleteUrl = url('purchaseDelete/'. encrypt($purchase->purchase_id));
-                    $action .= "<a id='deletepurchase' href='".$deleteUrl."' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i> Delete</a>";
+                    $action .= "<a id='deletepurchase' href='".$deleteUrl."' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i> ".trans('stockpurchase.btn.Delete')."</a>";
                 }
                 return $action;
             })
@@ -81,7 +81,8 @@ class PurchaseController extends Controller
 
         DB::commit();
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('stockpurchase.alert.insert'));
+
         return redirect($this->route);
 
     }
@@ -117,7 +118,7 @@ class PurchaseController extends Controller
 
         DB::commit();
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('stockpurchase.alert.update'));
         return redirect($this->route);
 
     }
@@ -127,7 +128,8 @@ class PurchaseController extends Controller
         if (Purchase::where('purchase_id', decrypt($id))->delete()) {
             Stock::where('transaction_id', decrypt($id))->delete();
         } 
-        Helper::successMsg('delete', $this->moduleName);
+        //Helper::successMsg('delete', $this->moduleName);
+        Helper::successMsg('custom', trans('stockpurchase.alert.delete'));
         return redirect($this->route);
     }
 }

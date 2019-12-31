@@ -38,17 +38,19 @@ return [
         'update'       => 'Role Update Successfully.',
 	],
 
+	/** Table Column */
 	'tfield' =>
 	[
 		'sr_no'    => 'SrNo',
 		'name'     => 'Name',
 		'description'  => 'Description',
 		'action'   => 'Action'
-    ],
+	],
+	
+    /**Alert Messages */
     'alert' => 
     [
         'insert' => 'Role Insert Successfully !',
         'update' => 'Role Update Successfully !',
-
     ],
 ];
