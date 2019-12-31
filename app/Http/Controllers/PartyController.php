@@ -30,16 +30,16 @@ class PartyController extends Controller
             $action = '';
             if (auth()->user()->hasPermission('edit.parties')) {
                 $editUrl = route('party.edit', encrypt($party->id));
-                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                $action .=  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> ".trans('party.btn.Edit')."</a>";
             }
 
             if (auth()->user()->hasPermission('activeinactive.parties')) {
                 if ($party->status == '0') {
                     $activeUrl = url('partyActiveInactive/active/'.$party->id);
-                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                    $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> ".trans('party.btn.Active')."</a>";
                 } else {
                     $deactiveUrl = url('partyActiveInactive/deactive/'.$party->id);
-                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                    $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> ".trans('party.btn.Deactive')."</a>";
                 }
             }
 
@@ -69,7 +69,7 @@ class PartyController extends Controller
     {
         Party::create(['state_id' => $request->state_id, 'city_id' => $request->city_id, 'name'=> ucwords($request->name), 'mobile_no' => $request->mobile_no, 'address' => $request->address, 'status' => $request->status, 'added_by' => auth()->user()->id]);
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('party.message.insert'));
         return redirect($this->route);
     }
 
@@ -87,7 +87,7 @@ class PartyController extends Controller
     {
         Party::find($id)->update(['state_id' => $request->state_id, 'city_id' => $request->city_id, 'name'=> ucwords($request->name), 'mobile_no' => $request->mobile_no, 'address' => $request->address, 'status' => $request->status, 'updated_by' => auth()->user()->id]);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('party.message.update'));
         return redirect($this->route);
     }
 
@@ -109,10 +109,10 @@ class PartyController extends Controller
     {
         if ($type == 'active') {
             Party::where('id', $id)->update(['status' => 1]);
-            Helper::activeDeactiveMsg('active', $this->moduleName);
+            Helper::activeDeactiveMsg('active', trans('party.message.active'));
         } else {
             Party::where('id', $id)->update(['status' => 0]);
-            Helper::activeDeactiveMsg('inactive', $this->moduleName);
+            Helper::activeDeactiveMsg('inactive', trans('party.message.deactive'));
         }
         return redirect($this->route);
     }
@@ -120,7 +120,7 @@ class PartyController extends Controller
     public function getStateCity(Request $request)
     {
         $cities = City::active()->where('state_id', $request->state_id)->pluck('name', 'id');
-        
+
         return json_encode($cities);
     }
 }

@@ -26,16 +26,16 @@ class CategoryController extends Controller
             ->addColumn('action', function ($category) {
                 $editUrl = route('category.edit', encrypt($category->id));
                 if (auth()->user()->hasPermission('edit.category')) {
-                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> ".trans('category.btn.Edit')."</a>";
                 }
 
                 if (auth()->user()->hasPermission('activeinactive.category')) {
                     if ($category->status == '0') {
                         $activeUrl = url('categoryactivedeactive/active/'.$category->id);
-                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> ".trans('category.btn.Active')."</a>";
                     } else {
                         $deactiveUrl = url('categoryactivedeactive/deactive/'.$category->id);
-                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> ".trans('category.btn.Deactive')."</a>";
                     }
                 }
                 return $action;
@@ -59,10 +59,10 @@ class CategoryController extends Controller
     {
         if ($type == 'active') {
             Category::where('id', $id)->update(['status'=>'1']);
-            Helper::activeDeactiveMsg('active', $this->moduleName);
+            Helper::activeDeactiveMsg('active', trans('category.message.active'));
         } else {
             Category::where('id', $id)->update(['status'=>'0']);
-            Helper::activeDeactiveMsg('deactive', $this->moduleName);
+            Helper::activeDeactiveMsg('inactive', trans('category.message.deactive'));
         }
         return redirect($this->route);
     }
@@ -82,7 +82,7 @@ class CategoryController extends Controller
         }
         Category::create(['name'=> ucwords($request->name), 'image' => $imageName,'status'=>$request->status, 'added_by' => auth()->user()->id]);
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('category.message.insert'));
         return redirect($this->route);
     }
 
@@ -109,7 +109,7 @@ class CategoryController extends Controller
 
         Category::find($id)->update(['name'=> ucwords($request->name), 'image' => $imageName,'status'=>$request->status, 'updated_by' => auth()->user()->id]);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('category.message.update'));
         return redirect($this->route);
     }
 

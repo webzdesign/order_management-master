@@ -6,14 +6,14 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	<div class="title_left">
-		<a href="{{ url('category') }}"><button class="btn btn-primary" >Back</button></a>
+		<a href="{{ url('category') }}"><button class="btn btn-primary" >{{ trans('category.btn.Back') }}</button></a>
 	</div>
 	<div class="clearfix"></div>
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2>Edit {{$moduleName}}</h2>
+					<h2>{{ trans('category.edit', [ 'module' => $moduleName ]) }}</h2>
 
 					<div class="clearfix"></div>
 				</div>
@@ -25,16 +25,16 @@
 
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-								State Name<span class="requride_cls">*</span>
+								{{ trans('category.cat_name') }}<span class="requride_cls">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="Enter Name" value="{{ $category->name }}">
+								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('category.placeholder.cat_name') }}" value="{{ $category->name }}">
 							</div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">
-                                Image
+                                {{ trans('category.image') }}
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="file" id="image" name="image" >
@@ -50,15 +50,15 @@
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">
-                                Status<span class="requride_cls">*</span>
+                                {{ trans('category.status') }}<span class="requride_cls">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="radio">
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($category->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">Active
+                                    <input type="radio" class="status" {{ ($category->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">{{ trans('category.active')}}
                                 </label>
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($category->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">Deactive
+                                    <input type="radio" class="status" {{ ($category->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">{{ trans('category.deactive')}}
                                 </label>
                             </div>
                             </div>
@@ -68,8 +68,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('category') }}" class="btn btn-primary">Cancel</a>
-								<button type="submit" class="btn btn-success focusClass">Submit</button>
+								<a href="{{ url('category') }}" class="btn btn-primary">{{ trans('category.btn.Cancel') }}</a>
+								<button type="submit" class="btn btn-success focusClass">{{ trans('category.btn.Submit') }}</button>
 							</div>
 						</div>
 
@@ -106,9 +106,11 @@ $(document).ready(function(){
         },
         messages:
         {
-            name:{ required:"Name Is Required", remote: "Name Already Exits", },
-            image:{ extension:"Only JPG / PNG / JPEG Format Allowed.", },
-            status:{ required:"Status Is Required.", },
+            name:{ required:"{{ trans('category.message.cat_name') }}", remote: "{{ trans('category.message.cat_remote') }}", },
+            image:{
+                extension:"{{ trans('category.message.image_check') }}",
+            },
+            status:{ required:"{{ trans('category.message.status') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));
