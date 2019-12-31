@@ -28,15 +28,15 @@ class ProductController extends Controller
             ->addColumn('action', function ($product) {
                 $editUrl = route('product.edit', encrypt($product->id));
                 if (auth()->user()->hasPermission('edit.product')) {
-                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                    $action = "<a href='".$editUrl."' class='btn btn-warning  btn-xs'><i class='fa fa-pencil'></i> ".trans('product.btn.Edit')."</a>";
                 }
                 if (auth()->user()->hasPermission('activeinactive.product')) {
                     if ($product->status == '0') {
                         $activeUrl = url('productactivedeactive/active/'.$product->id);
-                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> Activate</a>";
+                        $action .= "<a id='active' href='".$activeUrl."' class='btn btn-success btn-xs'><i class='fa fa-check'></i> ".trans('product.btn.Active')."</a>";
                     } else {
                         $deactiveUrl = url('productactivedeactive/deactive/'.$product->id);
-                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> Deactivate</a>";
+                        $action .= "<a id='deactive' href='".$deactiveUrl."' class='btn btn-danger btn-xs'><i class='fa fa-times'></i> ".trans('product.btn.Deactive')."</a>";
                     }
                 }
                 return $action;
@@ -68,10 +68,10 @@ class ProductController extends Controller
     {
         if ($type == 'active') {
             Product::where('id', $id)->update(['status'=>'1']);
-            Helper::activeDeactiveMsg('active', $this->moduleName);
+            Helper::activeDeactiveMsg('active', trans('product.message.active'));
         } else {
             Product::where('id', $id)->update(['status'=>'0']);
-            Helper::activeDeactiveMsg('deactive', $this->moduleName);
+            Helper::activeDeactiveMsg('inactive', trans('product.message.deactive'));
         }
         return redirect($this->route);
     }
@@ -95,7 +95,7 @@ class ProductController extends Controller
 
         Stock::create(['transaction_id' => $productInsertedId->id, 'voucher'=> '0', 'product_id'  => $productInsertedId->id, 'qty'=> $request->op_stock, 'type'=>'0', 'added_by'=>auth()->user()->id]);
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('product.message.insert'));
         return redirect($this->route);
     }
 
@@ -128,7 +128,7 @@ class ProductController extends Controller
 
         Stock::where('transaction_id', $id)->update(['transaction_id' => $id, 'voucher'=> '0', 'product_id'  => $id, 'qty'=> $request->op_stock, 'type'=>'0', 'updated_by'=>auth()->user()->id]);
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('product.message.update'));
         return redirect($this->route);
     }
 

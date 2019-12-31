@@ -15,10 +15,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{$moduleName }} Details</h2>
+                    <h2>{{ trans('product.detail', [ 'module' => $moduleName ]) }}</h2>
                     <div>
                         @permission('create.product')
-                        <a href="{{ route('product.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
+                        <a href="{{ route('product.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('product.btn.New') }}</button></a>
                         @endpermission
                     </div>
                     <div class="clearfix"></div>
@@ -31,14 +31,14 @@
                                 width="100%" role="grid" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>SrNo</th>
-                                            <th>Category</th>
-                                            <th>Product</th>
-                                            <th>Opening Stock</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                            <th>Added By</th>
-                                            <th>Action</th>
+                                            <th>{{ trans('product.tfield.sr_no') }}</th>
+                                            <th>{{ trans('product.tfield.cat_name')}}</th>
+                                            <th>{{ trans('product.tfield.product_name')}}</th>
+                                            <th>{{ trans('product.tfield.opening_stock')}}</th>
+                                            <th>{{ trans('product.tfield.price')}}</th>
+                                            <th>{{ trans('product.tfield.status')}}</th>
+                                            <th>{{ trans('product.tfield.added_by')}}</th>
+                                            <th>{{ trans('product.tfield.action')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -57,9 +57,17 @@
 <script>
 $(document).ready(function() {
 
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
+
     @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("product.product") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -72,6 +80,9 @@ $(document).ready(function() {
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+			"url": lang_url
+		},
         ajax: "{{url('getProductData') }}",
         columns: [
           { data: 'DT_RowIndex',searchable: false,orderable: false},
@@ -89,11 +100,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Activate?",
-            text: "As that can be undone by doing reverse.",
+            title: "{{ trans('product.message.active_title') }}",
+            text: "{{ trans('product.message.active_text') }}",
             icon: "success",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('product.btn.Cancel') }}" , "{{ trans('product.btn.ok') }}"]
         })
         .then((willActive) => {
             if (willActive) {
@@ -107,11 +119,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Deactivate?",
-            text: "As that can be undone by doing reverse.",
+            title: "{{ trans('product.message.deactive_title') }}",
+            text: "{{ trans('product.message.deactive_text') }}",
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('product.btn.Cancel') }}" , "{{ trans('product.btn.ok') }}"]
         })
         .then((willDeactivate) => {
             if (willDeactivate) {
