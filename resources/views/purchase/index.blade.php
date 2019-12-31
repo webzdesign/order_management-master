@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{$moduleName}}
+{{ trans('stockpurchase.detail', [ 'module' => $moduleName ]).' - '.Helper::setting()->name  }}
 @endsection
 @section('content')
 <div class="right_col" role="main">

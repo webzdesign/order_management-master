@@ -1,13 +1,12 @@
 @extends('layouts.master')
 @section('title')
-{{$moduleName}}
+{{ trans('user.detail', [ 'module' => $moduleName ]).' - '.Helper::setting()->name  }}
 @endsection
 @section('content')
 <div class="right_col" role="main">
   <div class="">
     <div class="page-title">
       <div class="title_left">
-
       </div>
 
       <div class="title_right">

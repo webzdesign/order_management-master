@@ -1,0 +1,28 @@
+<?php
+
+return [
+	'detail'     => ':module Details',
+    'state'   =>  'State',
+    'city'    =>  'City',
+    'from_date'  =>  'From Date',
+	'to_date' =>  'To Date',
+	'grand_total'	=> 'GRAND TOTAL',
+
+	/** Button */
+	'btn' =>
+	[
+		'Search'    => 'Search',
+		'Clear'     => 'Clear',
+		'Print'     => 'Print',
+	],
+
+	/** Table Column */
+	'tfield' =>
+	[
+		'sr_no'    => 'SrNo',
+		'party'    => 'Party',
+		'order_no'  => 'Order No',
+        'order_date'=> 'Order Date',
+		'order_amount'  => 'Order Amount',
+	],
+];
