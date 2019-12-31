@@ -7,14 +7,14 @@
   <div class="right_col" role="main">
     <div class="">
         <div class="title_left">
-          <a href="{{url('purchase')}}"><button class="btn btn-primary" >Back</button></a>
+          <a href="{{url('purchase')}}"><button class="btn btn-primary" >{{ trans('stockpurchase.btn.Back') }}</button></a>
         </div>
       <div class="clearfix"></div>
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Edit {{$moduleName}}</h2>
+              <h2>{{ trans('stockpurchase.edit', [ 'module' => $moduleName ]) }}</h2>
 
               <div class="clearfix"></div>
             </div>
@@ -25,26 +25,26 @@
                 @csrf
 
                 <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date">Date<span class="requride_cls">*</span>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date">{{ trans('stockpurchase.date') }}<span class="requride_cls">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="date" name="date"  class="form-control col-md-7 col-xs-12 focusClass datepicker " placeholder="Select Date" value="{{ date('d-m-Y', strtotime($purchase[0]->date) )}}" readonly>
+                    <input type="text" id="date" name="date"  class="form-control col-md-7 col-xs-12 focusClass datepicker " placeholder="{{ trans('stockpurchase.placeholder.select_date') }}" value="{{ date('d-m-Y', strtotime($purchase[0]->date) )}}" readonly>
                   </div>
                 </div>
 
                 <div class="row">
                   <div>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date">Purchase Details<span class="requride_cls">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="purchase">{{ trans('stockpurchase.purchase_detail') }}<span class="requride_cls">*</span>
                     </label>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                   <table id="recipe" class="table table-bordered" cellspacing="0">
                           <thead>
                                   <tr class="success">
-                                          <th>SrNo</th>
-                                          <th width="50%">Recipe Category <span class="requride_cls">*</span></th>
-                                          <th width="30%">Qty <span class="requride_cls">*</span></th>
-                                          <th>Action</th>
+                                          <th>{{ trans('stockpurchase.tfield.sr_no') }}</th>
+                                          <th width="50%">{{ trans('stockpurchase.tfield.product') }}<span class="requride_cls">*</span></th>
+                                          <th width="30%">{{ trans('stockpurchase.tfield.qty') }}<span class="requride_cls">*</span></th>
+                                          <th>{{ trans('stockpurchase.tfield.action') }}</th>
                                   </tr>
                           </thead>
                           <tbody>
@@ -61,7 +61,7 @@
                                       </td>
 
                                       <td>
-                                          <input type="text" class="form-control numberonly qty" placeholder="Enter Qty" name="qty[]" id="qty" value="{{ $value->qty }}" />
+                                          <input type="text" class="form-control numberonly qty" placeholder="{{ trans('stockpurchase.placeholder.qty') }}" name="qty[]" id="qty" value="{{ $value->qty }}" />
                                       </td>
 
                                       <td>
@@ -85,8 +85,8 @@
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                      <a href="{{url('purchase')}}" class="btn btn-primary">Cancel</a>
-                    <button type="submit" class="btn btn-success focusClass" id="submitButton">Submit</button>
+                      <a href="{{url('purchase')}}" class="btn btn-primary">{{ trans('stockpurchase.btn.Cancel') }}</a>
+                    <button type="submit" class="btn btn-success focusClass" id="submitButton">{{ trans('stockpurchase.btn.Submit') }}</button>
                   </div>
                 </div>
 
@@ -168,7 +168,7 @@
 				var qty_err = qtyCheck.indexOf(0);
 
 				if (product_err != '-1') {
-						var str = "Product Is Required";
+						var str = "{{ trans('stockpurchase.message.product_err') }}";
 						var result = str.fontcolor("red");
 						document.getElementById('product_id_err').innerHTML = result;
 						errorStatus = 1;
@@ -177,7 +177,7 @@
 				}
 
 				if (qty_err != '-1') {
-						var str = "Qty Is Required";
+						var str = "{{ trans('stockpurchase.message.qty_err') }}";
 						var result = str.fontcolor("red");
 						document.getElementById('qty_err').innerHTML = result;
 						errorStatus = 1;

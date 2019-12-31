@@ -55,6 +55,8 @@ return [
         'password_equalTo'  => 'Enter Confirm Password Same as Password',
 	],
 
+
+    /** Table Column */
 	'tfield' =>
 	[
 		'sr_no'     => 'SrNo',
@@ -64,6 +66,8 @@ return [
 		'status'    => 'Status',
 		'action'    => 'Action'
     ],
+
+    /**Alert Messages */
     'alert' => 
     [
         'insert'    => 'User Insert Successfully !',

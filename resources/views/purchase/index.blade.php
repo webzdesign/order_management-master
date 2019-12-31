@@ -21,9 +21,9 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>{{$moduleName }} Details</h2>
+            <h2>{{ trans('stockpurchase.detail', [ 'module' => $moduleName ]) }} </h2>
               @permission('create.purchases')
-                <div><a href="{{route('purchase.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a></div>
+                <div><a href="{{route('purchase.create')}}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('stockpurchase.btn.New') }}</button> </a></div>
               @endpermission
             <div class="clearfix"></div>
           </div>
@@ -35,13 +35,13 @@
                       width="100%" role="grid" style="width: 100%;">
                       <thead>
                         <tr>
-                          <th>SrNo</th>
-                          <th>Purchase ID</th>
-                          <th>Date</th>
-                          <th>product</th>
-                          <th>Qty</th>
-                          <th>Added By</th>
-                          <th>Action</th>
+                          <th>{{ trans('stockpurchase.tfield.sr_no') }}</th>
+                          <th>{{ trans('stockpurchase.tfield.purchase_id') }}</th>
+                          <th>{{ trans('stockpurchase.tfield.date') }}</th>
+                          <th>{{ trans('stockpurchase.tfield.product') }}</th>
+                          <th>{{ trans('stockpurchase.tfield.qty') }}</th>
+                          <th>{{ trans('stockpurchase.tfield.added_by') }}</th>
+                          <th>{{ trans('stockpurchase.tfield.action') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -61,9 +61,17 @@
 <script>
 $(document).ready(function() {
 
+  var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
+
   @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("stockpurchase.purchase") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -76,6 +84,9 @@ $(document).ready(function() {
   datatable=$('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+              "url": lang_url
+          },
         ajax: "{{url('/getPurchaseData') }}",
         columns: [
           { data: 'DT_RowIndex',searchable: false,orderable: false},
@@ -92,11 +103,12 @@ $(document).ready(function() {
         e.preventDefault();
         var linkURL = $(this).attr("href");
         swal({
-            title: "Are you sure want to Delete?",
-            text: "As that can't be reverse.",
+            title: "{{ trans('stockpurchase.alert.confirm_delete') }}",
+            text: "{{ trans('stockpurchase.alert.confirm_text') }}",
             icon: "success",
             buttons: true,
             dangerMode: true,
+            buttons: [ "{{ trans('stockpurchase.alert.cancel_alert') }}" , "{{ trans('stockpurchase.alert.confirm_alert') }}"]
         })
         .then((willActive) => {
             if (willActive) {
