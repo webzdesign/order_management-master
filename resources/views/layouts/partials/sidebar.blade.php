@@ -10,68 +10,68 @@
       <!-- <h3>General</h3> -->
       <ul class="nav side-menu">
 
-        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
-        <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Firm Master</a></li>
+        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> {{ trans('sidebar.dashboard') }}</a></li>
+        <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> {{ trans('sidebar.firm_master') }}</a></li>
         <!-- User Management Sidebar -->
         @if(auth()->user()->hasPermission('view.roles') || auth()->user()->hasPermission('view.users'))
-            <li><a><i class="fa fa-users"></i>User Management <span class="fa fa-chevron-down"></span></a>
+            <li><a><i class="fa fa-users"></i> {{ trans('sidebar.user_management') }}<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                     @permission('view.roles')
-                    <li><a href="{{url('role')}}"> Role / Permission</a></li>
+                    <li><a href="{{url('role')}}"> {{ trans('sidebar.role_permission') }}</a></li>
                     @endpermission
                     @permission('view.users')
-                    <li><a href="{{url('user')}}"> User</a></li>
+                    <li><a href="{{url('user')}}"> {{ trans('sidebar.user') }}</a></li>
                     @endpermission
                 </ul>
             </li>
         @endif
 
         @if(auth()->user()->hasPermission('view.states') || auth()->user()->hasPermission('view.cities') || auth()->user()->hasPermission('view.parties') || auth()->user()->hasPermission('view.category') || auth()->user()->hasPermission('view.product'))
-        <li><a><i class="fa fa-arrows"></i>Masters <span class="fa fa-chevron-down"></span></a>
+        <li><a><i class="fa fa-arrows"></i> {{ trans('sidebar.master') }} <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
                 @permission('view.states')
-                <li><a href="{{ url('state') }}"> State Master</a></li>
+                <li><a href="{{ url('state') }}"> {{ trans('sidebar.state_master') }}</a></li>
                 @endpermission
                 @permission('view.cities')
-                <li><a href="{{ url('city') }}"> City Master</a></li>
+                <li><a href="{{ url('city') }}"> {{ trans('sidebar.city_master') }}</a></li>
                 @endpermission
                 @permission('view.parties')
-                <li><a href="{{ url('party') }}"> Party Master</a></li>
+                <li><a href="{{ url('party') }}"> {{ trans('sidebar.party_master') }}</a></li>
                 @endpermission
                 @permission('view.category')
-                <li><a href="{{ url('category') }}"> Category</a></li>
+                <li><a href="{{ url('category') }}"> {{ trans('sidebar.category') }}</a></li>
                 @endpermission
                 @permission('view.product')
-                <li><a href="{{ url('product') }}"> Product</a></li>
+                <li><a href="{{ url('product') }}"> {{ trans('sidebar.product') }}</a></li>
                 @endpermission
             </ul>
         </li>
         @endif
 		@permission('view.order')
-			<li><a href="{{url('order')}}"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+			<li><a href="{{url('order')}}"><i class="fa fa-shopping-cart"></i> {{ trans('sidebar.orders') }}</a></li>
 		@endpermission
         @permission('view.purchases')
-          	<li><a href="{{url('purchase')}}"><i class="fa fa-line-chart"></i> Stock Adjustment / Purchase</a></li>
+          	<li><a href="{{url('purchase')}}"><i class="fa fa-line-chart"></i> {{ trans('sidebar.stock_purchase') }}</a></li>
         @endpermission
         @if(auth()->user()->hasPermission('view.partywisereport') || auth()->user()->hasPermission('view.productwisereport') || auth()->user()->hasPermission('view.datewisereport') || auth()->user()->hasPermission('view.citywisereport'))
-          <li><a><i class="fa fa-bar-chart"></i>Reports <span class="fa fa-chevron-down"></span></a>
+          <li><a><i class="fa fa-bar-chart"></i> {{ trans('sidebar.reports') }} <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
                   @permission('view.partywisereport')
-                    <li><a href="{{ url('partywisereport') }}"> Party Wise Report</a></li>
+                    <li><a href="{{ url('partywisereport') }}"> {{ trans('sidebar.party_report') }}</a></li>
                   @endpermission
                   @permission('view.productwisereport')
-                    <li><a href="{{ url('productwisereport') }}"> Product Wise Report</a></li>
+                    <li><a href="{{ url('productwisereport') }}"> {{ trans('sidebar.product_report') }}</a></li>
                   @endpermission
                   @permission('view.datewisereport')
-                    <li><a href="{{ url('datewisereport') }}"> Date Wise Report</a></li>
+                    <li><a href="{{ url('datewisereport') }}"> {{ trans('sidebar.date_report') }}</a></li>
                   @endpermission
                   @permission('view.citywisereport')
-                    <li><a href="{{ url('citywisereport') }}"> City Wise Report</a></li>
+                    <li><a href="{{ url('citywisereport') }}"> {{ trans('sidebar.city_report') }}</a></li>
                   @endpermission
               </ul>
           </li>
         @endif
-        <li><a href="{{url('settings')}}"><i class="fa fa-cog"></i> Settings</a></li>
+        <li><a href="{{url('settings')}}"><i class="fa fa-cog"></i> {{ trans('sidebar.setting') }}</a></li>
       </ul>
     </div>
   </div>

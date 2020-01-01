@@ -60,10 +60,10 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:20px;">
-                            <input type="radio" value="0" {{ ($setting->gst_type == 0) ? 'checked' : '' }} class="gst_type" name="gst_type">Inter State
+                            <input type="radio" value="0" {{ ($setting->gst_type == 0) ? 'checked' : '' }} class="gst_type" name="gst_type">{{ trans('settings.inter_state') }}
                             </label>
                             <label>
-                            <input type="radio" value="1" {{ ($setting->gst_type == 1) ? 'checked' : '' }} class="gst_type" name="gst_type">Out Of State
+                            <input type="radio" value="1" {{ ($setting->gst_type == 1) ? 'checked' : '' }} class="gst_type" name="gst_type">{{ trans('settings.out_state') }}
                             </label>
                         </div>
                         <label id="gst_type-error" class="error" for="gst_type"></label>
