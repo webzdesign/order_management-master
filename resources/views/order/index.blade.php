@@ -15,10 +15,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{$moduleName }} Details</h2>
+                    <h2>{{ trans('order.detail', [ 'module' => $moduleName ]) }}</h2>
                     <div>
                         @permission('create.order')
-                            <a href="{{ route('order.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> New</button></a>
+                            <a href="{{ route('order.create') }}"><button class="btn btn-primary" style="float:right;"><i class="fa fa-plus"></i> {{ trans('order.btn.New') }}</button></a>
                         @endpermission
                     </div>
                     <div class="clearfix"></div>
@@ -30,14 +30,14 @@
                                 <table class="datatable mdl-data-table dataTable table table-striped table-bordered" cellspacing="0" width="100%" role="grid" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>SrNo</th>
-                                            <th>OrderNo</th>
-                                            <th>Date</th>
-                                            <th>Party Name</th>
-											<th>Grand Total</th>
-                                            <th>Status</th>
-                                            <th>Added By</th>
-                                            <th>Action</th>
+                                            <th>{{ trans('order.tfield.sr_no') }}</th>
+                                            <th>{{ trans('order.tfield.order_no') }}</th>
+                                            <th>{{ trans('order.tfield.date') }}</th>
+                                            <th>{{ trans('order.tfield.party_name')}}</th>
+                                            <th>{{ trans('order.tfield.grand_total')}}</th>
+                                            <th>{{ trans('order.tfield.status')}}</th>
+                                            <th>{{ trans('order.tfield.added_by')}}</th>
+                                            <th>{{ trans('order.tfield.action')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -59,7 +59,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">Dispatch Qty</h4>
+                <h4 class="modal-title" id="myModalLabel2">{{ trans('order.dispatch_qty') }}</h4>
             </div>
             <div class="modal-body" >
                 <form class="form-horizontal" id="frm_modal" method="post" autocomplete="off">
@@ -70,10 +70,10 @@
                             <table id="order" class="table table-bordered" cellspacing="0">
                                 <thead>
                                     <tr class="success">
-                                        <th width="5%">SrNo</th>
-                                        <th width="30%">Product <span class="requride_cls">*</span></th>
-                                        <th width="25%">Remaining Qty <span class="requride_cls">*</span></th>
-                                        <th width="25%">Dispatch Qty</th>
+                                        <th width="5%">{{ trans('order.tfield.sr_no') }}</th>
+                                        <th width="30%">{{ trans('order.product') }} <span class="requride_cls">*</span></th>
+                                        <th width="25%">{{ trans('order.remaining_qty') }}<span class="requride_cls">*</span></th>
+                                        <th width="25%">{{ trans('order.dispatch_qty') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="tableBody" id="ExistOrderData">
@@ -91,8 +91,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="dispatch_submit">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('order.btn.close') }}</button>
+                        <button type="submit" class="btn btn-primary" id="dispatch_submit">{{ trans('order.btn.Submit') }}</button>
                     </div>
                 </form>
 
@@ -106,9 +106,17 @@
 <script>
 $(document).ready(function() {
 
+    var lang_url = "";
+    var lang_type  = "{{ Session::get('locale')}}";
+    if (lang_type == 'en') {
+        lang_url = "{{ url('/resources/lang/en/datatable_en.json') }}";
+    } else {
+        lang_url = "{{ url('/resources/lang/gu/datatable_gj.json') }}";
+    }
+
     @if (Session::has('message'))
     new PNotify({
-        title: '{{ $moduleName }}',
+        title: '{{ trans("order.order") }}',
         text: '{!! session('message') !!}',
         type: 'success',
         styling: 'bootstrap3',
@@ -121,6 +129,9 @@ $(document).ready(function() {
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
+        "language": {
+			"url": lang_url
+		},
         ajax: "{{url('getOrderData') }}",
         columns: [
           { data: 'DT_RowIndex',searchable: false,orderable: false},
@@ -222,7 +233,7 @@ $(document).ready(function() {
                     $("#dispatch_qty").val("");
                     $('#dispatchModal').modal('hide');
                     $('.datatable').DataTable().ajax.reload();
-                    swal("success", "Dispatch Qty Insert Successfully !", "success");
+                    swal("{{ trans('order.message.success') }}", "{{ trans('order.message.dis_qty') }}", "success");
                 }
             });
         } else {

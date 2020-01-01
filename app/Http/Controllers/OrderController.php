@@ -40,7 +40,7 @@ class OrderController extends Controller
                     if($order->status != 0){
                         $action = '';
                     } else {
-                        $action =  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Edit</a>";
+                        $action =  "<a href='".$editUrl."' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> ".trans('order.btn.Edit')."</a>";
                     }
                 }
             }
@@ -49,11 +49,11 @@ class OrderController extends Controller
                 if($order->status == 1) {
                     $action .= '';
                 } else {
-                    $action .= "<a class='btn btn-dark  btn-xs dispatch-confirm' data-toggle='modal' data-target='.bs-example-modal-sm' id='dispatchQtyBtn' data-id='$order->order_id'><i class='fa fa-arrow-up'></i> Dispatch</a>";
+                    $action .= "<a class='btn btn-dark  btn-xs dispatch-confirm' data-toggle='modal' data-target='.bs-example-modal-sm' id='dispatchQtyBtn' data-id='$order->order_id'><i class='fa fa-arrow-up'></i> ".trans('order.btn.Dispatch')."</a>";
                 }
             }
 
-            $action .=  "<a href='".$viewUrl."' class='btn btn-info btn-xs'><i class='fa fa-eye'></i> View</a>";
+            $action .=  "<a href='".$viewUrl."' class='btn btn-info btn-xs'><i class='fa fa-eye'></i> ".trans('order.btn.View')."</a>";
 
             return $action;
         })
@@ -105,7 +105,7 @@ class OrderController extends Controller
             $cnt++;
         }
 
-        Helper::successMsg('insert', $this->moduleName);
+        Helper::successMsg('custom', trans('order.message.insert'));
         return redirect($this->route);
     }
 
@@ -144,7 +144,7 @@ class OrderController extends Controller
             $cnt++;
         }
 
-        Helper::successMsg('update', $this->moduleName);
+        Helper::successMsg('custom', trans('order.message.update'));
         return redirect($this->route);
     }
 

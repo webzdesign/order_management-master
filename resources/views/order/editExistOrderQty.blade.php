@@ -13,10 +13,10 @@
         </select>
     </td>
     <td>
-        <input type="text" class="form-control remaining_qty" placeholder="Enter Remaining Qty" name="remaining_qty[]" id="remaining_qty" value="{{ $v->remaining_qty }}" readonly>
+        <input type="text" class="form-control remaining_qty" placeholder="{{ trans('order.placeholder.rem_qty') }}" name="remaining_qty[]" id="remaining_qty" value="{{ $v->remaining_qty }}" readonly>
     </td>
     <td>
-        <input type="text" class="form-control dispatch_qty" placeholder="Enter Dispatch Qty" name="dispatch_qty[]" id="dispatch_qty" >
+        <input type="text" class="form-control dispatch_qty" placeholder="{{ trans('order.placeholder.dis_qty') }}" name="dispatch_qty[]" id="dispatch_qty" >
     </td>
 </tr>
 @php $cnt++; @endphp

@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="title_left">
-        <a href="{{ url('order') }}"><button class="btn btn-primary" >Back</button></a>
+        <a href="{{ url('order') }}"><button class="btn btn-primary" >{{ trans('order.btn.Back') }}</button></a>
     </div>
     <div class="clearfix"></div>
 
@@ -14,7 +14,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Add {{$moduleName}}</h2>
+                    <h2>{{ trans('order.add', [ 'module' => $moduleName ]) }}</h2>
 
                     <div class="clearfix"></div>
                 </div>
@@ -26,14 +26,14 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="date">
-                                        Date <span class="requride_cls">*</span>
+                                        {{ trans('order.date') }}  <span class="requride_cls">*</span>
                                     </label>
                                     <input type="text" id="date" name="date" class="form-control datepicker" readonly value="{{ date('d-m-Y') }}">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="party_id">
-                                        Party Name <span class="requride_cls">*</span>
+                                        {{ trans('order.party_name') }} <span class="requride_cls">*</span>
                                     </label>
                                     <select class="select2_single form-control" name="party_id" id="party_id">
                                         <option value=""></option>
@@ -51,12 +51,12 @@
                             <table id="order" class="table table-bordered" cellspacing="0">
                                 <thead>
                                     <tr class="success">
-                                        <th>SrNo</th>
-                                        <th width="25%">Product <span class="requride_cls">*</span></th>
-                                        <th width="25%">Price <span class="requride_cls">*</span></th>
-                                        <th width="15%">Qty <span class="requride_cls">*</span></th>
-                                        <th width="25%">Amount <span class="requride_cls">*</span></th>
-                                        <th width="10%">Action</th>
+                                        <th>{{ trans('order.tfield.sr_no') }}</th>
+                                        <th width="25%">{{ trans('order.product') }} <span class="requride_cls">*</span></th>
+                                        <th width="25%">{{ trans('order.price') }} <span class="requride_cls">*</span></th>
+                                        <th width="15%">{{ trans('order.qty') }} <span class="requride_cls">*</span></th>
+                                        <th width="25%">{{ trans('order.amount') }} <span class="requride_cls">*</span></th>
+                                        <th width="10%">{{ trans('order.tfield.action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,13 +71,13 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" id="price" name="price[]" class="form-control" placeholder="Price" readonly>
+                                            <input type="text" id="price" name="price[]" class="form-control" placeholder="{{ trans('order.price') }}" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" id="qty" name="qty[]" class="form-control numberonly qty" placeholder="Qty">
+                                            <input type="text" id="qty" name="qty[]" class="form-control numberonly qty" placeholder="{{ trans('order.qty') }}">
                                         </td>
                                         <td>
-                                            <input type="text" id="amount" name="amount[]" class="form-control numberonly amount" placeholder="Amount" readonly>
+                                            <input type="text" id="amount" name="amount[]" class="form-control numberonly amount" placeholder="{{ trans('order.amount') }}" readonly>
                                         </td>
                                         <td>
                                             <button  tabindex="1" type="button" class="btn btn-success add btn-xs " onclick="">+</button>
@@ -89,15 +89,15 @@
                                         <td><label id="product_id_err"></label></td>
                                         <td></td>
                                         <td><label id="qty_err"></label></td>
-                                        <td><input type="text" id="total_amount" name="total_amount" class="form-control" placeholder="Total Amount" readonly></td>
+                                        <td><input type="text" id="total_amount" name="total_amount" class="form-control" placeholder="{{ trans('order.total_amt') }}" readonly></td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Discount</td>
-                                        <td><input type="text" id="discount" name="discount" class="form-control discount" placeholder="Discount" value="0"></td>
+                                        <td>{{ trans('order.discount') }}</td>
+                                        <td><input type="text" id="discount" name="discount" class="form-control discount" placeholder="{{ trans('order.discount') }}" value="0"></td>
                                         <td></td>
                                     </tr>
                                     <input type="hidden" id="gst_type" name="gst_type" value="{{ ((Helper::setting()->gst_type) == 0) ? '0' : '1' }}">
@@ -106,8 +106,8 @@
                                         <td></td>
                                         <td></td>
                                         <input type="hidden" name="cgst_per" id="cgst_per" value="{{ Helper::setting()->cgst }}">
-                                        <td>CGST {{ Helper::setting()->cgst.'%' }} </td>
-                                        <td><input type="text" id="cgst" name="cgst" class="form-control" placeholder="CGST" readonly value="">
+                                        <td>{{ trans('order.cgst') }} {{ Helper::setting()->cgst.'%' }} </td>
+                                        <td><input type="text" id="cgst" name="cgst" class="form-control" placeholder="{{ trans('order.cgst') }}" readonly value="">
                                         <input type="hidden" id="cgst_hidn" name="cgst_hidn" value="{{ Helper::setting()->cgst }}"></td>
                                         <td></td>
                                     </tr>
@@ -116,8 +116,8 @@
                                         <td></td>
                                         <td></td>
                                         <input type="hidden" name="sgst_per" id="sgst_per" value="{{ Helper::setting()->sgst }}">
-                                        <td>SGST {{ Helper::setting()->sgst.'%' }} </td>
-                                        <td><input type="text" id="sgst" name="sgst" class="form-control" placeholder="SGST" readonly value="">
+                                        <td>{{ trans('order.sgst') }} {{ Helper::setting()->sgst.'%' }} </td>
+                                        <td><input type="text" id="sgst" name="sgst" class="form-control" placeholder="{{ trans('order.sgst') }}" readonly value="">
                                         <input type="hidden" id="sgst_hidn" name="sgst_hidn" value="{{ Helper::setting()->sgst }}"></td>
                                         </td>
                                         <td></td>
@@ -127,8 +127,8 @@
                                         <td></td>
                                         <td></td>
                                         <input type="hidden" name="igst_per" id="igst_per" value="{{ Helper::setting()->igst }}">
-                                        <td>IGST {{ Helper::setting()->igst.'%' }} </td>
-                                        <td><input type="text" id="igst" name="igst" class="form-control" placeholder="IGST" readonly value="">
+                                        <td>{{ trans('order.igst') }} {{ Helper::setting()->igst.'%' }} </td>
+                                        <td><input type="text" id="igst" name="igst" class="form-control" placeholder="{{ trans('order.igst') }}" readonly value="">
                                         <input type="hidden" id="igst_hidn" name="igst_hidn" value="{{ Helper::setting()->igst }}"></td>
                                         </td>
                                         <td></td>
@@ -137,8 +137,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Grand Total </td>
-                                        <td><input type="text" id="grand_total" name="grand_total" class="form-control" placeholder="Grand Total" value="" readonly></td>
+                                        <td>{{ trans('order.grand_total') }} </td>
+                                        <td><input type="text" id="grand_total" name="grand_total" class="form-control" placeholder="{{ trans('order.grand_total') }}" value="" readonly></td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -150,10 +150,10 @@
                         <div class="row">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="instruction">
-                                    Instruction <span class="requride_cls">*</span>
+                                    {{ trans('order.instruction') }} <span class="requride_cls">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea id="instruction" name="instruction" class="form-control" placeholder="Enter Instruction"></textarea>
+                                    <textarea id="instruction" name="instruction" class="form-control" placeholder="{{ trans('order.placeholder.instruction') }} "></textarea>
                                 </div>
                             </div>
                         </div>
@@ -161,20 +161,20 @@
                         <div class="row">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lr_no">
-                                    LR No
+                                    {{ trans('order.lr_no') }}
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="lr_no" name="lr_no" class="form-control" placeholder="Enter LR No">
+                                    <input type="text" id="lr_no" name="lr_no" class="form-control" placeholder="{{ trans('order.placeholder.lr_no') }}">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="transporter"> Transporter
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="transporter"> {{ trans('order.transporter') }}
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="transporter" name="transporter" class="form-control" placeholder="Enter Transporter">
+                                    <input type="text" id="transporter" name="transporter" class="form-control" placeholder="{{ trans('order.placeholder.transporter') }}">
                                 </div>
                             </div>
                         </div>
@@ -182,8 +182,8 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <a href=" {{ url('order') }}" class="btn btn-primary">Cancel</a>
-                                <button type="submit" class="btn btn-success" id="submitButton">Submit</button>
+                                <a href=" {{ url('order') }}" class="btn btn-primary">{{ trans('order.btn.Cancel') }}</a>
+                                <button type="submit" class="btn btn-success" id="submitButton">{{ trans('order.btn.Submit') }}</button>
                             </div>
                         </div>
                     </form>
@@ -240,9 +240,9 @@ $(document).ready(function(){
         },
         messages:
         {
-            date:{ required:"Date Is Required.", },
-            party_id:{ required:"Party Name Is Required.", },
-            instruction:{ required:"Instruction Is Required.", },
+            date:{ required:"{{ trans('order.message.date') }}", },
+            party_id:{ required:"{{ trans('order.message.party_name') }}", },
+            instruction:{ required:"{{ trans('order.message.instruction') }}", },
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent("div"));
@@ -274,7 +274,7 @@ $(document).ready(function(){
         var qty_err = qtyCheck.indexOf(0);
 
         if (product_err != '-1') {
-            var str = "Product Is Required";
+            var str = "{{ trans('order.message.product') }}";
             var result = str.fontcolor("red");
             document.getElementById('product_id_err').innerHTML = result;
             errorStatus = 1;
@@ -283,7 +283,7 @@ $(document).ready(function(){
         }
 
         if (qty_err != '-1') {
-            var str = "Qty Is Required";
+            var str = "{{ trans('order.message.qty') }}";
             var result = str.fontcolor("red");
             document.getElementById('qty_err').innerHTML = result;
             errorStatus = 1;
