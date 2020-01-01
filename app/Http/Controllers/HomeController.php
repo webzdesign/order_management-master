@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $moduleName = 'Dashboard';
         $userCount = User::where('status',1)->count();
-        $totalOrder = Order::groupBy('order_id')->count();
+        $totalOrder = Order::groupBy('order_id')->get()->count();
         return view('home', compact('moduleName', 'userCount', 'totalOrder'));
     }
 
