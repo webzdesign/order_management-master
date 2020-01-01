@@ -10,7 +10,7 @@ return [
     'state_master'  => 'રાજ્ય',
     'city_master'   => 'શહેર',
     'party_master'  => 'મંડળી',
-    'category'      => 'પ્રકાર',
+    'category'      => 'વર્ગ',
     'product'       =>  'ઉત્પાદન',
     'orders'        =>  'ઓર્ડર',
     'stock_purchase'=>  'સ્ટોક ગોઠવણ / ખરીદ',
