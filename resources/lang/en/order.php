@@ -37,6 +37,7 @@ return [
 		'Submit'    => 'Submit',
 		'Add'       => 'Add',
 		'ok' 		=> 'Ok',
+		'Dispatch'  => 'Dispatch',
 		'close'     => 'Close',
 		'View'      => 'View',
 	],
