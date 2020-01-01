@@ -27,7 +27,7 @@
                   <label class="control-label" for="name">{{ trans('user.name') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_name') }}" value="{{old('name')}}">
+                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_name') }}" value="{{old('name')}}">
                   </div>
                 </div>
 
@@ -35,7 +35,7 @@
                   <label class="control-label" for="email">{{ trans('user.email') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_email') }}" value="{{old('email')}}">
+                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_email') }}" value="{{old('email')}}">
                   </div>
                 </div>
 
@@ -43,7 +43,7 @@
                   <label class="control-label" for="password">{{ trans('user.password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_password') }}" value="{{old('password')}}" >
+                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_password') }}" value="{{old('password')}}" >
                   </div>
                 </div>
 
@@ -52,7 +52,7 @@
                   <label class="control-label" for="confirm_password">{{ trans('user.confirm_password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_confirm') }}" value="{{old('confirm_password')}}" >
+                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_confirm') }}" value="{{old('confirm_password')}}" >
                   </div>
                 </div>
 
@@ -63,10 +63,10 @@
                   <div>
                     <div class="radio">
                       <label style="margin-right:20px;">
-                        <input type="radio" value="1" name="status" checked>{{ trans('user.active') }}
+                        <input type="radio" value="1" name="status" class="changefocus" checked>{{ trans('user.active') }}
                       </label>
                       <label>
-                        <input type="radio" value="0" name="status">{{ trans('user.deactive') }}
+                        <input type="radio" value="0" name="status" class="changefocus">{{ trans('user.deactive') }}
                       </label>
                     </div>
                     <label id="status-error" class="error" for="status"></label>
@@ -78,7 +78,7 @@
                     {{ trans('user.select_role') }}
                   </label>
                   <div>
-                    <select class="select2_single form-control" name="role" id="role">
+                    <select class="select2_single form-control changefocus" name="role" id="role">
                         <option value="">{{ trans('user.select') }}</option>
                         @foreach($role_details as $key=>$value)
                           <option value="{{$value->id}}">{{$value->name}}</option>
@@ -135,6 +135,15 @@
   @section('script')
   <script>
     $(document).ready(function(){
+
+      // $('body').on('click', '.changefocus', function(e){
+      //       $(this).next('.changefocus').focus();
+      // });
+
+      $('body').on('keyup', '.changefocus', function(e){
+            console.log($(this).val());
+            $(this).next().focus();
+      });
 
       $('body').on('click','.selectDeselect',function(e){
         var selectVal = $(this).attr('value');

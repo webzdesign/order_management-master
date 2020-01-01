@@ -119,7 +119,7 @@
         var $clone = $tr.clone();
 
         $clone.find(".product_id").select2({
-            placeholder: "Select ",
+            placeholder: "{{ trans('stockpurchase.select') }}",
             allowClear: true,
             width: '100%'
         });

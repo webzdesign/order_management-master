@@ -23,10 +23,12 @@
     .selectalltitle{
         color:#3e1ad0;
         margin-right:10px;
+        cursor:pointer;
     }
     .deselectalltitle{
         color:#e8182b;
         margin-right:10px;
+        cursor:pointer;
     }
     .permissionOption{
         color: black;
