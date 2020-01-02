@@ -2,7 +2,7 @@
 
 return [
 	'detail'     => 'ઉત્પાદન મુજબ અહેવાલ વિગતો',
-    'category'   =>  'પ્રકાર',
+    'category'   =>  'વર્ગ',
     'product'    =>  'ઉત્પાદન',
     'from_date' =>  'પ્રારંભ તારીખ',
 	'to_date' =>  'અંતિમ તારીખ',
@@ -20,7 +20,7 @@ return [
 	'tfield' =>
 	[
 		'sr_no'    => 'અનુક્રમ નંબર',
-		'party'    => 'મંડળી',
+		'party'    => 'પક્ષ',
 		'order_no'  => 'ઓર્ડર નંબર',
         'order_date'=> 'ઓર્ડર તારીખ',
         'product_amount'  => 'ઉત્પાદન રકમ',

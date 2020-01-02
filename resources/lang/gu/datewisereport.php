@@ -18,7 +18,7 @@ return [
 	'tfield' =>
 	[
 		'sr_no'    => 'અનુક્રમ નંબર',
-		'party'    => 'મંડળી',
+		'party'    => 'પક્ષ',
 		'order_no'  => 'ઓર્ડર નંબર',
         'order_date'=> 'ઓર્ડર તારીખ',
 		'order_amount'  => 'ઓર્ડર રકમ',
