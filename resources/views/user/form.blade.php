@@ -27,7 +27,7 @@
                   <label class="control-label" for="name">{{ trans('user.name') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_name') }}" value="{{old('name')}}">
+                    <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_name') }}" value="{{old('name')}}">
                   </div>
                 </div>
 
@@ -35,7 +35,7 @@
                   <label class="control-label" for="email">{{ trans('user.email') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_email') }}" value="{{old('email')}}">
+                    <input type="text" id="email" name="email"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_email') }}" value="{{old('email')}}">
                   </div>
                 </div>
 
@@ -43,7 +43,7 @@
                   <label class="control-label" for="password">{{ trans('user.password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_password') }}" value="{{old('password')}}" >
+                    <input type="password" id="password" name="password"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_password') }}" value="{{old('password')}}" >
                   </div>
                 </div>
 
@@ -52,7 +52,7 @@
                   <label class="control-label" for="confirm_password">{{ trans('user.confirm_password') }}<span class="requride_cls">*</span>
                   </label>
                   <div>
-                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('user.placeholder.user_confirm') }}" value="{{old('confirm_password')}}" >
+                    <input type="password" id="confirm_password" name="confirm_password"  class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('user.placeholder.user_confirm') }}" value="{{old('confirm_password')}}" >
                   </div>
                 </div>
 
@@ -63,10 +63,10 @@
                   <div>
                     <div class="radio">
                       <label style="margin-right:20px;">
-                        <input type="radio" value="1" name="status" checked>{{ trans('user.active') }}
+                        <input type="radio" value="1" name="status" class="changefocus" checked>{{ trans('user.active') }}
                       </label>
                       <label>
-                        <input type="radio" value="0" name="status">{{ trans('user.deactive') }}
+                        <input type="radio" value="0" class="changefocus" name="status">{{ trans('user.deactive') }}
                       </label>
                     </div>
                     <label id="status-error" class="error" for="status"></label>
@@ -78,8 +78,7 @@
                     {{ trans('user.select_role') }}
                   </label>
                   <div>
-                    <select class="select2_single form-control" name="role" id="role">
-                        <option value="">{{ trans('user.select') }}</option>
+                    <select class="select2 changefocus"name="role" id="role">
                         @foreach($role_details as $key=>$value)
                           <option value="{{$value->id}}">{{$value->name}}</option>
                         @endforeach
@@ -117,8 +116,8 @@
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
-                    <a href=" {{ url('user') }}" class="btn btn-primary">{{ trans('user.btn.Cancel') }}</a>
-                    <button type="submit" class="btn btn-success focusClass">{{ trans('user.btn.Submit') }}</button>
+                    <a href=" {{ url('user') }}" class="btn btn-primary changefocus">{{ trans('user.btn.Cancel') }}</a>
+                    <button type="submit" class="btn btn-success focusClass changefocus">{{ trans('user.btn.Submit') }}</button>
                   </div>
                 </div>
 
@@ -136,9 +135,48 @@
   <script>
     $(document).ready(function(){
 
+      var checkbox_index = 0;
+      $('.changefocus').eq(checkbox_index).focus();
+      
+
+      $(".select2").select2({
+          placeholder: "Select",
+          allowClear: true,
+          width:'100%'
+      });
+
+      $('body').on('keydown', '.changefocus', function(e){
+          if (e.which == 13) {
+              e.preventDefault();
+              if (checkbox_index == 5) {
+                  $("#role").select2('focus');
+              } else if (checkbox_index == 9) {
+                  $('.changefocus').eq(8).focus();
+              } else if (checkbox_index == 8) {
+                  $('.changefocus').eq(0).focus();
+              } else {
+                  checkbox_index = checkbox_index + 1;
+                  $('.changefocus').eq(checkbox_index).focus();
+              }
+          }
+      });
+
+      $('body').on('change', '#role',  function(e){
+            $('.changefocus').eq(9).focus();
+      });
+
+      $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+      });
+
+      $('body').on('click', '.changefocus', function(e){
+          // var index = $('.changefocus').index(this);
+          // console.log('tab = '+index);
+      });
+      
       $('body').on('click','.selectDeselect',function(e){
         var selectVal = $(this).attr('value');
-        console.log(selectVal);
         if(selectVal == 'select'){
             $(this).closest('.permission-listing').find(".permission").prop("checked", true);
         }else{
