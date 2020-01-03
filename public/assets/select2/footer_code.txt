@@ -1,0 +1,16 @@
+ 
+ function select2Focus() 
+    {
+      var select2 = $(this).data('select2');
+      setTimeout(function() {
+          if (!select2.opened()) {
+              select2.open();
+          }
+      }, 0);  
+    }
+ $('.select2').select2({placeholder: "Select"}).one('select2-focus', select2Focus).on("select2-blur", function () {
+      $(this).one('select2-focus', select2Focus)
+	})
+	
+	$('#regret_allot').select2().val('').trigger('change');
+	

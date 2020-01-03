@@ -5,8 +5,8 @@
 <!-- bootstrap-wysiwyg -->
 <link href="{{asset('public/assets/vendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
 <!-- Select2 -->
-<link href="{{asset('public/assets/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
-{{--  <link href="{{asset('public/select2/select2.css')}}" rel="stylesheet">  --}}
+
+<link href="{{asset('public/assets/select2/select2.css')}}" rel="stylesheet">
 <!-- bootstrap-daterangepicker -->
 <link href="{{asset('public/assets/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 

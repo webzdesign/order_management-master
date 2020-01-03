@@ -21,8 +21,8 @@
 <script src="{{asset('public/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
 
 <!-- Select2 -->
-<script src="{{asset('public/assets/vendors/select2/dist/js/select2.full.min.js')}}"></script>
-{{--  <script src="{{asset('public/select2/select2.js')}}"></script>  --}}
+
+<script src="{{asset('public/assets/select2/select2.js')}}"></script>
  <!-- Datatables -->
 <script src="{{asset('public/assets/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('public/assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -62,7 +62,7 @@
       }
     });
 
-    $(".select2_single").select2({
+    /*$(".select2_single").select2({
       placeholder: "{{ trans('user.select') }} ",
       allowClear: true
     });
@@ -70,15 +70,69 @@
     $(".select2_multiple").select2({
       placeholder: "{{ trans('user.select') }}",
       allowClear: true
-    });
+    });*/
 
     $('.datepicker').datepicker({
       autoclose: true,
       minViewMode: 0,
       format: 'dd-mm-yyyy'
     });
+
+    $("body").on("change", ".select2", function(event){
+      var select2 = $(this).data('select2');
+      var $currentTarget = event.currentTarget;
+      if($currentTarget.selectedIndex <= 0){
+        setTimeout(function() {
+            if (!select2.opened()) {
+                select2.open();
+            }
+        }, 0);
+      }
+    });
+
   });
 </script>
+
+<style type="text/css">
+  input:not(.select2-input), textarea{
+    background:#fff;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    /*padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;*/
+    border: 1px solid #DDDDDD;
+  }
+
+  input:not(.select2-input):focus, textarea:focus {
+    font-size:14px;
+    font-weight:900;
+    background:rgba(255,255,0,0.88);
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    /*padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;*/
+    border: 1px solid rgba(81, 203, 238, 1);
+  }
+  button[class*="add_row"]:focus,button[class*="bg_modal"]:focus{
+    background:#d0b0ff;
+  }
+  button[class*="add_row"],button[class*="bg_modal"]{
+    background:#A8E6B4;
+    border-color:#A8E6B4;
+  }
+  button[class*="remove_row"]:focus{
+    background:#d0b0ff;
+  }
+  button[class*="remove_row"]{
+    background:#f98582;
+    border-color:#f98582;
+  }
+  button[type="submit"]:focus,button[type="reset"]:focus{
+    background:#d58512;
+  }
+</style>
 
 </body>
 </html>
