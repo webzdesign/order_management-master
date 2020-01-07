@@ -23,7 +23,7 @@
                         <label for="category"> {{ trans('productwisereport.category') }} <span class="requride_cls">*</span>
                         </label>
                     
-                        <select id="category" name="category" class="form-control select2_single">
+                        <select id="category" name="category" class="select2">
                             <option></option>
                             @foreach ($category as $category)
                             <option {{ (old('category')== $category->id)?'selected':'' }} value="{{ $category->id }}">{{ $category->name }}</option>
@@ -35,7 +35,7 @@
                         <label for="product">{{ trans('productwisereport.product') }}  <span class="requride_cls">*</span>
                         </label>
                     
-                        <select id="product" name="product" class="form-control select2_single">
+                        <select id="product" name="product" class="select2">
                             <option></option>
                         </select>
                     </div>
@@ -100,6 +100,12 @@
 @section('script')
 <script>
 $(document).ready(function() {
+
+    $(".select2").select2({
+          placeholder: "Select",
+          allowClear: true,
+          width:'100%'
+    });
 
     var lang_url = "";
     var lang_type  = "{{ Session::get('locale')}}";
@@ -218,8 +224,8 @@ $(document).ready(function() {
 
     $('.searchClear').on('click', function(e) {
         e.preventDefault();
-        $('#category').val('').trigger('change');
-        $('#product').val('').trigger('change');
+        $("#category").select2("val", "");
+        $("#product").select2("val", "").empty();
         $('#from').val(from);
         $('#to').val(to);
         datatable.draw();

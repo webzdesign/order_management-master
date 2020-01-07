@@ -121,20 +121,22 @@
 
       $('body').on('click',".add", function(){
         var $tr = $(this).closest('.purchasetable');
-        $tr.find(".select2").select2("destroy");
-        var $clone = $tr.clone(true);
+        var $clone = $tr.clone();
 
-        $clone.removeAttr('data-select2-id').removeAttr('id');
-        $clone.find('option').removeAttr('data-select2-id');
-        $tr.select2();
-        $clone.find('.select2').val(null).trigger('change');
+        $clone.find(".select2").select2('destroy');
         
-        // $clone.find('span:nth-child(3)').remove();
-        // $clone.find('input').val('');
+        $clone.find(".select2").select2({
+            placeholder: "Select",
+            allowClear: true,
+            width:'100%'
+        });
+
+        $clone.find('.select2').val('').trigger('change');
+        $clone.find('span:nth-child(3)').remove();
+        $clone.find('input').val('');
 
         $tr.after($clone);
         sr_change();
-
 
       });
 

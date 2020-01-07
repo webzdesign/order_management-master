@@ -23,7 +23,7 @@
                         <label for="party">{{ trans('partywisereport.party') }}  <span class="requride_cls">*</span>
                         </label>
                     
-                        <select id="party" name="party" class="form-control select2_single">
+                        <select id="party" name="party" class="select2">
                             <option></option>
                             @foreach ($party as $party)
                             <option {{ (old('party')== $party->id)?'selected':'' }} value="{{ $party->id }}">{{ $party->name }} ({{ $party->mobile_no }})</option>
@@ -92,6 +92,12 @@
 @section('script')
 <script>
 $(document).ready(function() {
+
+    $(".select2").select2({
+          placeholder: "Select",
+          allowClear: true,
+          width:'100%'
+    });
 
     var lang_url = "";
     var lang_type  = "{{ Session::get('locale')}}";
@@ -191,7 +197,7 @@ $(document).ready(function() {
 
     $('.searchClear').on('click', function(e) {
         e.preventDefault();
-        $('#party').val('').trigger('change');
+        $("#party").select2("val", "");
         $('#from').val(from);
         $('#to').val(to);
         datatable.draw();

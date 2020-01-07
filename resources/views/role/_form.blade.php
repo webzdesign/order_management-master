@@ -48,7 +48,7 @@
                                 {{ trans('role.role_name') }} <span class="requride_cls">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="{{ trans('role.placeholder.role_name') }}" value="{{ $role->name }}">
+                                <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12  changefocus" placeholder="{{ trans('role.placeholder.role_name') }}" value="{{ $role->name }}">
                             </div>
                         </div>
 
@@ -57,7 +57,7 @@
                                 {{ trans('role.role_description') }}
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea id="description" name="description" class="form-control col-md-7 col-xs-12" placeholder="{{ trans('role.placeholder.role_description') }}" rows="3">{{ $role->description }}</textarea>
+                                <textarea id="description" name="description" class="form-control col-md-7 col-xs-12 changefocus" placeholder="{{ trans('role.placeholder.role_description') }}" rows="3">{{ $role->description }}</textarea>
                             </div>
                         </div>
 
@@ -90,8 +90,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <a href=" {{ url('role') }}" class="btn btn-primary">{{ trans('role.btn.Cancel') }}</a>
-                                <button type="submit" id="submitButton" class="btn btn-success focusClass">{{ trans('role.btn.Submit') }}</button>
+                                <a href=" {{ url('role') }}"><button type="button" class="btn btn-primary changefocus">{{ trans('role.btn.Cancel') }}</button></a>
+                                <button type="submit" id="submitButton" class="btn btn-success focusClass changefocus">{{ trans('role.btn.Submit') }}</button>
                             </div>
                         </div>
                     </form>
@@ -106,6 +106,30 @@
 @section('script')
 <script>
 jQuery(document).ready(function() {
+
+    var checkbox_index = 0;
+    $('.changefocus').eq(checkbox_index).focus();
+
+    $('body').on('keydown', '.changefocus', function(e){
+        if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 1) {
+                  $('.changefocus').eq(3).focus();
+            } else if (checkbox_index == 3) {
+                  $('.changefocus').eq(2).focus();
+            } else if (checkbox_index == 2) {
+                $('.changefocus').eq(0).focus();
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+          }
+    });
+
+    $('body').on('focus', '.changefocus', function(e){
+        var index = $('.changefocus').index(this);
+        checkbox_index = index;
+    });
 
     $('body').on('click','.selectDeselect',function(e){
         var selectVal = $(this).attr('value');

@@ -79,6 +79,7 @@
                   </label>
                   <div>
                     <select class="select2 changefocus"name="role" id="role">
+                        <option value=""></option>
                         @foreach($role_details as $key=>$value)
                           <option value="{{$value->id}}">{{$value->name}}</option>
                         @endforeach
@@ -116,7 +117,7 @@
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
-                    <a href=" {{ url('user') }}" class="btn btn-primary changefocus">{{ trans('user.btn.Cancel') }}</a>
+                    <a href=" {{ url('user') }}"><button type="button" class="btn btn-primary changefocus">{{ trans('user.btn.Cancel') }}</button></a>
                     <button type="submit" class="btn btn-success focusClass changefocus">{{ trans('user.btn.Submit') }}</button>
                   </div>
                 </div>
@@ -137,7 +138,6 @@
 
       var checkbox_index = 0;
       $('.changefocus').eq(checkbox_index).focus();
-      
 
       $(".select2").select2({
           placeholder: "Select",
@@ -161,18 +161,15 @@
           }
       });
 
-      $('body').on('change', '#role',  function(e){
-            $('.changefocus').eq(9).focus();
+      $("body").on("select2-selecting", "#role", function(e) {
+          setTimeout(function() {
+              $('.changefocus').eq(9).focus();
+          }, 0);
       });
 
       $('body').on('focus', '.changefocus', function(e){
           var index = $('.changefocus').index(this);
           checkbox_index = index;
-      });
-
-      $('body').on('click', '.changefocus', function(e){
-          // var index = $('.changefocus').index(this);
-          // console.log('tab = '+index);
       });
       
       $('body').on('click','.selectDeselect',function(e){

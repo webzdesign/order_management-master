@@ -23,7 +23,7 @@
                         <label for="state">{{ trans('citywisereport.state') }} <span class="requride_cls">*</span>
                         </label>
                     
-                        <select id="state" name="state" class="form-control select2_single">
+                        <select id="state" name="state" class="select2">
                             <option></option>
                             @foreach ($state as $state)
                                 <option {{ (old('state')== $state->id)?'selected':'' }} value="{{ $state->id }}">{{ $state->name }}</option>
@@ -33,7 +33,7 @@
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <label for="city">{{ trans('citywisereport.city') }} <span class="requride_cls">*</span>
                         </label>
-                        <select id="city" name="city" class="form-control select2_single">
+                        <select id="city" name="city" class="select2">
                             <option></option>
                         </select>
                     </div>
@@ -97,6 +97,12 @@
 @section('script')
 <script>
 $(document).ready(function() {
+
+    $(".select2").select2({
+          placeholder: "Select",
+          allowClear: true,
+          width:'100%'
+    });
 
     var lang_url = "";
     var lang_type  = "{{ Session::get('locale')}}";
@@ -213,8 +219,8 @@ $(document).ready(function() {
 
     $('.searchClear').on('click', function(e) {
         e.preventDefault();
-        $('#state').val('').trigger('change');
-        $('#city').val('').trigger('change');
+        $("#state").select2("val", "");
+        $("#city").select2("val", "").empty();
         $('#from').val(from);
         $('#to').val(to);
         datatable.draw();

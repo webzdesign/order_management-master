@@ -139,7 +139,7 @@ class UserController extends Controller
         $user->password     = bcrypt($request->password); 
         $user->status       = $request->status; 
         $user->save();
-        $user->syncPermissions($roles);
+        $user->syncRoles($roles);
         $user->syncPermissions($request->permission);
 
         Helper::successMsg('custom', trans('user.alert.update'));
