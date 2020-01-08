@@ -27,7 +27,7 @@
                             {{ trans('product.cat_name') }} <span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="select2_single form-control" name="category_id" id="category_id">
+                            <select class="select2 changefocus" name="category_id" id="category_id">
                                 <option value=""></option>
                                 @foreach($category as $key => $val)
                                     <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -41,7 +41,7 @@
                             {{ trans('product.product_name') }}  <span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12" placeholder="{{ trans('product.placeholder.product_name') }}">
+                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 changefocus" placeholder="{{ trans('product.placeholder.product_name') }}">
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@
                             {{ trans('product.opening_stock') }} <span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="op_stock" name="op_stock" class="form-control col-md-7 col-xs-12 numberonly" placeholder="{{ trans('product.placeholder.opening_stock') }}">
+                        <input type="text" id="op_stock" name="op_stock" class="form-control col-md-7 col-xs-12 numberonly changefocus" placeholder="{{ trans('product.placeholder.opening_stock') }}">
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                             {{ trans('product.price') }} <span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="price" name="price" class="form-control col-md-7 col-xs-12 numberonly" placeholder="{{ trans('product.placeholder.price') }}">
+                        <input type="text" id="price" name="price" class="form-control col-md-7 col-xs-12 numberonly changefocus" placeholder="{{ trans('product.placeholder.price') }}">
                         </div>
                     </div>
 
@@ -68,7 +68,7 @@
                             {{ trans('product.image') }}
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="file" id="image" name="image" class="form-control col-md-7 col-xs-12">
+                        <input type="file" id="image" name="image" class="form-control col-md-7 col-xs-12 changefocus">
                         </div>
                     </div>
 
@@ -79,10 +79,10 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" checked id="status" name="status" value="1">{{ trans('product.active')}}
+                                <input type="radio" class="status changefocus" checked id="status" name="status" value="1">{{ trans('product.active')}}
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" id="status" name="status" value="0">{{ trans('product.deactive')}}
+                                <input type="radio" class="status changefocus" id="status" name="status" value="0">{{ trans('product.deactive')}}
                             </label>
                         </div>
                         </div>
@@ -92,8 +92,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('product') }}" class="btn btn-primary">{{ trans('product.btn.Cancel') }}</a>
-                            <button type="submit" class="btn btn-success">{{ trans('product.btn.Submit') }}</button>
+                            <a href=" {{ url('product') }}"><button type="button" class="btn btn-primary changefocus">{{ trans('product.btn.Cancel') }}</button></a>
+                            <button type="submit" class="btn btn-success changefocus">{{ trans('product.btn.Submit') }}</button>
                         </div>
                     </div>
 
@@ -108,6 +108,44 @@
 @section('script')
 <script>
 $(document).ready(function(){
+    
+    var checkbox_index = 1;
+    $(".select2").select2({
+        placeholder: "Select",
+        allowClear: true,
+        width:'100%'
+    });
+
+    $(".select2").select2('focus');
+
+    $("body").on("select2-selecting", "#category_id", function(e) {
+        checkbox_index = checkbox_index + 1;
+        setTimeout(function() {
+            $('.changefocus').eq(2).focus();
+        }, 0);
+    });
+
+    $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+    });
+
+    $('body').on('keydown', '.changefocus', function(e){
+          if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 7) {
+                $('.changefocus').eq(9).focus();
+            } else if (checkbox_index == 9) {
+                $('.changefocus').eq(8).focus();
+            } else if (checkbox_index == 8) {
+                $('.select2').select2('focus');
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+          }
+      });
+
     $('#frm').validate({
         rules:{
             category_id:{ required:true, },
