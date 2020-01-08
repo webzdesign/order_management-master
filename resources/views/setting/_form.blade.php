@@ -133,9 +133,9 @@ jQuery(document).ready(function() {
                   checkbox_index = checkbox_index + 1;
                   $('.changefocus').eq(checkbox_index).focus();    
                 } else {
-                  $('.changefocus').eq(7).focus();
-                }
-            }else if (checkbox_index == 9) {
+                  $('.changefocus').eq(7).focus();    
+                } 
+            } else if (checkbox_index == 9) {
                 $('.changefocus').eq(8).focus();
             } else if (checkbox_index == 8) {
                 $('.changefocus').eq(0).focus();
@@ -147,12 +147,12 @@ jQuery(document).ready(function() {
     });
 
     $('body').on('change', '.gst_type', function(e){
-          var val = $(this).val();
-          if (val == 1) {
-              state_check = 1;
-          } else {
-              state_check = 0;
-          }
+        var val = $(this).val();
+        if (val == 1) {
+            state_check = 1;
+        } else {
+            state_check = 0;
+        }
     });
 
     $('body').on('focus', '.changefocus', function(e){
