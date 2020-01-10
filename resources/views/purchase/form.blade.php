@@ -51,8 +51,7 @@
                         <tr class="purchasetable">
                           <td><label class="sr_no">1 </label></td>
                           <td>
-                              <select id="product_id" name="product_id[]" class="form-control m-bot15 select2_single col-lg-12 product_id" style="width:100%;">
-                                  <option></option>
+                              <select id="product_id" name="product_id[]" class="select2" style="width:100%;">
                                   @foreach ($products as $key => $val)
                                     <option value="{{ $val->id }}">{{ $val->name }}</option>
                                   @endforeach
@@ -98,6 +97,12 @@
   <script>
     $(document).ready(function(){
       
+      $(".select2").select2({
+            placeholder: "Select",
+            allowClear: true,
+            width:'100%'
+      });
+      
       function sr_change(){
       var count= $('.purchasetable').length;
       for(var i=0; i< count; i++){
@@ -114,21 +119,24 @@
           validationCheck();
       })
 
-      $('body').on('click',".add",function(){
+      $('body').on('click',".add", function(){
         var $tr = $(this).closest('.purchasetable');
         var $clone = $tr.clone();
 
-        $clone.find(".product_id").select2({
-            placeholder: "{{ trans('stockpurchase.select') }}",
+        $clone.find(".select2").select2('destroy');
+        
+        $clone.find(".select2").select2({
+            placeholder: "Select",
             allowClear: true,
-            width: '100%'
+            width:'100%'
         });
-        $clone.find('select').val('').trigger('change');
+
+        $clone.find('.select2').val('').trigger('change');
         $clone.find('span:nth-child(3)').remove();
         $clone.find('input').val('');
 
-         $tr.after($clone);
-         sr_change();
+        $tr.after($clone);
+        sr_change();
 
       });
 
