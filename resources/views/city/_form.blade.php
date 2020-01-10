@@ -28,7 +28,7 @@
                                 {{ trans('city.state_name') }}<span class="requride_cls">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="select2_single form-control" name="state_id" id="state_id">
+                                <select class="select2 changefocus" name="state_id" id="state_id">
                                     <option value=""></option>
                                     @foreach($states as $key => $val)
                                         <option {{ ($val->id == $city->state_id) ? 'selected' : '' }} value="{{ $val->id }}">{{ $val->name }}</option>
@@ -42,7 +42,7 @@
 								{{ trans('city.city_name') }}<span class="requride_cls">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('city.placeholder.city_name') }}" value="{{ $city->name }}">
+								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('city.placeholder.city_name') }}" value="{{ $city->name }}">
 							</div>
                         </div>
 
@@ -53,10 +53,10 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="radio">
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($city->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">{{ trans('city.active')}}
+                                    <input type="radio" class="status changefocus" {{ ($city->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">{{ trans('city.active')}}
                                 </label>
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($city->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">{{ trans('city.deactive')}}
+                                    <input type="radio" class="status changefocus" {{ ($city->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">{{ trans('city.deactive')}}
                                 </label>
                             </div>
                             </div>
@@ -66,8 +66,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('city') }}" class="btn btn-primary">{{ trans('city.btn.Cancel') }}</a>
-								<button type="submit" class="btn btn-success focusClass">{{ trans('city.btn.Submit') }}</button>
+								<a href="{{ url('city') }}" class="btn btn-primary changefocus">{{ trans('city.btn.Cancel') }}</a>
+								<button type="submit" class="btn btn-success focusClass changefocus">{{ trans('city.btn.Submit') }}</button>
 							</div>
 						</div>
 
@@ -115,7 +115,44 @@ $(document).ready(function(){
             $(':input[type="submit"]').prop('disabled', true);
             form.submit();
         }
-	});
+    });
+
+    var checkbox_index = 1;
+    $(".select2").select2({
+        placeholder: "Select",
+        allowClear: true,
+        width:'100%'
+    });
+
+    $(".select2").select2('focus');
+
+    $("body").on("select2-selecting", "#state_id", function(e) {
+        checkbox_index = checkbox_index + 1;
+        setTimeout(function() {
+            $('.changefocus').eq(2).focus();
+        }, 0);
+    });
+
+    $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+    });
+
+    $('body').on('keydown', '.changefocus', function(e){
+        if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 4) {
+                $('.changefocus').eq(6).focus();
+            } else if (checkbox_index == 6) {
+                $('.changefocus').eq(5).focus();
+            } else if (checkbox_index == 5) {
+                $('.select2').select2('focus');
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+        }
+    });
 });
 </script>
 @endsection

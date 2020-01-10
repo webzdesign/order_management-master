@@ -27,7 +27,7 @@
                             {{ trans('city.state_name') }} <span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="select2 state_id" name="state_id" id="state_id" style="width:100%;">
+                            <select class="select2 state_id changefocus" name="state_id" id="state_id" style="width:100%;">
                                 <option value=""></option>
                                 @foreach($states as $key => $val)
                                     <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -41,7 +41,7 @@
                             {{ trans('city.city_name') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 name" placeholder="{{ trans('city.placeholder.city_name') }}">
+                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 name changefocus" placeholder="{{ trans('city.placeholder.city_name') }}">
                         </div>
                     </div>
 
@@ -50,14 +50,14 @@
                             {{ trans('city.status') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="radio">
-                            <label style="margin-right:4%;">
-                                <input type="radio" class="status" checked id="status" name="status" value="1">{{ trans('city.active')}}
-                            </label>
-                            <label style="margin-right:4%;">
-                                <input type="radio" class="status" id="status" name="status" value="0">{{ trans('city.deactive')}}
-                            </label>
-                        </div>
+                            <div class="radio">
+                                <label style="margin-right:4%;">
+                                    <input type="radio" class="status changefocus" checked id="status" name="status" value="1">{{ trans('city.active')}}
+                                </label>
+                                <label style="margin-right:4%;">
+                                    <input type="radio" class="status changefocus" id="status" name="status" value="0">{{ trans('city.deactive')}}
+                                </label>
+                            </div>
                         </div>
                         <label id="status-error" class="error requride_cls" for="status"></label>
                     </div>
@@ -65,11 +65,10 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('city') }}" class="btn btn-primary">{{ trans('city.btn.Cancel') }}</a>
-                            <button type="submit" class="btn btn-success">{{ trans('city.btn.Submit') }}</button>
+                            <a href=" {{ url('city') }}" class="btn btn-primary changefocus">{{ trans('city.btn.Cancel') }}</a>
+                            <button type="submit" class="btn btn-success changefocus">{{ trans('city.btn.Submit') }}</button>
                         </div>
                     </div>
-
                 </form>
             </div>
             </div>
@@ -81,6 +80,7 @@
 @section('script')
 <script>
 $(document).ready(function(){
+
     $('#frm').validate({
         rules:{
             state_id:{ required:true, },
@@ -113,135 +113,42 @@ $(document).ready(function(){
         }
     });
 
-    $("body").on("keydown", ".select2", function(e) {
-		var $currentTarget = e.currentTarget;
-		var key_code = e.which || e.keyCode;
-		if($($currentTarget).attr("id") == "s2id_party"){
-			if(key_code == 9) {
-				if(e.shiftKey) {
-					$("button[type=submit]").focus();
-					e.preventDefault();
-				}
-			}
-			else if(key_code == 13){
-				var $selectTag = $(".name");
-				setTimeout(function() {
-					$($selectTag).focus();
-				}, 0);
-			}
-		}
-	});
-
-	$("body").on("select2-selecting", ".state_id", function(event){
-
-		var $currentTarget = event.currentTarget;
-		var $tr = $($currentTarget).closest("tr");
-		var $trRowIndex = $tr.index();
-		var key_code = event.which || event.keyCode;
-		var $selectTag = $(".name");
-		setTimeout(function() {
-				$($selectTag).focus();
-		}, 0);
-    });
-
-    $("body").on("keydown", ".name", function(event){
-		var $currentTarget = event.currentTarget;
-		var $tr = $($currentTarget).closest("tr");
-		var $trRowIndex = $tr.index();
-		var key_code = event.which || event.keyCode;
-		var $inputID = $(".status:first");
-		var $prevID = $(".name");
-		if(key_code == 13){
-			$($inputID).focus();
-			event.preventDefault();
-		}else if(key_code == 9) {
-			if(event.shiftKey) {
-				$($prevID).select2('focus');
-				event.preventDefault();
-			}else{
-				$($inputID).focus();
-				event.preventDefault();
-			}
-		}
-    });
-
-    $("body").on("keydown", ".status", function(event){
-		var $currentTarget = event.currentTarget;
-		var $tr = $($currentTarget).closest("tr");
-		var $th=$(this);
-		var $trRowIndex = $tr.index();
-		var key_code = event.which || event.keyCode;
-		//alert($(".status:eq(0)").attr(id));
-		var $inputID=$(".status:last");
-		var $prevID=$(".name");
-		//alert($th.index());
-		if($th.index() == 0){
-			//alert('first');
-			$inputID = $(".status:last");
-			$prevID = $(".name");
-		}
-		else {
-            //alert('sec');
-			//alert($('.status:checked').length);
-			if($('.status:checked').length==0)
-			{
-				$inputID = $("button[type=submit]");
-			}
-			else if($th.is(':checked'))
-			{
-				$inputID = $("button[type=submit]");
-			}
-			else
-			{
-				$inputID = $("button[type=submit]");
-			}
-			$prevID = $(".status:first");
-		}
-
-		if(key_code == 13){
-			$($inputID).focus();
-			event.preventDefault();
-		}else if(key_code == 9) {
-			if(event.shiftKey) {
-				$($prevID).focus();
-				event.preventDefault();
-			}else{
-				$($inputID).focus();
-				event.preventDefault();
-			}
-		}else if(key_code == 32)
-			{
-				$th.trigger("click");
-			}
-    });
-
-    $("body").on("keydown", "button[type=submit]", function(event){
-        var keyCode = event.keyCode || event.which;
-        var $th = $(this);
-        var $prevID = $(".name");
-        if(keyCode == 13) {
-            $("#frm").select2('focus');
-            event.preventDefault();
-        }
-        else if(keyCode == 9) {
-            if(event.shiftKey) {
-            } else {
-                $("#frm").select2('focus');
-                event.preventDefault();
-            }
-        } else if(keyCode == 32)
-        {
-            $th.trigger("click");
-        }
-    });
-
-
+    var checkbox_index = 1;
     $(".select2").select2({
-		placeholder: "Select",
-		allowClear: true
-	});
+        placeholder: "Select",
+        allowClear: true,
+        width:'100%'
+    });
 
-	$(".state_id").select2('focus');
+    $(".select2").select2('focus');
+
+    $("body").on("select2-selecting", "#state_id", function(e) {
+        checkbox_index = checkbox_index + 1;
+        setTimeout(function() {
+            $('.changefocus').eq(2).focus();
+        }, 0);
+    });
+
+    $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+    });
+
+    $('body').on('keydown', '.changefocus', function(e){
+        if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 4) {
+                $('.changefocus').eq(6).focus();
+            } else if (checkbox_index == 6) {
+                $('.changefocus').eq(5).focus();
+            } else if (checkbox_index == 5) {
+                $('.select2').select2('focus');
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+        }
+    });
 
 });
 </script>

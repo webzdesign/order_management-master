@@ -108,7 +108,7 @@
 @section('script')
 <script>
 $(document).ready(function(){
-    
+
     var checkbox_index = 1;
     $(".select2").select2({
         placeholder: "Select",
@@ -131,7 +131,7 @@ $(document).ready(function(){
     });
 
     $('body').on('keydown', '.changefocus', function(e){
-          if (e.which == 13) {
+        if (e.which == 13) {
             e.preventDefault();
             if (checkbox_index == 7) {
                 $('.changefocus').eq(9).focus();
@@ -143,8 +143,8 @@ $(document).ready(function(){
                 checkbox_index = checkbox_index + 1;
                 $('.changefocus').eq(checkbox_index).focus();
             }
-          }
-      });
+        }
+    });
 
     $('#frm').validate({
         rules:{

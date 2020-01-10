@@ -35,7 +35,7 @@
                                     <label for="party_id">
                                         {{ trans('order.party_name') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <select class="select2_single form-control" name="party_id" id="party_id">
+                                    <select class="select2" name="party_id" id="party_id" style="width:100%;">
                                         <option value=""></option>
                                         @foreach($party as $key => $val)
                                             <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -59,11 +59,11 @@
                                         <th width="10%">{{ trans('order.tfield.action') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="addrow">
                                     <tr class="ordertable">
                                         <td><label class="sr_no">1 </label></td>
                                         <td>
-                                            <select id="product_id" name="product_id[]" class="form-control m-bot15 select2_single col-lg-12 product_id">
+                                            <select id="product_id" name="product_id[]" class="m-bot15 select2 col-lg-12 product_id" style="width:100%">
                                                 <option></option>
                                                 @foreach ($product as $key => $val)
                                                     <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -377,6 +377,54 @@ $(document).ready(function(){
         }
     });
 
+    <!-- On Enter Key Start -->
+
+    $(".select2").select2({
+		placeholder: "Select",
+		allowClear: true
+	});
+
+	$("body").on("select2-selecting", "#party_id", function(event){
+		var $th = $(this);
+		var $currentTarget = event.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+		var $trRowIndex = $tr.index();
+		var $selectTag = $("table tbody#addrow tr:eq(0) td:eq(0)").find("select");
+		setTimeout(function() {
+				$($selectTag).select2("focus");
+			}, 0);
+    });
+
+    $("body").on("keydown", ".select2", function(e) {
+		var $currentTarget = e.currentTarget;
+		var key_code = e.which || e.keyCode;
+		if($($currentTarget).attr("id") == "s2id_party_id"){
+			if(key_code == 9) {
+				if(e.shiftKey) {
+					$("button[type=submit]").focus();
+					e.preventDefault();
+				}
+			}
+			else if(key_code == 13){
+				var $selectTag = $("table tbody#addrow tr:eq(0) td:eq(1)").find("select");
+				setTimeout(function() {
+					$($selectTag).select2("focus");
+				}, 0);
+			}
+		}
+    });
+
+    /*$("body").on("select2-selecting", ".product_id", function(event){
+		var $currentTarget = event.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+		var $trRowIndex = $tr.index();
+		var $selectTag = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(2)").find("select");
+		setTimeout(function() {
+				$($selectTag).select2("focus");
+			}, 0);
+	});*/
+
+    $("#party_id").select2('focus');
 });
 </script>
 @endsection

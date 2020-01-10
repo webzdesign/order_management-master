@@ -28,7 +28,7 @@
 								{{ trans('state.state_name') }}<span class="requride_cls">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass" placeholder="{{ trans('state.placeholder.state_name') }}" value="{{ $state->name }}">
+								<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12 focusClass changefocus" placeholder="{{ trans('state.placeholder.state_name') }}" value="{{ $state->name }}">
 							</div>
                         </div>
 
@@ -39,10 +39,10 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="radio">
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($state->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">{{ trans('state.active')}}
+                                    <input type="radio" class="status changefocus" {{ ($state->status == 1) ? 'checked' : '' }} id="status" name="status" value="1">{{ trans('state.active')}}
                                 </label>
                                 <label style="margin-right:4%;">
-                                    <input type="radio" class="status" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">{{ trans('state.deactive')}}
+                                    <input type="radio" class="status changefocus" {{ ($state->status == 0) ? 'checked' : '' }} id="status" name="status" value="0">{{ trans('state.deactive')}}
                                 </label>
                             </div>
                             </div>
@@ -52,8 +52,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('state') }}" class="btn btn-primary">{{ trans('state.btn.Cancel') }}</a>
-								<button type="submit" class="btn btn-success focusClass">{{ trans('state.btn.Submit') }}</button>
+								<a href="{{ url('state') }}" class="btn btn-primary changefocus">{{ trans('state.btn.Cancel') }}</a>
+								<button type="submit" class="btn btn-success focusClass changefocus">{{ trans('state.btn.Submit') }}</button>
 							</div>
 						</div>
 
@@ -99,7 +99,29 @@ $(document).ready(function(){
             $(':input[type="submit"]').prop('disabled', true);
             form.submit();
         }
-	});
+    });
+
+    var checkbox_index = 0;
+    $('.changefocus').eq(checkbox_index).focus();
+    $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+    });
+
+    $('body').on('keydown', '.changefocus', function(e){
+        if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 3) {
+                $('.changefocus').eq(4).focus();
+            } else if (checkbox_index == 4) {
+                $('.changefocus').eq(0).focus();
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+
+        }
+    });
 });
 </script>
 @endsection
