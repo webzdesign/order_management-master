@@ -27,7 +27,7 @@
                             {{ trans('category.cat_name') }}<span class="requride_cls">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12" placeholder="{{ trans('category.placeholder.cat_name') }}">
+                        <input type="text" id="name" name="name"  class="form-control col-md-7 col-xs-12 changefocus" placeholder="{{ trans('category.placeholder.cat_name') }}">
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                             {{ trans('category.image') }}
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="file" id="image" name="image"  class="form-control col-md-7 col-xs-12">
+                        <input type="file" id="image" name="image"  class="form-control col-md-7 col-xs-12 changefocus">
                         </div>
                     </div>
 
@@ -47,10 +47,10 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="radio">
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" checked id="status" name="status" value="1">{{ trans('category.active')}}
+                                <input type="radio" class="status changefocus" checked id="status" name="status" value="1">{{ trans('category.active')}}
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status" id="status" name="status" value="2">{{ trans('category.deactive')}}
+                                <input type="radio" class="status changefocus" id="status" name="status" value="2">{{ trans('category.deactive')}}
                             </label>
                         </div>
                         </div>
@@ -60,8 +60,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <a href=" {{ url('category') }}" class="btn btn-primary">{{ trans('category.btn.Cancel') }}</a>
-                            <button type="submit" class="btn btn-success">{{ trans('category.btn.Submit') }}</button>
+                            <a href=" {{ url('category') }}"><button type="button" class="btn btn-primary changefocus">{{ trans('category.btn.Cancel') }}</button></a>
+                            <button type="submit" class="btn btn-success changefocus">{{ trans('category.btn.Submit') }}</button>
                         </div>
                     </div>
 
@@ -76,6 +76,31 @@
 @section('script')
 <script>
 $(document).ready(function(){
+
+    var checkbox_index = 0;
+    $('.changefocus').eq(checkbox_index).focus();
+    $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+    });
+
+    $('body').on('keydown', '.changefocus', function(e){
+          if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 3) {
+                $('.changefocus').eq(5).focus();
+            } else if (checkbox_index == 5) {
+                $('.changefocus').eq(4).focus();
+            } else if (checkbox_index == 4) {
+                $('.changefocus').eq(0).focus();
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+            
+          }
+    });
+
     $('#frm').validate({
         rules:{
             name:{
