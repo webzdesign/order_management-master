@@ -50,7 +50,7 @@
                                 <input type="radio" class="status changefocus" checked id="status" name="status" value="1">{{ trans('category.active')}}
                             </label>
                             <label style="margin-right:4%;">
-                                <input type="radio" class="status changefocus" id="status" name="status" value="2">{{ trans('category.deactive')}}
+                                <input type="radio" class="status changefocus" id="status" name="status" value="0">{{ trans('category.deactive')}}
                             </label>
                         </div>
                         </div>
@@ -97,7 +97,7 @@ $(document).ready(function(){
                 checkbox_index = checkbox_index + 1;
                 $('.changefocus').eq(checkbox_index).focus();
             }
-            
+
           }
     });
 

@@ -105,7 +105,7 @@ $(document).ready(function(){
                 checkbox_index = checkbox_index + 1;
                 $('.changefocus').eq(checkbox_index).focus();
             }
-            
+
           }
     });
 
