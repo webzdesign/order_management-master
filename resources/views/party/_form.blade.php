@@ -29,14 +29,14 @@
                                     <label for="name">
                                         {{ trans('party.party_name') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="{{ trans('party.placeholder.party_name') }}" value="{{ $party->name }}">
+                                    <input type="text" id="name" name="name" class="form-control changefocus" placeholder="{{ trans('party.placeholder.party_name') }}" value="{{ $party->name }}">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="mobile_no">
                                        {{ trans('party.party_mobile') }}<span class="requride_cls">*</span>
                                     </label>
-                                    <input type="text" id="mobile_no" name="mobile_no" class="form-control numberonly" minlength="10" maxlength="10" placeholder="{{ trans('party.placeholder.party_mobile') }}" value="{{ $party->mobile_no }}">
+                                    <input type="text" id="mobile_no" name="mobile_no" class="form-control numberonly changefocus" minlength="10" maxlength="10" placeholder="{{ trans('party.placeholder.party_mobile') }}" value="{{ $party->mobile_no }}">
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                     <label for="state_id">
                                         {{ trans('party.state_name') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <select class="select2_single form-control" name="state_id" id="state_id">
+                                    <select class="select2 changefocus" name="state_id" id="state_id" style="width:100%;">
                                         <option value=""></option>
                                         @foreach($states as $key => $val)
                                             <option {{ ($party->state_id == $val->id) ? 'selected' : '' }} value="{{ $val->id }}">{{ $val->name }}</option>
@@ -61,7 +61,7 @@
                                     <label for="city_id">
                                         {{ trans('party.city_name') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <select class="select2_single form-control" name="city_id" id="city_id">
+                                    <select class="select2 changefocus" name="city_id" id="city_id" style="width:100%;">
                                         <option value=""></option>
                                         @foreach($cities as $key => $val)
                                             <option {{ ($party->city_id == $val->id) ? 'selected' : '' }} value="{{ $val->id }}">{{ $val->name }}</option>
@@ -79,7 +79,7 @@
                                     <label for="city_id">
                                         {{ trans('party.party_add') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <textarea id="address" name="address" class="form-control" placeholder="{{ trans('party.placeholder.party_add') }}">{{ $party->address }}</textarea>
+                                    <textarea id="address" name="address" class="form-control changefocus" placeholder="{{ trans('party.placeholder.party_add') }}">{{ $party->address }}</textarea>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="status">
@@ -88,10 +88,10 @@
 
                                     <div class="radio">
                                         <label style="margin-right:20px;">
-                                            <input type="radio" value="1" {{ ($party->status == 1) ? 'checked' : '' }} name="status">{{ trans('party.active')}}
+                                            <input type="radio" class="changefocus" value="1" {{ ($party->status == 1) ? 'checked' : '' }} name="status">{{ trans('party.active')}}
                                         </label>
                                         <label>
-                                            <input type="radio" value="0" {{ ($party->status == 0) ? 'checked' : '' }} name="status">{{ trans('party.deactive')}}
+                                            <input type="radio" class="changefocus" value="0" {{ ($party->status == 0) ? 'checked' : '' }} name="status">{{ trans('party.deactive')}}
                                         </label>
                                     </div>
                                     <label id="status-error" class="error" for="status"></label>
@@ -102,8 +102,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<a href="{{ url('party') }}" class="btn btn-primary">{{ trans('party.btn.Cancel') }}</a>
-								<button type="submit" class="btn btn-success focusClass">{{ trans('party.btn.Submit') }}</button>
+								<a href="{{ url('party') }}" class="btn btn-primary changefocus">{{ trans('party.btn.Cancel') }}</a>
+								<button type="submit" class="btn btn-success focusClass changefocus">{{ trans('party.btn.Submit') }}</button>
 							</div>
 						</div>
 
@@ -118,6 +118,50 @@
 @section('script')
 <script>
 $(document).ready(function(){
+
+    var checkbox_index = 0;
+    $('.changefocus').eq(checkbox_index).focus();
+
+    $(".select2").select2({
+          placeholder: "Select",
+          allowClear: true,
+          width:'100%'
+    });
+
+    $('body').on('focus', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+          checkbox_index = index;
+    });
+
+    $('body').on('click', '.changefocus', function(e){
+          var index = $('.changefocus').index(this);
+    });
+
+    $("body").on("select2-selecting", "#city_id", function(e) {
+        checkbox_index = checkbox_index + 1;
+        setTimeout(function() {
+            $('.changefocus').eq(6).focus();
+        }, 0);
+    });
+
+    $('body').on('keydown', '.changefocus', function(e){
+        if (e.which == 13) {
+            e.preventDefault();
+            if (checkbox_index == 1) {
+                checkbox_index = checkbox_index + 1;
+                $(".select2:first").select2('focus');
+            } else if (checkbox_index == 8) {
+                $('.changefocus').eq(10).focus();
+            } else if (checkbox_index == 10) {
+                $('.changefocus').eq(9).focus();
+            } else if (checkbox_index == 9) {
+                $('.changefocus').eq(0).focus();
+            } else {
+                checkbox_index = checkbox_index + 1;
+                $('.changefocus').eq(checkbox_index).focus();
+            }
+        }
+    });
 
     $('body').on('change', '#state_id', function(e){
         $("#city_id").prop('disabled', true);
