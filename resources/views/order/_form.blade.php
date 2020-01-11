@@ -36,7 +36,7 @@
                                     <label for="party_id">
                                         {{ trans('order.party_name') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <select class="select2_single form-control" name="party_id" id="party_id">
+                                    <select class="select2" name="party_id" id="party_id" style="width:100%;">
                                         <option value=""></option>
                                         @foreach($party as $key => $val)
                                             <option value="{{ $val->id }}" {{ ($val->id == $order[0]->party_id)? 'selected':'' }}>{{ $val->name }}</option>
@@ -52,7 +52,6 @@
                             <table id="order" class="table table-bordered" cellspacing="0">
                                 <thead>
                                     <tr class="success">
-                                        <th>{{ trans('order.tfield.sr_no') }}</th>
                                         <th width="25%">{{ trans('order.product') }} <span class="requride_cls">*</span></th>
                                         <th width="25%">{{ trans('order.price') }} <span class="requride_cls">*</span></th>
                                         <th width="15%">{{ trans('order.qty') }} <span class="requride_cls">*</span></th>
@@ -60,12 +59,11 @@
                                         <th width="10%">{{ trans('order.tfield.action') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="addrow">
                                     @foreach($order as $key => $value)
                                     <tr class="ordertable">
-                                        <td><label class="sr_no">{{ $key+1 }}</label></td>
                                         <td>
-                                            <select id="product_id" name="product_id[]" class="form-control m-bot15 select2_single col-lg-12 product_id">
+                                            <select id="product_id" name="product_id[]" class=" m-bot15 select2 col-lg-12 product_id" style="width:100%;">
                                                 <option></option>
                                                 @foreach ($product as $key => $val)
                                                     <option value="{{ $val->id }}" {{ ($val->id == $value->product_id) ? 'selected':''  }}>{{ $val->name }}</option>
@@ -82,13 +80,14 @@
                                             <input type="text" id="amount" name="amount[]" class="form-control numberonly amount" placeholder="{{ trans('order.amount') }}" value={{ $value->amount }} readonly>
                                         </td>
                                         <td>
-                                            <button  tabindex="1" type="button" class="btn btn-success add btn-xs " onclick="">+</button>
-                                            <button tabindex="1" type="button" class="btn btn-danger minus btn-xs">-</button>
+                                            <button type="button" name="add[]" class="btn btn-success add btn-xs ">+</button>
+                                            <button type="button" name="minus[]" class="btn btn-danger minus btn-xs">-</button>
                                         </td>
                                     </tr>
                                     @endforeach
+                                </tbody>
+                                <tfoot>
                                     <tr>
-                                        <td></td>
                                         <td><label id="product_id_err"></label></td>
                                         <td></td>
                                         <td><label id="qty_err"></label></td>
@@ -96,7 +95,6 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td>{{ trans('order.discount') }} </td>
@@ -107,14 +105,12 @@
                                     <tr style="display:{{ (($order[0]->gst_type) == 0) ? '' : 'none' }}">
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>{{ trans('order.cgst') }} {{ $order[0]->cgst_per.'%' }} </td>
                                         <td><input type="text" id="cgst" name="cgst" class="form-control" placeholder="{{ trans('order.cgst') }}" readonly value="{{ $order[0]->cgst }}">
                                         <input type="hidden" id="cgst_hidn" name="cgst_hidn" value="{{ $order[0]->cgst_per }}"></td>
                                         <td></td>
                                     </tr>
                                     <tr style="display:{{ (($order[0]->gst_type) == 0) ? '' : 'none' }}">
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td>{{ trans('order.sgst') }} {{ $order[0]->sgst_per.'%' }} </td>
@@ -126,7 +122,6 @@
                                     <tr style="display:{{ (($order[0]->gst_type) == 1) ? '' : 'none' }}">
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>{{ trans('order.igst') }} {{ $order[0]->igst_per.'%' }} </td>
                                         <td><input type="text" id="igst" name="igst" class="form-control" placeholder="{{ trans('order.igst') }}" readonly value="{{ $order[0]->igst }}">
                                         <input type="hidden" id="igst_hidn" name="igst_hidn" value="{{ $order[0]->igst_per }}"></td>
@@ -136,12 +131,11 @@
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>{{ trans('order.grand_total') }} </td>
                                         <td><input type="text" id="grand_total" name="grand_total" class="form-control" placeholder="{{ trans('order.grand_total') }}" value="{{ $order[0]->grand_total }}" readonly></td>
                                         <td></td>
                                     </tr>
-                                </tbody>
+                                </tfoot>
                             </table>
                         </div>
 
@@ -153,7 +147,7 @@
                                     {{ trans('order.instruction') }} <span class="requride_cls">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea id="instruction" name="instruction" class="form-control" placeholder="{{ trans('order.placeholder.instruction') }}">{{$order[0]->instruction}}</textarea>
+                                    <textarea id="instruction" name="instruction" class="form-control instruction" placeholder="{{ trans('order.placeholder.instruction') }}">{{$order[0]->instruction}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +158,7 @@
                                     {{ trans('order.lr_no') }}
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="lr_no" name="lr_no" class="form-control" placeholder="{{ trans('order.placeholder.lr_no') }}" value="{{$order[0]->lr_no}}">
+                                    <input type="text" id="lr_no" name="lr_no" class="form-control lr_no" placeholder="{{ trans('order.placeholder.lr_no') }}" value="{{$order[0]->lr_no}}">
                                 </div>
                             </div>
                         </div>
@@ -174,7 +168,7 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="transporter"> {{ trans('order.transporter') }}
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="transporter" name="transporter" class="form-control" placeholder="{{ trans('order.placeholder.transporter') }}" value="{{$order[0]->transporter}}">
+                                    <input type="text" id="transporter" name="transporter" class="form-control transporter" placeholder="{{ trans('order.placeholder.transporter') }}" value="{{$order[0]->transporter}}">
                                 </div>
                             </div>
                         </div>
@@ -196,17 +190,118 @@
 @endsection
 @section('script')
 <script>
-$(document).ready(function(){
-
-    function sr_change(){
-        var count= $('.ordertable').length;
-        for(var i=0; i< count; i++){
-            var cnt = i+1;
-            $("label.sr_no").eq(i).text(cnt);
+    function renumber()
+    {
+        var cnt=$('.ordertable').length;
+        var c=0;
+        if(c<cnt)
+        {
+            c=0
+            $('.add').each(function(){
+                $(this).attr('name','add['+c+']')
+                c++
+            });
+            c=0
+            $('.minus').each(function(){
+                $(this).attr('name','minus['+c+']')
+                c++
+            });
         }
     }
 
-    $('body').on('click',".add",function(){
+$(document).ready(function(){
+
+    _.templateSettings.variable = "element";
+	var tpl = _.template($("#form_tpl").html());
+	var counter = 1;
+	var $add_focus = 0;
+
+	$("body").on('keydown','.add',function(e){
+		e.preventDefault();
+		var key_code = e.which || e.keyCode;
+		var $currentTarget = e.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+		var $trRowIndex = $tr.index();
+		e.preventDefault();
+		if(key_code == 32)
+		{
+			var tplData = {
+				i: counter
+			};
+			$cl=$(this).closest("tr").after(tpl(tplData));
+			counter += 1;
+			$(".select2").select2("destroy");
+			$(".select2").select2({
+				placeholder: "Select",
+				allowClear:true,
+			});
+			renumber();
+			total();
+
+			var $selectTag = $("table tbody#addrow tr:eq("+($trRowIndex+1)+") td:eq(0)").find("select");
+			$($selectTag).select2("focus");
+		}
+		else if(key_code == 13)
+		{
+			var $buttonTag = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(4)").find(".minus");
+			$($buttonTag).focus();
+		}
+		else if(key_code == 9) {
+			if(e.shiftKey) {
+				var $inputID = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(2)").find("input");
+				$inputID.focus();
+			}
+			else{
+				var $buttonTag = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(4)").find(".minus");
+				$($buttonTag).focus();
+			}
+		}
+		return false;
+	});
+
+	$('body').on('keydown',".minus",function(e){
+		var key_code = e.which || e.keyCode;
+		var $currentTarget = e.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+		var $trRowIndex = $tr.index();
+		e.preventDefault();
+		var count= $('.ordertable').length;
+		var value=count-1;
+		if(key_code == 32)
+		{
+			if(value>=1){
+				$(this).closest('.ordertable').fadeOut('fast', function(){
+					$(this).closest('.ordertable').remove();
+					total();
+					var $selectTag = $("table tbody#addrow tr:eq("+($trRowIndex-1)+") td:eq(0)").find("select");
+					$($selectTag).select2("focus");
+				});
+			}
+			renumber();
+		}
+		else if(key_code == 13)
+		{
+            var $trCount = $("table tbody#addrow tr").length;
+			if(($trCount - 1) - $trRowIndex == 0){
+               // $("button[type=submit]").focus();
+                $('#instruction').focus();
+			}else{
+				var $selectTag = $("table tbody#addrow tr:eq("+($trRowIndex+1)+") td:eq(0)").find("select");
+				$($selectTag).select2("focus");
+			}
+		}
+		else if(key_code == 9) {
+			if(e.shiftKey) {
+                var $buttonTag = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(4)").find(".add");
+				$($buttonTag).focus();
+			}
+			else{
+				$("button[type=submit]").focus();
+			}
+		}
+	});
+
+    /*$('body').on('click',".add",function(){
         var $tr = $(this).closest('.ordertable');
         var $clone = $tr.clone();
 
@@ -231,9 +326,10 @@ $(document).ready(function(){
             sr_change();
             total();
         }
-    });
+    });*/
 
     $('#frm').validate({
+        ignore: ".select2-input",
         rules:{
             date:{ required:true, },
             party_id:{ required:true, },
@@ -255,7 +351,7 @@ $(document).ready(function(){
         var qtyCheck = [];
         var errorStatus = 0;
 
-        $('.product_id').each(function () {
+        $('select.product_id').each(function () {
             if ($(this).val() == '' ) {
                 productCheck.push(0);
             } else  {
@@ -379,6 +475,202 @@ $(document).ready(function(){
         }
     });
 
+    <!-- On Enter Key Start -->
+
+    $(".select2").select2({
+		placeholder: "Select",
+		allowClear: true
+	});
+
+	$("body").on("select2-selecting", "#party_id", function(event){
+		var $th = $(this);
+		var $currentTarget = event.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+		var $trRowIndex = $tr.index();
+		var $selectTag = $("table tbody#addrow tr:eq(0) td:eq(0)").find("select");
+		setTimeout(function() {
+				$($selectTag).select2("focus");
+		}, 0);
+    });
+
+    $("body").on("keydown", ".select2", function(e) {
+		var $currentTarget = e.currentTarget;
+		var key_code = e.which || e.keyCode;
+		if($($currentTarget).attr("id") == "s2id_party_id"){
+			if(key_code == 9) {
+				if(e.shiftKey) {
+					$("button[type=submit]").focus();
+					e.preventDefault();
+				}
+			}
+			else if(key_code == 13){
+				var $selectTag = $("table tbody#addrow tr:eq(0) td:eq(0)").find("select");
+				setTimeout(function() {
+					$($selectTag).select2("focus");
+				}, 0);
+			}
+		}
+    });
+
+    $("body").on("select2-selecting", ".product_id", function(event){
+		var $currentTarget = event.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+        var $trRowIndex = $tr.index();
+        var $inputID = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(0)").find("input");
+        var $inputIDqty = $(".qty");
+        setTimeout(function() {
+            $($inputIDqty).focus();
+        }, 0);
+    });
+
+    $("body").on("keydown", ".qty", function(event){
+        var $currentTarget = event.currentTarget;
+        var $tr = $($currentTarget).closest("tr");
+        var $trRowIndex = $tr.index();
+        var key_code = event.which || event.keyCode;
+        var $buttonTag = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(4)").find(".add");
+        var $prevID = $("table tbody#addrow tr:eq("+$trRowIndex+") td:eq(2)").find("input");
+
+        if(key_code == 13){
+            $($buttonTag).focus();
+            event.preventDefault();
+        }else if(key_code == 9) {
+            if(event.shiftKey){
+                $($prevID).focus();
+                event.preventDefault();
+            }else{
+                $($buttonTag).focus();
+                event.preventDefault();
+            }
+        }
+    });
+
+    $("body").on("keydown", ".instruction", function(event){
+        var $currentTarget = event.currentTarget;
+        var $tr = $($currentTarget).closest("tr");
+        var $trRowIndex = $tr.index();
+        var key_code = event.which || event.keyCode;
+        var $lrnoId = $(".lr_no");
+
+        if(key_code == 13){
+            $($lrnoId).focus();
+            event.preventDefault();
+        }
+    });
+
+    $("body").on("keydown", ".lr_no", function(event){
+        var $currentTarget = event.currentTarget;
+        var $tr = $($currentTarget).closest("tr");
+        var $trRowIndex = $tr.index();
+        var key_code = event.which || event.keyCode;
+        var $transId = $(".transporter");
+
+        if(key_code == 13){
+            $($transId).focus();
+            event.preventDefault();
+        }
+    });
+
+    $("body").on("keydown", ".transporter", function(event){
+        var $currentTarget = event.currentTarget;
+        var $tr = $($currentTarget).closest("tr");
+        var $trRowIndex = $tr.index();
+        var key_code = event.which || event.keyCode;
+
+        if(key_code == 13){
+            $("button[type=submit]").focus();
+            event.preventDefault();
+        }
+
+    });
+
+    $("body").on("keydown", "button[type=submit]", function(event){
+        var keyCode = event.keyCode || event.which;
+        var $th = $(this);
+        var $tr_length = $("table tbody#addrow tr").length-1;
+        var $prevID = $("table tbody#addrow tr:eq("+$tr_length+") td:eq(4)").find(".minus");
+
+        if(keyCode == 13) {
+            $("#party_id").select2('focus');
+            event.preventDefault();
+        }
+        else if(keyCode == 9) {
+            if(event.shiftKey) {
+            }else{
+                $("#party_id").select2('focus');
+                event.preventDefault();
+            }
+        }else if(keyCode == 32)
+        {
+            $th.trigger("click");
+        }
+    });
+
+    $("body").on("click", ".add, .minus", function(e){
+		var $th = $(this);
+		var $currentTarget = e.currentTarget;
+		var $tr = $($currentTarget).closest("tr");
+		var $trRowIndex = $tr.index();
+		e.preventDefault();
+		if($th.hasClass("minus"))
+		{
+			var count= $('.ordertable').length;
+			var value=count-1;
+			if(value>=1){
+				$(this).closest('.ordertable').fadeOut('fast', function(){
+					$(this).closest('.ordertable').remove();
+                    total();
+					var $selectTag = $("table tbody#addrow tr:eq("+($trRowIndex-1)+") td:eq(0)").find("select");
+					$($selectTag).select2("focus");
+				});
+			}
+			renumber();
+		}else if($th.hasClass("add")){
+			var tplData = {
+				i: counter
+			};
+			$cl=$(this).closest("tr").after(tpl(tplData));
+			counter += 1;
+			$(".select2").select2("destroy");
+			$(".select2").select2({
+				placeholder: "Select",
+				allowClear:true,
+			});
+			renumber();
+            total();
+
+			var $selectTag = $("table tbody#addrow tr:eq("+($trRowIndex+1)+") td:eq(0)").find("select");
+			$($selectTag).select2("focus");
+		}else{}
+	});
+
+    $("#party_id").select2('focus');
+
 });
+</script>
+<script  type="text/html" id="form_tpl">
+    <tr class="ordertable">
+        <td>
+            <select id="product_id" name="product_id[]" class="m-bot15 select2 col-lg-12 product_id" style="width:100%;">
+                <option></option>
+                @foreach ($product as $key => $val)
+                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                @endforeach
+            </select>
+        </td>
+        <td>
+            <input type="text" id="price" name="price[]" class="form-control" placeholder="{{ trans('order.price') }}" readonly>
+        </td>
+        <td>
+            <input type="text" id="qty" name="qty[]" class="form-control numberonly qty" placeholder="{{ trans('order.qty') }}">
+        </td>
+        <td>
+            <input type="text" id="amount" name="amount[]" class="form-control numberonly amount" placeholder="{{ trans('order.amount') }}" readonly>
+        </td>
+        <td>
+            <button type="button" name="add[]" class="btn btn-success add btn-xs">+</button>
+            <button type="button" name="minus[]" class="btn btn-danger minus btn-xs">-</button>
+        </td>
+    </tr>
 </script>
 @endsection

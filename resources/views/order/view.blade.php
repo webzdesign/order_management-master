@@ -36,7 +36,7 @@
                                     <label for="party_id">
                                         {{ trans('order.party_name') }} <span class="requride_cls">*</span>
                                     </label>
-                                    <select class="select2_single form-control" name="party_id" id="party_id" disabled>
+                                    <select class="select2" name="party_id" id="party_id" disabled style="width:100%;">
                                         <option value=""></option>
                                         @foreach($party as $key => $val)
                                             <option value="{{ $val->id }}" {{ ($val->id == $order[0]->party_id)? 'selected':'' }}>{{ $val->name }}</option>
@@ -64,7 +64,7 @@
                                     <tr class="ordertable">
                                         <td><label class="sr_no">{{ $key+1 }}</label></td>
                                         <td>
-                                            <select id="product_id" name="product_id[]" class="form-control m-bot15 select2_single col-lg-12 product_id" disabled>
+                                            <select id="product_id" name="product_id[]" class="m-bot15 select2 col-lg-12 product_id" disabled style="width:100%;">
                                                 <option></option>
                                                 @foreach ($product as $key => $val)
                                                     <option value="{{ $val->id }}" {{ ($val->id == $value->product_id) ? 'selected':''  }}>{{ $val->name }}</option>
@@ -186,6 +186,10 @@
 <script>
 $(document).ready(function(){
 
+    $(".select2").select2({
+		placeholder: "Select",
+		allowClear: true
+	});
 
     function total()
     {
