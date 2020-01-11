@@ -63,7 +63,7 @@
                                     @foreach($order as $key => $value)
                                     <tr class="ordertable">
                                         <td>
-                                            <select id="product_id" name="product_id[]" class=" m-bot15 select2 col-lg-12 product_id" style="width:100%;">
+                                            <select id="product_id" name="product_id[]" class="select2 product_id" style="width:100%;">
                                                 <option></option>
                                                 @foreach ($product as $key => $val)
                                                     <option value="{{ $val->id }}" {{ ($val->id == $value->product_id) ? 'selected':''  }}>{{ $val->name }}</option>
@@ -651,7 +651,7 @@ $(document).ready(function(){
 <script  type="text/html" id="form_tpl">
     <tr class="ordertable">
         <td>
-            <select id="product_id" name="product_id[]" class="m-bot15 select2 col-lg-12 product_id" style="width:100%;">
+            <select id="product_id" name="product_id[]" class="select2 product_id" style="width:100%;">
                 <option></option>
                 @foreach ($product as $key => $val)
                     <option value="{{ $val->id }}">{{ $val->name }}</option>
