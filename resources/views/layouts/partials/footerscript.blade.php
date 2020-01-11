@@ -115,17 +115,17 @@
     margin: 5px 1px 3px 0px;*/
     border: 1px solid rgba(81, 203, 238, 1);
   }
-  button[class*="add_row"]:focus,button[class*="bg_modal"]:focus{
+  button[class*="add"]:focus,button[class*="bg_modal"]:focus{
     background:#d0b0ff;
   }
-  button[class*="add_row"],button[class*="bg_modal"]{
+  button[class*="add"],button[class*="bg_modal"]{
     background:#A8E6B4;
     border-color:#A8E6B4;
   }
-  button[class*="remove_row"]:focus{
+  button[class*="minus"]:focus{
     background:#d0b0ff;
   }
-  button[class*="remove_row"]{
+  button[class*="minus"]{
     background:#f98582;
     border-color:#f98582;
   }

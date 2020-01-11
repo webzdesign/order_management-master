@@ -38,8 +38,6 @@
                           <th>{{ trans('stockpurchase.tfield.sr_no') }}</th>
                           <th>{{ trans('stockpurchase.tfield.purchase_id') }}</th>
                           <th>{{ trans('stockpurchase.tfield.date') }}</th>
-                          <th>{{ trans('stockpurchase.tfield.product') }}</th>
-                          <th>{{ trans('stockpurchase.tfield.qty') }}</th>
                           <th>{{ trans('stockpurchase.tfield.added_by') }}</th>
                           <th>{{ trans('stockpurchase.tfield.action') }}</th>
                         </tr>
@@ -92,8 +90,6 @@ $(document).ready(function() {
           { data: 'DT_RowIndex',searchable: false,orderable: false},
           { data: 'purchase_id'},
           { data: 'date'},
-          { data: 'product.name'},
-          { data: 'qty'},
           { data: 'user.name'},
           { data: 'action',orderable: false, searchable: false},
         ],
